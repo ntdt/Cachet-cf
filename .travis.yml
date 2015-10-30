@@ -1,19 +1,24 @@
 language: php
-
 php:
-  - 5.5.9
-  - 5.5
-  - 5.6
-  - hhvm
-
+- 5.5.9
 sudo: false
-
-install: travis_retry composer install --no-interaction --ignore-platform-reqs --no-scripts --prefer-source
-
+install:
+- travis_retry composer install --no-interaction --no-scripts
+- npm install
+- node_modules/.bin/bower install
+- node_modules/.bin/gulp
 script:
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "hhvm" ]; then vendor/bin/phpunit; fi;'
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi;'
-
-after_script:
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi;'
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi;'
+- vendor/bin/phpunit
+after_success:
+- rm -Rf node_modules
+- rm -Rf vendor/bower_components
+- composer update --no-dev
+- zip -r cachet-cf-bundled ./* .bp-config
+deploy:
+  provider: releases
+  api_key:
+    secure: EwBnKdHw2/BFkf8sowV95uIJjZTL+Wk6pojPbH+zQMpF4WuWAg+NX95hNy+iv19PfQVkldNRP12OzUAwt1+7fUrgplut8kG5BD+2YMd2uis6yrIemFQbqeBjAvqQCm8h5sVATrlTcMRuhNHPmjvDc6i13emL/ef/n0ZkKulGrr+0vDcJO/xDmCbhXCeVuJE2Nevsp66XyZkxvCw/ukroK6NaZMj9otcvlvJiVKJ7U2AVdYAFFVzo9tLV8j/WigSQvSAN3qBBNjsuiHF2bQoH04TEqXw26VN1GrJljHBWu1HaPirB0AfE/RuhoPLTj+Ua+M+URoOvOgqhGRHynS7QJ6CYnuGdhKLYaD5K+KyKesM+1pyN+JTy+A0VOdNd4HkpU6HkE7S2b4lEJRlodcM8Hh9TbhIlQxDiVYzeYJ/OqaseAjdB8mjmE7XnljdUUapOl/nTWw+T01FUerWHoms9PvnoOOjdO2gsdmZvHMetiHkfN6Gy0thKxAaUpLAnjIb2S86lInT3zzkptUAo7qXDBQPI5sgwc+XlcxQPy27xfOQDcNu5jCFmjOcQq2JgBTsaw6cnp/i63YNzog8uD41y0u7OJC59h58JPWaqjdOZm6kZJUDkwR4rMXJoZC2pHM9Rapm8DSZ8uZlUJUnGbfNCr85H8pGOjiHtNw9yriSEn+U=
+  file: cachet-cf-bundled.zip
+  on:
+    tags: true
+    all_branches: true
