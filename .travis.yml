@@ -1,11 +1,8 @@
 language: php
 php:
 - 5.5.9
-sudo: true
+sudo: false
 install:
-- sudo npm cache clean -f
-- sudo npm install -g n
-- sudo n stable
 - travis_retry composer install --no-interaction --no-scripts
 - npm install
 - node_modules/.bin/bower install
