@@ -1,10 +1,10 @@
 language: php
 php:
 - 5.5.9
-sudo: false
+sudo: true
 install:
-- npm install -g n
-- n stable
+- sudo apt-get update
+- sudo apt-get install nodejs npm
 - travis_retry composer install --no-interaction --no-scripts
 - npm install
 - node_modules/.bin/bower install
