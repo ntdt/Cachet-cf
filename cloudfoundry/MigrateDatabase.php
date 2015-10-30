@@ -1,14 +1,4 @@
 <?php
-/**
- * Copyright (C) 2015 Arthur Halet
- *
- * This software is distributed under the terms and conditions of the 'MIT'
- * license which can be found in the file 'LICENSE' in this package distribution
- * or at 'http://opensource.org/licenses/MIT'.
- *
- * Author: Arthur Halet
- * Date: 29/10/15
- */
 
 
 namespace Arthurh\CloudFoundry;
@@ -16,9 +6,9 @@ namespace Arthurh\CloudFoundry;
 
 use Arhframe\Util\File;
 use CfCommunity\CfHelper\CfHelper;
+use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Illuminate\Foundation\Application;
 
 class MigrateDatabase
 {

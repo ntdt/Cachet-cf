@@ -13,7 +13,7 @@ after_success:
 - rm -Rf node_modules
 - rm -Rf vendor/bower_components
 - composer update --no-dev
-- zip -r cachet-cf-bundled ./*
+- zip -r cachet-cf-bundled ./* .bp-config
 deploy:
   provider: releases
   api_key:
