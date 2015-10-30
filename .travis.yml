@@ -11,6 +11,7 @@ script:
 - vendor/bin/phpunit
 after_success:
 - rm -Rf node_modules
+- rm -Rf vendor/bower_components
 - composer update --no-dev
 - zip -r cachet-cf-bundled ./*
 deploy:
