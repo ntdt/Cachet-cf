@@ -1,11 +1,11 @@
 language: php
 php:
 - 5.5.9
-node_js:
-- '4.1'
-sudo: false
+sudo: true
 install:
-- travis_retry composer install --no-interaction --no-scripts --prefer-source
+- sudo apt-get update
+- sudo apt-get install nodejs npm
+- travis_retry composer install --no-interaction --no-scripts
 - npm install
 - node_modules/.bin/bower install
 - node_modules/.bin/gulp
