@@ -37,6 +37,8 @@ require __DIR__.'/../bootstrap/autoload.php';
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
+$migrateDatabase = new \Arthurh\CloudFoundry\MigrateDatabase($app);
+$migrateDatabase->runMigration();
 /*
 |--------------------------------------------------------------------------
 | Run The Application

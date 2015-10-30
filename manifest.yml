@@ -1,0 +1,9 @@
+---
+name: cachettest
+env:
+  APP_KEY: W0CUoZdiYX3I0ysuvPTw2dFC9QQ0n6lC
+  APP_DEBUG: true
+buildpack: php_buildpack
+services:
+- mysql-cachet
+- redis-cachet
