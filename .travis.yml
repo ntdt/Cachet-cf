@@ -3,8 +3,8 @@ php:
 - 5.5.9
 sudo: false
 install:
-- apt-get update
-- apt-get install nodejs npm
+- npm install -g n
+- n stable
 - travis_retry composer install --no-interaction --no-scripts
 - npm install
 - node_modules/.bin/bower install
