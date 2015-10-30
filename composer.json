@@ -50,13 +50,13 @@
             "app/Http/helpers.php"
         ],
         "psr-4": {
-            "CachetHQ\\Cachet\\": "app/"
+            "CachetHQ\\Cachet\\": "app/",
+            "Arthurh\\CloudFoundry\\": "cloudfoundry/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "CachetHQ\\Tests\\Cachet\\": "tests/",
-            "Arthurh\\CloudFoundry\\": "cloudfoundry/"
+            "CachetHQ\\Tests\\Cachet\\": "tests/"
         }
     },
     "scripts": {
