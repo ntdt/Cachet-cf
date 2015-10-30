@@ -12,6 +12,7 @@ This is a for from this application but with some changes to be runned on Cloud 
 ## (**Recommended**) Use another database
 
 By default cachet will be run with a sqlite database, it's recommended to use another one.
+
 1. Create a database service from your marketplace in Cloud Foundry (commands: `cf m` and `cf cs [service name] [plan] [service instance name]`)
 2. Bind the service to your cachet (commands: `cf bs cachet [service instance name]`)
 3. Restage your cachet (commands: `cf restage cachet`)
@@ -19,6 +20,7 @@ By default cachet will be run with a sqlite database, it's recommended to use an
 ## Use a redis server
 
 Cachet can use a redis server for caching and save session.
+
 1. Create a redis service from your marketplace in Cloud Foundry (commands: `cf m` and `cf cs [service name] [plan] [service instance name]`)
 2. Bind the service to your cachet (commands: `cf bs cachet [service instance name]`)
 3. Restage your cachet (commands: `cf restage cachet`)
@@ -27,6 +29,7 @@ Cachet can use a redis server for caching and save session.
 
 Cachet can send notification to your email address, by default mail will not be send.
 To use this functionality bind a smtp service to your app:
+
 1. Create a smtp service from your marketplace in Cloud Foundry (commands: `cf m` and `cf cs [service name] [plan] [service instance name]`)
 2. Bind the service to your cachet (commands: `cf bs cachet [service instance name]`)
 3. Restage your cachet (commands: `cf restage cachet`)
