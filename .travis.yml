@@ -3,6 +3,7 @@ php:
 - 5.5.9
 sudo: false
 install:
+- composer config --global github-oauth.github.com $GITHUB_TOKEN_COMPOSER
 - travis_retry composer install --no-interaction --no-scripts
 - npm install
 - node_modules/.bin/bower install
@@ -22,3 +23,6 @@ deploy:
   on:
     tags: true
     all_branches: true
+env:
+  global:
+    secure: Z8cNv96Nf91ai6Jc9Zw8PS3AZajBSlyarpW0N3zRolIW/qsZIjb5OxPgiCRmoOMQJTlZtHvxLjez4u+E/5C6Wq7+AG+h31N3kQu2iIhiiQSidHGG50/HTqzBnapEtlN5QhzLY6IGBnWhutF/NkUiUpD3CNBBnSYw8XfNpj4+B59IHo1HfN64THD7jvNWiJoWkGdQeNcxRryNlabJiFq94cVtLvBcNb8VPeQy/sxMWFgeknvoIEdct/xfEMc0sA6Gz54kPqSOiNQKuQKrEErgVJVdWSyrBVfd0VQIN/4HZVFI1Lw1SG0epEwd467kskqCBMnXL9J0oTAZ0tszO4ptkCECXHqrH0UjYE+ajvAUZ7Dea/gk8sja2P3cE5b9WejdQiUgyfjhU2kqBkGPP+NiG5CIN3s0rIeMRAwZoh1Df9T8aiFohwlYFxMhRekKgOOUJi3LI2/nWK6MLgqeGvudKW86GpEbL39G3AsPuPsJLTnT5icNrJLSeBF4jHDHOdcqXz4XjMUGJ7j4Iy1lVEDeYZxC69MSUFLJ7GcInjKbTyTfTKc27oByH1SFsMwvi1jLChwmOT9fzhJyzhLcmq+BWlscfBhhAGcjyNqSq2lXAQi+sUD77uSrzLAyA9geiLsF9AEVJDi6nbv1kWEym4PYdycOXv0kf/RUSlB3Q/Xly2Y=
