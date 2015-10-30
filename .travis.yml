@@ -7,9 +7,11 @@ sudo: false
 install:
 - travis_retry composer install --no-interaction --no-scripts --prefer-source
 - npm install
-- node_modules/.bin/bower
+- node_modules/.bin/bower install
 - node_modules/.bin/gulp
+after_success:
 - rm -Rf node_modules
+- composer update --no-dev
 - zip -r cachet-cf-bundled ./*
 deploy:
   provider: releases
