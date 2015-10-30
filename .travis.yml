@@ -9,6 +9,8 @@ install:
 - npm install
 - node_modules/.bin/bower install
 - node_modules/.bin/gulp
+script:
+- vendor/bin/phpunit
 after_success:
 - rm -Rf node_modules
 - composer update --no-dev
