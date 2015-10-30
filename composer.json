@@ -34,7 +34,8 @@
         "mccool/laravel-auto-presenter": "^3.1",
         "pragmarx/google2fa": "^0.5",
         "roumen/feed": "^2.9",
-        "watson/validating": "^1.0"
+        "watson/validating": "^1.0",
+        "cloudfoundry-community/cf-helper-php": "^1.6"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.5",
@@ -54,31 +55,16 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "CachetHQ\\Tests\\Cachet\\": "tests/"
+            "CachetHQ\\Tests\\Cachet\\": "tests/",
+            "Arthurh\\CloudFoundry\\": "cloudfoundry/"
         }
     },
     "scripts": {
         "pre-install-cmd": [
             "rm -f compiled.php config.php routes.php services.json"
         ],
-        "post-install-cmd": [
-            "php artisan optimize --force",
-            "php artisan config:cache",
-            "php artisan route:cache",
-            "chmod -R 755 storage"
-        ],
         "pre-update-cmd": [
             "rm -f compiled.php config.php routes.php services.json"
-        ],
-        "post-update-cmd": [
-            "php artisan optimize --force",
-            "php artisan config:cache",
-            "php artisan route:cache",
-            "chmod -R 755 storage"
-        ],
-        "post-create-project-cmd": [
-            "php -r \"copy('.env.example', '.env');\"",
-            "php artisan key:generate"
         ]
     },
     "config": {

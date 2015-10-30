@@ -1,0 +1,13 @@
+{
+    "WEBDIR": "public",
+    "PHP_EXTENSIONS": [
+        "bz2",
+        "zlib",
+        "curl",
+        "mcrypt",
+        "pdo",
+        "pdo_mysql",
+        "pdo_sqlite",
+        "redis"
+    ]
+}
