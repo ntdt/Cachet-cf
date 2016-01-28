@@ -1,3 +1,4 @@
 {
-    "WEBDIR": "public"
+    "WEBDIR": "public",
+    "PHP_EXTENSIONS": ["pdo", "pdo_mysql", "redis", "bz2", "zlib", "curl", "mcrypt"]
 }

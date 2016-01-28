@@ -26,9 +26,6 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "ext-pdo": "*",
-        "ext-pdo_mysql": "*",
-        "ext-redis": "*",
         "laravel/framework": "~5.1.26",
         "alt-three/emoji": "^2.1",
         "alt-three/validator": "^1.4",
