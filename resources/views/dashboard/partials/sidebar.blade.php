@@ -1,4 +1,3 @@
-@if($current_user)
 <div class="sidebar">
     <div class="sidebar-inner">
         <div class="profile">
@@ -27,7 +26,7 @@
         <ul>
             <li {!! set_active('dashboard') !!}>
                 <a href="{{ route('dashboard.index') }}">
-                    <i class="icon ion-speedometer"></i>
+                    <i class="icon ion-ios-speedometer"></i>
                     <span>{{ trans('dashboard.dashboard') }}</span>
                 </a>
             </li>
@@ -46,15 +45,9 @@
             </li>
             <li {!! set_active('dashboard/components*') !!}>
                 <a href="{{ route('dashboard.components.index') }}">
-                    <i class="icons ion-outlet"></i>
+                    <i class="icons ion-ios-browsers"></i>
                     <span>{{ trans('dashboard.components.components') }}</span>
                     <span class="label label-info">{{ $component_count }}</span>
-                </a>
-            </li>
-            <li {!! set_active('dashboard/team*') !!}>
-                <a href="{{ route('dashboard.team.index') }}">
-                    <i class="icons ion-ios-people"></i>
-                    <span>{{ trans('dashboard.team.team') }}</span>
                 </a>
             </li>
             <li {!! set_active('dashboard/metrics*') !!}>
@@ -67,6 +60,12 @@
                 <a href="{{ route('dashboard.subscribers.index') }}">
                     <i class="icons ion-email"></i>
                     <span>{{ trans('dashboard.subscribers.subscribers') }}</span>
+                </a>
+            </li>
+            <li {!! set_active('dashboard/team*') !!}>
+                <a href="{{ route('dashboard.team.index') }}">
+                    <i class="icons ion-ios-people"></i>
+                    <span>{{ trans('dashboard.team.team') }}</span>
                 </a>
             </li>
             <li {!! set_active('dashboard/settings*') !!}>
@@ -93,4 +92,3 @@
         </div>
     </div>
 </div>
-@endif

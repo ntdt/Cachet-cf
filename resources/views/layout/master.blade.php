@@ -7,8 +7,8 @@
     <meta name="env" content="{{ app('env') }}">
     <meta name="token" content="{{ csrf_token() }}">
 
-    <link rel="alternate" type="application/atom+xml" href="/atom" title="{{ $page_title }} - Atom Feed">
-    <link rel="alternate" type="application/rss+xml" href="/rss" title="{{ $page_title }} - RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="/atom" title="{{ $app_name.' | Cachet' }} - Atom Feed">
+    <link rel="alternate" type="application/rss+xml" href="/rss" title="{{ $app_name.' | Cachet' }} - RSS Feed">
 
     <!-- Mobile friendliness -->
     <meta name="HandheldFriendly" content="True">
@@ -35,7 +35,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-touch-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-touch-icon-152x152.png">
 
-    <title>{{ $page_title }}</title>
+    <title>{{ $app_name.' | Cachet' }}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ elixir('dist/css/all.css') }}">
@@ -44,15 +44,15 @@
 
     @include('partials.crowdin')
 
-    @if($stylesheet = Setting::get('stylesheet'))
+    @if($app_stylesheet)
     <style type="text/css">
-    {!! $stylesheet !!}
+    {!! $app_stylesheet !!}
     </style>
     @endif
 
     <script type="text/javascript">
         var Global = {};
-        Global.locale = '{{ Setting::get('app_locale') }}';
+        Global.locale = '{{ $app_locale }}';
     </script>
     <script src="{{ elixir('dist/js/all.js') }}"></script>
 </head>

@@ -13,8 +13,8 @@ return [
     // Components
     'components' => [
         'status' => [
-            1 => '正常运转',
-            2 => '性能问题',
+            1 => '运行正常',
+            2 => '负载较高',
             3 => '部分停运',
             4 => '严重停转',
         ],
@@ -22,39 +22,39 @@ return [
 
     // Incidents
     'incidents' => [
-        'none'          => '没有已报告的事件。',
-        'past'          => '过去的事件',
+        'none'          => '无故障报告',
+        'past'          => '历史状态',
         'previous_week' => '前一周',
         'next_week'     => '后一周',
-        'none'          => '没有已报告的事件。',
+        'none'          => '当日无故障',
         'scheduled'     => '计划维护',
         'scheduled_at'  => '，计划于 :timestamp',
         'status'        => [
-            0 => '计划中的', // TODO: Hopefully remove this.
-            1 => '调查中',
-            2 => '已定位',
-            3 => '观察中',
-            4 => '已修复',
+            0 => '计划中', // TODO: Hopefully remove this.
+            1 => '确认中',
+            2 => '修复中',
+            3 => '已更新',
+            4 => '已解决',
         ],
     ],
 
     // Service Status
     'service' => [
-        'good' => '所有系统正常运转。',
-        'bad'  => '一些系统出了问题。',
+        'good' => '所有系统运行正常',
+        'bad'  => '部分系统运行异常',
     ],
 
     'api' => [
         'regenerate' => '重新生成 API 密钥',
-        'revoke'     => '吊销 API 密钥',
+        'revoke'     => '注销 API 密钥',
     ],
 
     // Metrics
     'metrics' => [
         'filter' => [
-            'hourly'  => 'Last 12 Hours',
-            'weekly'  => 'Week',
-            'monthly' => 'Month',
+            'hourly'  => '最近12小时',
+            'weekly'  => '周',
+            'monthly' => '月',
         ],
     ],
 
@@ -64,7 +64,7 @@ return [
         'button'    => '订阅',
         'email'     => [
             'subscribe'    => '订阅电子邮件更新。',
-            'subscribed'   => '你已经订阅电子邮件通知，请检查您的电子邮件，确认您的订阅。',
+            'subscribed'   => '您已经订阅电子邮件通知，请检查您的电子邮件，确认您的订阅。',
             'verified'     => '您的电子邮件订阅已确认。谢谢！',
             'unsubscribe'  => '取消电子邮件订阅。',
             'unsubscribed' => '您的电子邮件订阅已被取消。',
@@ -87,9 +87,28 @@ return [
         ],
     ],
 
+    'users' => [
+        'email' => [
+            'invite' => [
+                'text'           => "您已被邀请加入 :app_name 团队的状态页, 请点击以下链接进行注册。\n:link\n谢谢, :app_name",
+                'html-preheader' => '您已被邀请加入 :app_name.',
+                'html'           => '<p>您已被邀请加入 :app_name 团队的状态页, 请点击以下链接进行注册。</p><p><a href=":link">:link</a></p><p>谢谢, :app_name</p>',
+            ],
+        ],
+    ],
+
+    'signup' => [
+        'title'    => '注册',
+        'username' => '用户名',
+        'email'    => '邮箱',
+        'password' => '密码',
+        'success'  => '您的账号已注册成功。',
+        'failure'  => '注册失败。',
+    ],
+
     // Other
-    'powered_by'      => ':app 应用状态页面由 <a href="https://cachethq.io">Cachet</a>提供支持。',
-    'about_this_site' => '关于此站点',
+    'powered_by'      => ':app 状态页托管服务由 <a href="https://cachethq.io">Cachet</a> 提供技术支持。',
+    'about_this_site' => '关于我们',
     'rss-feed'        => 'RSS 订阅',
     'atom-feed'       => 'Atom 订阅',
     'feed'            => '状态源',

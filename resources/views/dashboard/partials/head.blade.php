@@ -18,17 +18,17 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-touch-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-touch-icon-152x152.png">
 
-    <title>{{ isset($page_title) ? $page_title : Setting::get('app_name') }} | Cachet</title>
+    <title>{{ $page_title or $app_name.' | Cachet' }}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ elixir('dist/css/all.css') }}">
+    @yield('css')
 
     @include('partials.crowdin')
 
     <script type="text/javascript">
         var Global = {};
-        Global.locale = '{{ Setting::get('app_locale') }}';
+        Global.locale = '{{ $app_locale }}';
     </script>
     <script src="{{ elixir('dist/js/all.js') }}"></script>
-
 </head>

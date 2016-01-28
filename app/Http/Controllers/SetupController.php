@@ -58,13 +58,26 @@ class SetupController extends Controller
     public function getIndex()
     {
         // If we've copied the .env.example file, then we should try and reset it.
-        if (getenv('APP_KEY') === 'SomeRandomString') {
+        if (strlen(Config::get('app.key')) !== 32) {
             $this->keyGenerate();
+        }
+
+        $supportedLanguages = Request::getLanguages();
+        $userLanguage = Config::get('app.locale');
+
+        foreach ($supportedLanguages as $language) {
+            $language = str_replace('_', '-', $language);
+
+            if (isset($this->langs[$language])) {
+                $userLanguage = $language;
+                break;
+            }
         }
 
         return View::make('setup')
             ->withPageTitle(trans('setup.setup'))
             ->withCacheDrivers($this->cacheDrivers)
+            ->withUserLanguage($userLanguage)
             ->withAppUrl(Request::root());
     }
 
@@ -197,7 +210,7 @@ class SetupController extends Controller
         if ($path === null || ($path !== null && file_exists($path))) {
             $path = base_path('.env');
             file_put_contents($path, str_replace(
-                getenv(strtoupper($key)), $value, file_get_contents($path)
+                env(strtoupper($key)), $value, file_get_contents($path)
             ));
         }
     }

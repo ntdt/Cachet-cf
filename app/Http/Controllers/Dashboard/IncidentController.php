@@ -37,7 +37,7 @@ class IncidentController extends Controller
     protected $subMenu = [];
 
     /**
-     * Creates a new DashIncidentController instance.
+     * Creates a new incident controller instance.
      *
      * @return \CachetHQ\Cachet\Http\Controllers\DashScheduleController
      */
@@ -118,7 +118,9 @@ class IncidentController extends Controller
                 Binput::get('component_id'),
                 Binput::get('component_status'),
                 Binput::get('notify', true),
-                Binput::get('created_at')
+                Binput::get('created_at'),
+                null,
+                null
             ));
         } catch (ValidationException $e) {
             return Redirect::route('dashboard.incidents.add')
@@ -127,7 +129,7 @@ class IncidentController extends Controller
                 ->withErrors($e->getMessageBag());
         }
 
-        return Redirect::route('dashboard.incidents.add')
+        return Redirect::route('dashboard.incidents.index')
             ->withSuccess(sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.incidents.add.success')));
     }
 
@@ -167,7 +169,8 @@ class IncidentController extends Controller
     {
         $template->delete();
 
-        return Redirect::route('dashboard.incidents.index');
+        return Redirect::route('dashboard.templates.index')
+            ->withSuccess(sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.incidents.templates.delete.success')));
     }
 
     /**
@@ -186,7 +189,7 @@ class IncidentController extends Controller
                 ->withErrors($e->getMessageBag());
         }
 
-        return Redirect::route('dashboard.templates.add')
+        return Redirect::route('dashboard.templates.index')
             ->withSuccess(sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.incidents.templates.add.success')));
     }
 
@@ -201,7 +204,8 @@ class IncidentController extends Controller
     {
         $this->dispatch(new RemoveIncidentCommand($incident));
 
-        return Redirect::route('dashboard.incidents.index');
+        return Redirect::route('dashboard.incidents.index')
+            ->withSuccess(sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.incidents.delete.success')));
     }
 
     /**
@@ -239,7 +243,9 @@ class IncidentController extends Controller
                 Binput::get('component_id'),
                 Binput::get('component_status'),
                 Binput::get('notify', true),
-                Binput::get('created_at')
+                Binput::get('created_at'),
+                null,
+                null
             ));
         } catch (ValidationException $e) {
             return Redirect::route('dashboard.incidents.edit', ['id' => $incident->id])
@@ -248,10 +254,8 @@ class IncidentController extends Controller
                 ->withErrors($e->getMessageBag());
         }
 
-        $componentStatus = array_pull($incidentData, 'component_status');
-
         if ($incident->component) {
-            $incident->component->update(['status' => $componentStatus]);
+            $incident->component->update(['status' => Binput::get('component_status')]);
         }
 
         return Redirect::route('dashboard.incidents.edit', ['id' => $incident->id])

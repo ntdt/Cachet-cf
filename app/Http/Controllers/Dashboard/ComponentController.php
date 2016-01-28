@@ -31,15 +31,25 @@ class ComponentController extends Controller
 {
     use DispatchesJobs;
 
+    /**
+     * Array of sub-menu items.
+     *
+     * @var array
+     */
     protected $subMenu = [];
 
+    /**
+     * Creates a new component controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->subMenu = [
             'components' => [
                 'title'  => trans('dashboard.components.components'),
                 'url'    => route('dashboard.components.index'),
-                'icon'   => 'ion-outlet',
+                'icon'   => 'ion-ios-browsers',
                 'active' => false,
             ],
             'groups' => [
@@ -184,7 +194,7 @@ class ComponentController extends Controller
 
         $component->tags()->sync($componentTags);
 
-        return Redirect::route('dashboard.components.add')
+        return Redirect::route('dashboard.components.index')
             ->withSuccess(sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.components.add.success')));
     }
 
@@ -199,7 +209,8 @@ class ComponentController extends Controller
     {
         $this->dispatch(new RemoveComponentCommand($component));
 
-        return Redirect::route('dashboard.components.index');
+        return Redirect::route('dashboard.components.index')
+            ->withSuccess(sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.components.delete.success')));
     }
 
     /**
@@ -213,7 +224,8 @@ class ComponentController extends Controller
     {
         $this->dispatch(new RemoveComponentGroupCommand($group));
 
-        return Redirect::route('dashboard.components.index');
+        return Redirect::route('dashboard.components.index')
+            ->withSuccess(sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.components.delete.success')));
     }
 
     /**
@@ -260,7 +272,7 @@ class ComponentController extends Controller
                 ->withErrors($e->getMessageBag());
         }
 
-        return Redirect::route('dashboard.components.groups.add')
+        return Redirect::route('dashboard.components.groups')
             ->withSuccess(sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.components.groups.add.success')));
     }
 

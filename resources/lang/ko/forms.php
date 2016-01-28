@@ -51,6 +51,7 @@ return [
         'templates'          => [
             'name'     => '이름',
             'template' => '템플릿',
+            'twig'     => 'Incident Templates can make use of the <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> templating language.',
         ],
     ],
 
@@ -63,6 +64,7 @@ return [
         'link'        => '링크',
         'tags'        => '태그',
         'tags-help'   => '쉼표로 구분.',
+        'enabled'     => 'Component enabled?',
 
         'groups' => [
             'name' => '이름',
@@ -137,6 +139,10 @@ return [
         'gravatar'       => 'Change your profile picture at Gravatar.',
         '2fa'            => [
             'help' => '2단계 인증을 활성화하면 계정 보안이 강화됩니다. <a href="https://support.google.com/accounts/answer/1066447?hl=en">Google Authenticator</a> 또는 유사한 앱을 모바일 기기에 다운로드 받아야 합니다. 로그인 할 때, 해당 앱에서 생성된 토큰을 입력해야합니다.',
+        ],
+        'team' => [
+            'description' => 'Invite your team members by entering their email addresses here.',
+            'email'       => 'Email #:id',
         ],
     ],
 

@@ -65,6 +65,13 @@ final class UpdateComponentCommand
     public $group_id;
 
     /**
+     * Is the component enabled?
+     *
+     * @var bool
+     */
+    public $enabled;
+
+    /**
      * The validation rules.
      *
      * @var string[]
@@ -72,10 +79,11 @@ final class UpdateComponentCommand
     public $rules = [
         'name'        => 'string',
         'description' => 'string',
-        'status'      => 'int',
+        'status'      => 'int|min:1|max:4',
         'link'        => 'url',
         'order'       => 'int',
         'group_id'    => 'int',
+        'enabled'     => 'bool',
     ];
 
     /**
@@ -88,10 +96,11 @@ final class UpdateComponentCommand
      * @param string                            $link
      * @param int                               $order
      * @param int                               $group_id
+     * @param bool                              $enabled
      *
      * @return void
      */
-    public function __construct(Component $component, $name, $description, $status, $link, $order, $group_id)
+    public function __construct(Component $component, $name, $description, $status, $link, $order, $group_id, $enabled)
     {
         $this->component = $component;
         $this->name = $name;
@@ -100,5 +109,6 @@ final class UpdateComponentCommand
         $this->link = $link;
         $this->order = $order;
         $this->group_id = $group_id;
+        $this->enabled = $enabled;
     }
 }

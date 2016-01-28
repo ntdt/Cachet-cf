@@ -6,7 +6,7 @@
             <i class="icon ion-navicon"></i>
         </div>
         <span class="uppercase">
-            <i class="icon ion-speedometer"></i> {{ trans('dashboard.dashboard') }}
+            <i class="icon ion-ios-speedometer"></i> {{ trans('dashboard.dashboard') }}
         </span>
     </div>
     <div class="content-wrapper">
@@ -37,7 +37,7 @@
                             </form>
                         </div>
                         @empty
-                        <div class="list-group-item text-danger">{{ trans('dashboard.components.add.message') }}</div>
+                        <div class="list-group-item"><a href="{{ route('dashboard.components.add') }}">{{ trans('dashboard.components.add.message') }}</a></div>
                         @endforelse
                     </div>
                 </div>
@@ -48,7 +48,7 @@
             <div class="col-sm-12 col-lg-6">
                 <div class="stats-widget">
                     <div class="stats-top">
-                        <span class="stats-value">{{ $incidents->map(function($incident) { return count($incident); })->sum() }}</span>
+                        <span class="stats-value"><a href="{{ route('dashboard.incidents.index') }}">{{ $incidents->map(function($incident) { return count($incident); })->sum() }}</a></span>
                         <span class="stats-label">{{ trans('dashboard.incidents.incidents') }}</span>
                     </div>
                     <div class="stats-chart">
@@ -60,7 +60,7 @@
             <div class="col-sm-12 col-lg-6">
                 <div class="stats-widget">
                     <div class="stats-top">
-                        <span class="stats-value">{{ $subscribers->map(function($subscribers) { return count($subscribers); })->sum() }}</span>
+                        <span class="stats-value"><a href="{{ route('dashboard.subscribers.index') }}">{{ $subscribers->map(function($subscribers) { return count($subscribers); })->sum() }}</a></span>
                         <span class="stats-label">{{ trans('dashboard.subscribers.subscribers') }}</span>
                     </div>
                     <div class="stats-chart">

@@ -150,7 +150,7 @@ return [
          * Packages Service Providers...
          */
         env('CACHET_EMOJI', false) ? 'AltThree\Emoji\EmojiServiceProvider' : null,
-        'Barryvdh\Cors\CorsServiceProvider',
+        'Barryvdh\Cors\ServiceProvider',
         'Fideloper\Proxy\TrustedProxyServiceProvider',
         'GrahamCampbell\Binput\BinputServiceProvider',
         'GrahamCampbell\Exceptions\ExceptionsServiceProvider',
@@ -162,6 +162,7 @@ return [
         'McCool\LaravelAutoPresenter\AutoPresenterServiceProvider',
         'PragmaRX\Google2FA\Vendor\Laravel\ServiceProvider',
         'Roumen\Feed\FeedServiceProvider',
+        'TwigBridge\ServiceProvider',
 
         /*
          * Application Service Providers...
@@ -201,6 +202,7 @@ return [
         'Eloquent'  => 'Illuminate\Database\Eloquent\Model',
         'Event'     => 'Illuminate\Support\Facades\Event',
         'File'      => 'Illuminate\Support\Facades\File',
+        'Gate'      => 'Illuminate\Support\Facades\Gate',
         'Hash'      => 'Illuminate\Support\Facades\Hash',
         'Input'     => 'Illuminate\Support\Facades\Input',
         'Inspiring' => 'Illuminate\Foundation\Inspiring',

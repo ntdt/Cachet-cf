@@ -32,7 +32,7 @@ return [
         '2fauth'        => 'Código de autenticação',
         'invalid'       => 'E-mail ou senha inválidos',
         'invalid-token' => 'Token inválido',
-        'cookies'       => 'You must enable cookies to login.',
+        'cookies'       => 'Você precisa habilitar os cookies para acessar.',
     ],
 
     // Incidents form fields
@@ -51,6 +51,7 @@ return [
         'templates'          => [
             'name'     => 'Nome',
             'template' => 'Template',
+            'twig'     => 'Incident Templates can make use of the <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> templating language.',
         ],
     ],
 
@@ -63,6 +64,7 @@ return [
         'link'        => 'Link',
         'tags'        => 'Marcações',
         'tags-help'   => 'Separados por vírgulas.',
+        'enabled'     => 'Component enabled?',
 
         'groups' => [
             'name' => 'Nome',
@@ -79,7 +81,7 @@ return [
         'default-value'    => 'Valor padrão',
         'calc_type'        => 'Cálculo de métricas',
         'type_sum'         => 'Soma',
-        'type_avg'         => 'média',
+        'type_avg'         => 'Média',
         'places'           => 'Casas decimais',
 
         'points' => [
@@ -143,7 +145,7 @@ return [
         'password'       => 'Senha',
         'api-token'      => 'Token da API',
         'api-token-help' => 'Gerar nova chave da API impedirá que aplicativos existentes acessem o Cachet.',
-        'gravatar'       => 'Change your profile picture at Gravatar.',
+        'gravatar'       => 'Alterar sua foto do perfil no Gravatar.',
         'user_level'     => 'Nível de Usuário',
         'levels'         => [
             'admin' => 'Administrador',
@@ -151,6 +153,10 @@ return [
         ],
         '2fa'            => [
             'help' => 'Ativar a autenticação de dois fatores aumenta a segurança de sua conta. Você vai precisar baixar <a href="https://support.google.com/accounts/answer/1066447?hl=en"> Google Authenticator</a> ou um app similar em seu dispositivo móvel. Quando você entrar, será solicitado um token gerado pelo app.',
+        ],
+        'team' => [
+            'description' => 'Invite your team members by entering their email addresses here.',
+            'email'       => 'Email #:id',
         ],
     ],
 

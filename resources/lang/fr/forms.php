@@ -51,6 +51,7 @@ return [
         'templates'          => [
             'name'     => 'Nom',
             'template' => 'Modéle',
+            'twig'     => 'Incident Templates can make use of the <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> templating language.',
         ],
     ],
 
@@ -63,6 +64,7 @@ return [
         'link'        => 'Lien',
         'tags'        => 'Mots clés',
         'tags-help'   => 'séparé par des virgules.',
+        'enabled'     => 'Component enabled?',
 
         'groups' => [
             'name' => 'Nom',
@@ -136,6 +138,10 @@ return [
         'gravatar'       => 'Change your profile picture at Gravatar.',
         '2fa'            => [
             'help' => 'Habilitante authentification à deux facteurs augmente la sécurité de votre compte. Vous aurez besoin de télécharger <a href="https://support.google.com/accounts/answer/1066447?hl=en"> Google Authenticator</a> ou une application similaire sur votre appareil mobile. Lorsque vous vous connectez vous sera demandé de fournir un jeton généré par l\'application.',
+        ],
+        'team' => [
+            'description' => 'Invite your team members by entering their email addresses here.',
+            'email'       => 'Email #:id',
         ],
     ],
 

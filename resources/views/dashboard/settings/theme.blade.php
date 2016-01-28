@@ -20,12 +20,13 @@
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <label>{{ trans('forms.settings.app-setup.banner') }}</label>
-                                    @if($banner = Setting::get('app_banner'))
+                                    @if($app_banner)
                                     <div id="banner-view" class="well">
-                                        <img src="data:{{ Setting::get('app_banner_type') }};base64,{{ $banner }}" style="max-width: 100%">
+                                        <img src="data:{{ $app_banner_type }};base64,{{ $app_banner }}" style="max-width: 100%">
                                         <br><br>
                                         <button id="remove-banner" class="btn btn-danger">{{ trans('forms.remove') }}</button>
                                     </div>
+                                    <input type="hidden" name="remove_banner" value="0">
                                     @endif
                                     <input type="file" name="app_banner" class="form-control">
                                     <span class="help-block">{{ trans('forms.settings.app-setup.banner-help') }}</span>
@@ -66,7 +67,7 @@
                                     <div class="checkbox">
                                         <label>
                                             <input type="hidden" value="0" name="style.fullwidth_header">
-                                            <input type="checkbox" value="1" name="style.fullwidth_header" {{ Setting::get('style_fullwidth_header') ? 'checked' : null }}>
+                                            <input type="checkbox" value="1" name="style.fullwidth_header" {{ $app_banner_style_full_width ? 'checked' : null }}>
                                             {{ trans('forms.settings.theme.fullwidth-banner') }}
                                         </label>
                                     </div>
@@ -134,6 +135,7 @@
                                 <div class="col-sm-12">
                                     <div class="checkbox">
                                         <label>
+                                            <input type="hidden" name="dashboard_login_link" value="0">
                                             <input type="checkbox" value="1" name="dashboard_login_link" {{ Setting::get('dashboard_login_link') ? 'checked' : null }}>
                                             {{ trans('forms.settings.theme.dashboard-login') }}
                                         </label>

@@ -23,9 +23,18 @@ use Illuminate\Support\Facades\View;
 
 class SettingsController extends Controller
 {
+    /**
+     * Array of sub-menu items.
+     *
+     * @var array
+     */
     protected $subMenu = [];
-    protected $subTitle = 'Settings';
 
+    /**
+     * Creates a new settings controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->subMenu = [
@@ -33,24 +42,6 @@ class SettingsController extends Controller
                 'title'  => trans('dashboard.settings.app-setup.app-setup'),
                 'url'    => route('dashboard.settings.setup'),
                 'icon'   => 'ion-gear-b',
-                'active' => false,
-            ],
-            'analytics' => [
-                'title'  => trans('dashboard.settings.analytics.analytics'),
-                'url'    => route('dashboard.settings.analytics'),
-                'icon'   => 'ion-stats-bars',
-                'active' => false,
-            ],
-            'localization' => [
-                'title'  => trans('dashboard.settings.localization.localization'),
-                'url'    => route('dashboard.settings.localization'),
-                'icon'   => 'ion-earth',
-                'active' => false,
-            ],
-            'security' => [
-                'title'  => trans('dashboard.settings.security.security'),
-                'url'    => route('dashboard.settings.security'),
-                'icon'   => 'ion-lock-combination',
                 'active' => false,
             ],
             'theme' => [
@@ -65,11 +56,36 @@ class SettingsController extends Controller
                 'icon'   => 'ion-paintbucket',
                 'active' => false,
             ],
+            'localization' => [
+                'title'  => trans('dashboard.settings.localization.localization'),
+                'url'    => route('dashboard.settings.localization'),
+                'icon'   => 'ion-earth',
+                'active' => false,
+            ],
+            'security' => [
+                'title'  => trans('dashboard.settings.security.security'),
+                'url'    => route('dashboard.settings.security'),
+                'icon'   => 'ion-lock-combination',
+                'active' => false,
+            ],
+            'analytics' => [
+                'title'  => trans('dashboard.settings.analytics.analytics'),
+                'url'    => route('dashboard.settings.analytics'),
+                'icon'   => 'ion-stats-bars',
+                'active' => false,
+            ],
+            'about' => [
+                'title'  => CACHET_VERSION,
+                'url'    => 'javascript: void(0);',
+                'icon'   => 'ion-flag',
+                'active' => false,
+            ],
         ];
 
-        View::share('sub_title', $this->subTitle);
-
-        View::share('sub_menu', $this->subMenu);
+        View::share([
+            'sub_title' => trans('dashboard.settings.settings'),
+            'sub_menu'  => $this->subMenu,
+        ]);
     }
 
     /**
@@ -84,7 +100,7 @@ class SettingsController extends Controller
         Session::flash('redirect_to', $this->subMenu['setup']['url']);
 
         return View::make('dashboard.settings.app-setup')
-            ->withPageTitle('Application Setup - Dashboard')
+            ->withPageTitle(trans('dashboard.settings.app-setup.app-setup').' - '.trans('dashboard.dashboard'))
             ->withSubMenu($this->subMenu);
     }
 
@@ -100,7 +116,7 @@ class SettingsController extends Controller
         Session::flash('redirect_to', $this->subMenu['analytics']['url']);
 
         return View::make('dashboard.settings.analytics')
-            ->withPageTitle('Analytics - Dashboard')
+            ->withPageTitle(trans('dashboard.settings.analytics.analytics').' - '.trans('dashboard.dashboard'))
             ->withSubMenu($this->subMenu);
     }
 
@@ -116,7 +132,7 @@ class SettingsController extends Controller
         Session::flash('redirect_to', $this->subMenu['localization']['url']);
 
         return View::make('dashboard.settings.localization')
-            ->withPageTitle('Localization - Dashboard')
+            ->withPageTitle(trans('dashboard.settings.localization.localization').' - '.trans('dashboard.dashboard'))
             ->withSubMenu($this->subMenu);
     }
 
@@ -132,7 +148,7 @@ class SettingsController extends Controller
         Session::flash('redirect_to', $this->subMenu['theme']['url']);
 
         return View::make('dashboard.settings.theme')
-            ->withPageTitle('Theme - Dashboard')
+            ->withPageTitle(trans('dashboard.settings.theme.theme').' - '.trans('dashboard.dashboard'))
             ->withSubMenu($this->subMenu);
     }
 
@@ -150,7 +166,7 @@ class SettingsController extends Controller
         Session::flash('redirect_to', $this->subMenu['security']['url']);
 
         return View::make('dashboard.settings.security')
-            ->withPageTitle('Security - Dashboard')
+            ->withPageTitle(trans('dashboard.settings.security.security').' - '.trans('dashboard.dashboard'))
             ->withSubMenu($this->subMenu)
             ->withUnsecureUsers($unsecureUsers);
     }
@@ -167,7 +183,7 @@ class SettingsController extends Controller
         Session::flash('redirect_to', $this->subMenu['stylesheet']['url']);
 
         return View::make('dashboard.settings.stylesheet')
-            ->withPageTitle('Stylesheet - Dashboard')
+            ->withPageTitle(trans('dashboard.settings.stylesheet.stylesheet').' - '.trans('dashboard.dashboard'))
             ->withSubMenu($this->subMenu);
     }
 

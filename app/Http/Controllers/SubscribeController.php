@@ -38,7 +38,6 @@ class SubscribeController extends Controller
     public function showSubscribe()
     {
         return View::make('subscribe')
-            ->withPageTitle(Setting::get('app_name'))
             ->withAboutApp(Markdown::convertToHtml(Setting::get('app_about')));
     }
 
@@ -71,7 +70,7 @@ class SubscribeController extends Controller
      */
     public function getVerify($code = null)
     {
-        if (is_null($code)) {
+        if ($code === null) {
             throw new NotFoundHttpException();
         }
 
@@ -96,7 +95,7 @@ class SubscribeController extends Controller
      */
     public function getUnsubscribe($code = null)
     {
-        if (is_null($code)) {
+        if ($code === null) {
             throw new NotFoundHttpException();
         }
 

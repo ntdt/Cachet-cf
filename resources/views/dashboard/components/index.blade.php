@@ -8,17 +8,18 @@
         <div class="content-wrapper">
             <div class="header sub-header">
                 <span class="uppercase">
-                    <i class="icons ion-outlet"></i> {{ trans('dashboard.components.components') }}
+                    <i class="icons ion-ios-browsers"></i> {{ trans('dashboard.components.components') }}
                 </span>
                 <a class="btn btn-sm btn-success pull-right" href="{{ route('dashboard.components.add') }}">
                     {{ trans('dashboard.components.add.title') }}
                 </a>
                 <div class="clearfix"></div>
             </div>
+            @include('dashboard.partials.errors')
             <div class="row">
                 <div class="col-sm-12 striped-list" id="component-list">
                     @forelse($components as $component)
-                    <div class="row striped-list-item" data-component-id="{{ $component->id }}">
+                    <div class="row striped-list-item {{ !$component->enabled ? 'bg-warning' : null }}" data-component-id="{{ $component->id }}">
                         <div class="col-xs-6">
                             <h4>
                                 @if($components->count() > 1)
@@ -39,7 +40,7 @@
                         </div>
                     </div>
                     @empty
-                    <div class="list-group-item text-danger">{{ trans('dashboard.components.add.message') }}</div>
+                    <div class="list-group-item"><a href="{{ route('dashboard.components.add') }}">{{ trans('dashboard.components.add.message') }}</a></div>
                     @endforelse
                 </div>
             </div>

@@ -56,9 +56,13 @@ class SendMaintenanceEmailNotificationHandler
      */
     public function handle(MaintenanceWasScheduledEvent $event)
     {
+        if (!$event->incident->notify) {
+            return false;
+        }
+
         $data = AutoPresenter::decorate($event->incident);
 
-        foreach ($this->subscriber->all() as $subscriber) {
+        foreach ($this->subscriber->isVerified()->get() as $subscriber) {
             $mail = [
                 'email'            => $subscriber->email,
                 'subject'          => 'Scheduled maintenance.',
@@ -68,7 +72,6 @@ class SendMaintenanceEmailNotificationHandler
                 'scheduled_at'     => $data->scheduled_at_formatted,
                 'token'            => $subscriber->token,
                 'unsubscribe_link' => route('subscribe.unsubscribe', ['code' => $subscriber->verify_code]),
-                'app_url'          => env('APP_URL'),
             ];
 
             $this->mailer->queue([

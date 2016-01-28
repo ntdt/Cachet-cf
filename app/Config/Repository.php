@@ -46,11 +46,10 @@ class Repository
      *
      * @param string      $name
      * @param string|null $default
-     * @param bool        $checkEnv
      *
      * @return string|null
      */
-    public function get($name, $default = null, $checkEnv = true)
+    public function get($name, $default = null)
     {
         // if we've not loaded the settings, load them now
         if (!$this->settings) {
@@ -60,13 +59,6 @@ class Repository
         // if the setting exists and is not blank, return it
         if (!empty($this->settings[$name])) {
             return $this->settings[$name];
-        }
-
-        // fallback to getenv if allowed to
-        if ($checkEnv) {
-            if ($this->settings[$name] = env(strtoupper($name))) {
-                return $this->settings[$name];
-            }
         }
 
         return $default;

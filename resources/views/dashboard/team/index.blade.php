@@ -6,12 +6,17 @@
             <i class="icon ion-navicon"></i>
         </div>
         <span class="uppercase">
-            <i class="icon icon ion-android-alert"></i> {{ trans('dashboard.team.team') }}
+            <i class="icon ion-ios-people"></i> {{ trans('dashboard.team.team') }}
         </span>
         @if($current_user->isAdmin)
-        <a class="btn btn-sm btn-success pull-right" href="{{ route('dashboard.team.add') }}">
-            {{ trans('dashboard.team.add.title') }}
-        </a>
+        <div class="button-group pull-right">
+            <a class="btn btn-sm btn-success" href="{{ route('dashboard.team.invite') }}">
+                {{ trans('dashboard.team.invite.title') }}
+            </a>
+            <a class="btn btn-sm btn-success" href="{{ route('dashboard.team.add') }}">
+                {{ trans('dashboard.team.add.title') }}
+            </a>
+        </div>
         @endif
         <div class="clearfix"></div>
     </div>

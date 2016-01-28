@@ -15,9 +15,9 @@ use CachetHQ\Cachet\Commands\Incident\RemoveIncidentCommand;
 use CachetHQ\Cachet\Commands\Incident\ReportIncidentCommand;
 use CachetHQ\Cachet\Commands\Incident\UpdateIncidentCommand;
 use CachetHQ\Cachet\Models\Incident;
-use Exception;
 use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -73,9 +73,11 @@ class IncidentController extends AbstractApiController
                 Binput::get('component_id'),
                 Binput::get('component_status'),
                 Binput::get('notify', true),
-                Binput::get('created_at')
+                Binput::get('created_at'),
+                Binput::get('template'),
+                Binput::get('vars')
             ));
-        } catch (Exception $e) {
+        } catch (QueryException $e) {
             throw new BadRequestHttpException();
         }
 
@@ -101,9 +103,11 @@ class IncidentController extends AbstractApiController
                 Binput::get('component_id'),
                 Binput::get('component_status'),
                 Binput::get('notify', true),
-                Binput::get('created_at')
+                Binput::get('created_at'),
+                Binput::get('template'),
+                Binput::get('vars')
             ));
-        } catch (Exception $e) {
+        } catch (QueryException $e) {
             throw new BadRequestHttpException();
         }
 

@@ -51,6 +51,7 @@ return [
         'templates'          => [
             'name'     => 'Navn',
             'template' => 'Skabelon',
+            'twig'     => 'Incident Templates can make use of the <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> templating language.',
         ],
     ],
 
@@ -63,6 +64,7 @@ return [
         'link'        => 'Link',
         'tags'        => 'Tags',
         'tags-help'   => 'Komma adskilt.',
+        'enabled'     => 'Component enabled?',
 
         'groups' => [
             'name' => 'Navn',
@@ -151,6 +153,10 @@ return [
         ],
         '2fa' => [
             'help' => 'Brug Two-Factor login for større sikkerhed på din konto. Du skal så nok installere <a href="https://support.google.com/accounts/answer/1066447?hl=en">Google Authenticator</a> eller lignende på din mobile enked for at kunne logge ind med nøgler fra appen.',
+        ],
+        'team' => [
+            'description' => 'Invite your team members by entering their email addresses here.',
+            'email'       => 'Email #:id',
         ],
     ],
 

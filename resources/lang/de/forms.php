@@ -51,6 +51,7 @@ return [
         'templates'          => [
             'name'     => 'Name',
             'template' => 'Vorlage',
+            'twig'     => 'Incident Templates can make use of the <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> templating language.',
         ],
     ],
 
@@ -63,6 +64,7 @@ return [
         'link'        => 'Link',
         'tags'        => 'Schlagwörter',
         'tags-help'   => 'Durch Kommata trennen.',
+        'enabled'     => 'Component enabled?',
 
         'groups' => [
             'name' => 'Name',
@@ -136,6 +138,10 @@ return [
         'gravatar'       => 'Change your profile picture at Gravatar.',
         '2fa'            => [
             'help' => 'Die Zwei-Faktor-Authentifizierung erhöht die Sicherheit Ihres Kontos. Sie benötigen <a href="https://support.google.com/accounts/answer/1066447?hl=en">Google Authenticator</a> oder eine ähnliche App auf Ihrem Mobilgerät. Beim Anmelden werden sie aufgefordert, einen Token einzugeben, der von der App generiert wird.',
+        ],
+        'team' => [
+            'description' => 'Invite your team members by entering their email addresses here.',
+            'email'       => 'Email #:id',
         ],
     ],
 

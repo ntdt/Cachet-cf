@@ -6,7 +6,7 @@
             <i class="icon ion-navicon"></i>
         </div>
         <span class="uppercase">
-            <i class="icons ion-outlet"></i> {{ trans('dashboard.components.components') }}
+            <i class="icons ion-ios-browsers"></i> {{ trans('dashboard.components.components') }}
         </span>
         &gt; <small>{{ trans('dashboard.components.edit.title') }}</small>
     </div>
@@ -55,6 +55,13 @@
                             <label>{{ trans('forms.components.tags') }}</label>
                             <input name="component[tags]" class="form-control" value="{{ $component->tagsList }}">
                             <span class="help-block">{{ trans('forms.components.tags-help') }}</span>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="hidden" value="0" name="component[enabled]">
+                                <input type="checkbox" value="1" name="component[enabled]" {{ $component->enabled ? "checked" : null }}>
+                                {{ trans('forms.components.enabled') }}
+                            </label>
                         </div>
                     </fieldset>
 

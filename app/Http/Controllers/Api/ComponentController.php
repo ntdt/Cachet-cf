@@ -16,9 +16,9 @@ use CachetHQ\Cachet\Commands\Component\RemoveComponentCommand;
 use CachetHQ\Cachet\Commands\Component\UpdateComponentCommand;
 use CachetHQ\Cachet\Models\Component;
 use CachetHQ\Cachet\Models\Tag;
-use Exception;
 use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -31,14 +31,19 @@ class ComponentController extends AbstractApiController
      * Get all components.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Illuminate\Contracts\Auth\Guard          $auth
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getComponents(Request $request)
+    public function getComponents(Request $request, Guard $auth)
     {
-        $components = Component::paginate(Binput::get('per_page', 20));
+        if ($auth->check()) {
+            $components = Component::whereRaw('1 = 1');
+        } else {
+            $components = Component::enabled();
+        }
 
-        return $this->paginator($components, $request);
+        return $this->paginator($components->paginate(Binput::get('per_page', 20)), $request);
     }
 
     /**
@@ -56,11 +61,9 @@ class ComponentController extends AbstractApiController
     /**
      * Create a new component.
      *
-     * @param \Illuminate\Contracts\Auth\Guard $auth
-     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postComponents(Guard $auth)
+    public function postComponents()
     {
         try {
             $component = $this->dispatch(new AddComponentCommand(
@@ -69,9 +72,10 @@ class ComponentController extends AbstractApiController
                 Binput::get('status'),
                 Binput::get('link'),
                 Binput::get('order'),
-                Binput::get('group_id')
+                Binput::get('group_id'),
+                (bool) Binput::get('enabled', true)
             ));
-        } catch (Exception $e) {
+        } catch (QueryException $e) {
             throw new BadRequestHttpException();
         }
 
@@ -109,9 +113,10 @@ class ComponentController extends AbstractApiController
                 Binput::get('status'),
                 Binput::get('link'),
                 Binput::get('order'),
-                Binput::get('group_id')
+                Binput::get('group_id'),
+                (bool) Binput::get('enabled', true)
             ));
-        } catch (Exception $e) {
+        } catch (QueryException $e) {
             throw new BadRequestHttpException();
         }
 

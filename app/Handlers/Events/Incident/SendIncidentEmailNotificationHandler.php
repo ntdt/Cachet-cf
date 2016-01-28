@@ -56,12 +56,16 @@ class SendIncidentEmailNotificationHandler
      */
     public function handle(IncidentWasReportedEvent $event)
     {
+        if (!$event->incident->notify) {
+            return false;
+        }
+
         $incident = AutoPresenter::decorate($event->incident);
         $component = AutoPresenter::decorate($event->incident->component);
 
         // Only send emails for public incidents.
         if ($event->incident->visible === 1) {
-            foreach ($this->subscriber->all() as $subscriber) {
+            foreach ($this->subscriber->isVerified()->get() as $subscriber) {
                 $mail = [
                     'email'            => $subscriber->email,
                     'subject'          => 'New incident reported.',
@@ -72,7 +76,6 @@ class SendIncidentEmailNotificationHandler
                     'text_content'     => $incident->message,
                     'token'            => $subscriber->token,
                     'unsubscribe_link' => route('subscribe.unsubscribe', ['code' => $subscriber->verify_code]),
-                    'app_url'          => env('APP_URL'),
                 ];
 
                 $this->mailer->queue([

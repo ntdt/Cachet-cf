@@ -30,12 +30,17 @@ return [
             'success' => 'Incident updated.',
             'failure' => 'Something went wrong with the incident.',
         ],
+        'delete' => [
+            'success' => 'The incident has been deleted and will not show on your status page.',
+            'failure' => 'The incident could not be deleted. Please try again.',
+        ],
 
         // Incident templates
         'templates' => [
             'title' => 'Incident Templates',
             'add'   => [
                 'title'   => 'Create an Incident Template',
+                'message' => 'You should add an Incident Template.',
                 'success' => 'Template created.',
                 'failure' => 'Something went wrong with the incident template.',
             ],
@@ -44,12 +49,17 @@ return [
                 'success' => 'Template has been updated!',
                 'failure' => 'Something went wrong updating the incident template',
             ],
+            'delete' => [
+                'success' => 'The tmplate has been deleted.',
+                'failure' => 'The template could not be deleted. Please try again.',
+            ],
         ],
     ],
 
     // Incident Maintenance
     'schedule' => [
         'schedule'     => 'Scheduled Maintenance',
+        'logged'       => '{0} There are no schedules, good work.|You have logged one schedule.|You have reported <strong>:count</strong> schedules.',
         'scheduled_at' => 'Scheduled at :timestamp',
         'add'          => [
             'title'   => 'Add Scheduled Maintenance',
@@ -83,6 +93,10 @@ return [
             'success' => 'Component updated.',
             'failure' => 'Something went wrong with the component.',
         ],
+        'delete' => [
+            'success' => 'Component deleted.',
+            'failure' => 'The Component could not be deleted. Please try again.',
+        ],
 
         // Component groups
         'groups' => [
@@ -98,6 +112,10 @@ return [
                 'success' => 'Component group updated.',
                 'failure' => 'Something went wrong with the component group.',
             ],
+            'delete' => [
+                'success' => 'Component Group deleted.',
+                'failure' => 'The Component Group could not be deleted. Please try again.',
+            ],
         ],
     ],
 
@@ -106,6 +124,7 @@ return [
         'metrics' => 'Metrics',
         'add'     => [
             'title'   => 'Create a Metric',
+            'message' => 'You should add a Metric.',
             'success' => 'Metric created.',
             'failure' => 'Something went wrong with the metric.',
         ],
@@ -113,6 +132,10 @@ return [
             'title'   => 'Edit a Metric',
             'success' => 'Metric updated.',
             'failure' => 'Something went wrong with the metric.',
+        ],
+        'delete' => [
+            'success' => 'The metric has been deleted and will not show on your status page.',
+            'failure' => 'The metric could not be deleted. Please try again.',
         ],
     ],
     // Subscribers
@@ -142,7 +165,7 @@ return [
         'add'         => [
             'title'   => 'Add a New Team Member',
             'success' => 'Team member added.',
-            'failure' => 'Something went wrong with the component.',
+            'failure' => 'Something went wrong with the user.',
         ],
         'edit' => [
             'title'   => 'Update Profile',
@@ -152,6 +175,11 @@ return [
         'delete' => [
             'success' => 'User deleted.',
             'failure' => 'Something went wrong when deleting this user.',
+        ],
+        'invite' => [
+            'title'   => 'Invite a New Team Member',
+            'success' => 'The users invited.',
+            'failure' => 'Something went wrong with the invite.',
         ],
     ],
 
@@ -207,7 +235,7 @@ return [
 
     // Welcome modal
     'welcome' => [
-        'welcome' => 'Welcome to Cachet',
+        'welcome' => 'Welcome to your status page!',
         'message' => 'Your status page is almost ready! You might want to configure these extra settings',
         'close'   => 'Just go straight to my dashboard',
         'steps'   => [

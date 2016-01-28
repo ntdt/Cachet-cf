@@ -11,7 +11,6 @@
 
 namespace CachetHQ\Cachet\Composers;
 
-use CachetHQ\Cachet\Facades\Setting;
 use CachetHQ\Cachet\Models\Component;
 use CachetHQ\Cachet\Models\ComponentGroup;
 use CachetHQ\Cachet\Models\Incident;
@@ -35,7 +34,7 @@ class StatusPageComposer
             'favicon'       => 'favicon-high-alert',
         ];
 
-        if (Component::notStatus(1)->count() === 0) {
+        if (Component::enabled()->notStatus(1)->count() === 0) {
             // If all our components are ok, do we have any non-fixed incidents?
             $incidents = Incident::notScheduled()->orderBy('created_at', 'desc')->get();
             $incidentCount = $incidents->count();
@@ -48,7 +47,7 @@ class StatusPageComposer
                 ];
             }
         } else {
-            if (Component::whereIn('status', [2, 3])->count() > 0) {
+            if (Component::enabled()->whereIn('status', [2, 3])->count() > 0) {
                 $withData['favicon'] = 'favicon-medium-alert';
             }
         }
@@ -57,14 +56,13 @@ class StatusPageComposer
         $scheduledMaintenance = Incident::scheduled()->orderBy('scheduled_at')->get();
 
         // Component & Component Group lists.
-        $usedComponentGroups = Component::where('group_id', '>', 0)->groupBy('group_id')->lists('group_id');
+        $usedComponentGroups = Component::enabled()->where('group_id', '>', 0)->groupBy('group_id')->lists('group_id');
         $componentGroups = ComponentGroup::whereIn('id', $usedComponentGroups)->orderBy('order')->get();
-        $ungroupedComponents = Component::where('group_id', 0)->orderBy('order')->orderBy('created_at')->get();
+        $ungroupedComponents = Component::enabled()->where('group_id', 0)->orderBy('order')->orderBy('created_at')->get();
 
         $view->with($withData)
             ->withComponentGroups($componentGroups)
             ->withUngroupedComponents($ungroupedComponents)
-            ->withScheduledMaintenance($scheduledMaintenance)
-            ->withPageTitle(Setting::get('app_name'));
+            ->withScheduledMaintenance($scheduledMaintenance);
     }
 }

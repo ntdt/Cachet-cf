@@ -12,14 +12,35 @@
 namespace CachetHQ\Cachet\Handlers\Commands\Incident;
 
 use CachetHQ\Cachet\Commands\Incident\ReportIncidentCommand;
+use CachetHQ\Cachet\Dates\DateFactory;
 use CachetHQ\Cachet\Events\Incident\IncidentWasReportedEvent;
 use CachetHQ\Cachet\Models\Component;
 use CachetHQ\Cachet\Models\Incident;
-use Illuminate\Support\Facades\Config;
-use Jenssegers\Date\Date;
+use CachetHQ\Cachet\Models\IncidentTemplate;
+use Twig_Loader_String;
+use TwigBridge\Facade\Twig;
 
 class ReportIncidentCommandHandler
 {
+    /**
+     * The date factory instance.
+     *
+     * @var \CachetHQ\Cachet\Dates\DateFactory
+     */
+    protected $dates;
+
+    /**
+     * Create a new report incident command handler instance.
+     *
+     * @param \CachetHQ\Cachet\Dates\DateFactory $dates
+     *
+     * @return void
+     */
+    public function __construct(DateFactory $dates)
+    {
+        $this->dates = $dates;
+    }
+
     /**
      * Handle the report incident command.
      *
@@ -29,6 +50,10 @@ class ReportIncidentCommandHandler
      */
     public function handle(ReportIncidentCommand $command)
     {
+        if ($command->template) {
+            $command->message = $this->parseIncidentTemplate($command->template, $command->template_vars);
+        }
+
         $data = [
             'name'    => $command->name,
             'status'  => $command->status,
@@ -43,7 +68,7 @@ class ReportIncidentCommandHandler
 
         // The incident occurred at a different time.
         if ($command->incident_date) {
-            $incidentDate = Date::createFromFormat('d/m/Y H:i', $command->incident_date, config('cachet.timezone'))->setTimezone(Config::get('app.timezone'));
+            $incidentDate = $this->dates->createNormalized('d/m/Y H:i', $command->incident_date);
 
             $data['created_at'] = $incidentDate;
             $data['updated_at'] = $incidentDate;
@@ -59,11 +84,26 @@ class ReportIncidentCommandHandler
             ]);
         }
 
-        // Notify subscribers.
-        if ($command->notify) {
-            event(new IncidentWasReportedEvent($incident));
-        }
+        $incident->notify = (bool) $command->notify;
+
+        event(new IncidentWasReportedEvent($incident));
 
         return $incident;
+    }
+
+    /**
+     * Compiles an incident template into an incident message.
+     *
+     * @param string $templateSlug
+     * @param array  $vars
+     *
+     * @return string
+     */
+    protected function parseIncidentTemplate($templateSlug, $vars)
+    {
+        Twig::setLoader(new Twig_Loader_String());
+        $template = IncidentTemplate::forSlug($templateSlug)->first();
+
+        return Twig::render($template->template, $vars);
     }
 }

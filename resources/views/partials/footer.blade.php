@@ -2,8 +2,8 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-5">
-                @if(Setting::get('show_support'))
-                <p>{!! trans('cachet.powered_by', ['app' => Setting::get('app_name')]) !!}</p>
+                @if($show_support)
+                <p>{!! trans('cachet.powered_by', ['app' => $app_name]) !!}</p>
                 @endif
             </div>
             <div class="col-sm-7">
@@ -24,7 +24,7 @@
                     <li>
                         <a class="btn btn-link" href="{{ route('feed.atom') }}">{{ trans('cachet.atom-feed') }}</a>
                     </li>
-                    @if($subscribers_enabled)
+                    @if(subscribers_enabled())
                     <li>
                         <a class="btn btn-success btn-outline" href="{{ route('subscribe.subscribe') }}">{{ trans('cachet.subscriber.button') }}</a>
                     </li>
