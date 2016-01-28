@@ -5,6 +5,7 @@ sudo: false
 install:
 - composer config --global github-oauth.github.com $GITHUB_TOKEN_COMPOSER
 - travis_retry composer install --no-interaction --no-scripts
+- npm install -g npm@latest
 - npm install
 - node_modules/.bin/bower install
 - node_modules/.bin/gulp
