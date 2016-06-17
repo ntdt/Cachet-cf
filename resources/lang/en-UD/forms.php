@@ -27,12 +27,14 @@ return [
 
     // Login form fields
     'login' => [
+        'login'         => 'crwdns651:0crwdne651:0',
         'email'         => 'crwdns217:0crwdne217:0',
         'password'      => 'crwdns381:0crwdne381:0',
         '2fauth'        => 'crwdns382:0crwdne382:0',
-        'invalid'       => 'crwdns383:0crwdne383:0',
+        'invalid'       => 'crwdns652:0crwdne652:0',
         'invalid-token' => 'crwdns384:0crwdne384:0',
         'cookies'       => 'crwdns480:0crwdne480:0',
+        'rate-limit'    => 'crwdns781:0crwdne781:0',
     ],
 
     // Incidents form fields
@@ -45,12 +47,13 @@ return [
         'scheduled_at'       => 'crwdns464:0crwdne464:0',
         'incident_time'      => 'crwdns481:0crwdne481:0',
         'notify_subscribers' => 'crwdns585:0crwdne585:0',
-        'visibility'         => 'crwdns482:0crwdne482:0',
+        'visibility'         => 'crwdns711:0crwdne711:0',
         'public'             => 'crwdns483:0crwdne483:0',
         'logged_in_only'     => 'crwdns586:0crwdne586:0',
         'templates'          => [
             'name'     => 'crwdns389:0crwdne389:0',
             'template' => 'crwdns390:0crwdne390:0',
+            'twig'     => 'crwdns653:0crwdne653:0',
         ],
     ],
 
@@ -66,7 +69,11 @@ return [
         'enabled'     => 'crwdns587:0crwdne587:0',
 
         'groups' => [
-            'name' => 'crwdns397:0crwdne397:0',
+            'name'               => 'crwdns397:0crwdne397:0',
+            'collapsing'         => 'crwdns712:0crwdne712:0',
+            'visible'            => 'crwdns713:0crwdne713:0',
+            'collapsed'          => 'crwdns714:0crwdne714:0',
+            'collapsed_incident' => 'crwdns715:0crwdne715:0',
         ],
     ],
 
@@ -82,6 +89,8 @@ return [
         'type_sum'         => 'crwdns476:0crwdne476:0',
         'type_avg'         => 'crwdns477:0crwdne477:0',
         'places'           => 'crwdns590:0crwdne590:0',
+        'default_view'     => 'crwdns655:0crwdne655:0',
+        'threshold'        => 'crwdns725:0crwdne725:0',
 
         'points' => [
             'value' => 'crwdns471:0crwdne471:0',
@@ -92,14 +101,15 @@ return [
     'settings' => [
         /// Application setup
         'app-setup' => [
-            'site-name'              => 'crwdns233:0crwdne233:0',
+            'site-name'              => 'crwdns716:0crwdne716:0',
             'site-url'               => 'crwdns398:0crwdne398:0',
             'display-graphs'         => 'crwdns472:0crwdne472:0',
             'about-this-page'        => 'crwdns402:0crwdne402:0',
             'days-of-incidents'      => 'crwdns403:0crwdne403:0',
-            'banner'                 => 'crwdns404:0crwdne404:0',
+            'banner'                 => 'crwdns717:0crwdne717:0',
             'banner-help'            => 'crwdns405:0crwdne405:0',
             'subscribers'            => 'crwdns513:0crwdne513:0',
+            'automatic_localization' => 'crwdns726:0crwdne726:0',
         ],
         'analytics' => [
             'analytics_google'       => 'crwdns591:0crwdne591:0',
@@ -118,15 +128,15 @@ return [
             'allowed-domains-help' => 'crwdns408:0crwdne408:0',
         ],
         'stylesheet' => [
-            'custom-css' => 'crwdns409:0crwdne409:0',
+            'custom-css' => 'crwdns718:0crwdne718:0',
         ],
         'theme' => [
-            'background-color'        => 'crwdns410:0crwdne410:0',
+            'background-color'        => 'crwdns719:0crwdne719:0',
             'background-fills'        => 'crwdns600:0crwdne600:0',
             'banner-background-color' => 'crwdns601:0crwdne601:0',
             'banner-padding'          => 'crwdns602:0crwdne602:0',
             'fullwidth-banner'        => 'crwdns603:0crwdne603:0',
-            'text-color'              => 'crwdns411:0crwdne411:0',
+            'text-color'              => 'crwdns720:0crwdne720:0',
             'dashboard-login'         => 'crwdns604:0crwdne604:0',
             'reds'                    => 'crwdns605:0crwdne605:0',
             'blues'                   => 'crwdns606:0crwdne606:0',

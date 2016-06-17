@@ -3,10 +3,10 @@
 @section('content')
     <div class="header">
         <div class="sidebar-toggler visible-xs">
-            <i class="icon ion-navicon"></i>
+            <i class="ion ion-navicon"></i>
         </div>
         <span class="uppercase">
-            <i class="icon ion-person"></i> {{ trans('dashboard.subscribers.subscribers') }}
+            <i class="ion ion-ios-email-outline"></i> {{ trans('dashboard.subscribers.subscribers') }}
         </span>
     </div>
     <div class="content-wrapper">
@@ -18,12 +18,16 @@
                 <fieldset>
                 <div class="form-group">
                     <label>{{ trans('forms.user.email') }}</label>
-                    <input type="email" class="form-control" name="email" value="{{ Input::old('email') }}" required>
+                    <textarea rows="5" class="form-control" name="email" required>{{ Binput::old('email') }}</textarea>
+                    <span class="help-block">{{ trans('dashboard.subscribers.add.help') }}</p>
                 </div>
                 </fieldset>
 
                 <div class="form-group">
-                <button type="submit" class="btn btn-success">{{ trans('forms.add') }}</button>
+                    <div class='btn-group'>
+                        <button type="submit" class="btn btn-success">{{ trans('forms.add') }}</button>
+                        <a class="btn btn-default" href="{{ route('dashboard.subscribers.index') }}">{{ trans('forms.cancel') }}</a>
+                    </div>
                 </div>
             </form>
             </div>

@@ -24,13 +24,12 @@ class StatusPageRoutes
      * Define the status page routes.
      *
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
+     * @return void
      */
     public function map(Registrar $router)
     {
-        $router->group([
-            'middleware' => ['app.hasSetting', 'localize'],
-            'setting'    => 'app_name',
-        ], function ($router) {
+        $router->group(['middleware' => ['web', 'ready', 'localize']], function (Registrar $router) {
             $router->get('/', [
                 'as'   => 'status-page',
                 'uses' => 'StatusPageController@showIndex',
@@ -40,6 +39,13 @@ class StatusPageRoutes
                 'as'   => 'incident',
                 'uses' => 'StatusPageController@showIncident',
             ]);
+
+            $router->get('metrics/{metric}', [
+                'as'   => 'metrics',
+                'uses' => 'StatusPageController@getMetrics',
+            ]);
+
+            $router->get('component/{component}/shield', 'StatusPageController@showComponentBadge');
         });
     }
 }

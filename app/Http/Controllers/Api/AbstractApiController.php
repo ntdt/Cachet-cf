@@ -161,19 +161,11 @@ abstract class AbstractApiController extends Controller
 
         $items = $paginator->getCollection();
 
-        if ($sortBy = $request->get('sort')) {
-            $direction = $request->has('order') && $request->get('order') == 'desc';
-
-            $items = $items->sortBy($sortBy, SORT_REGULAR, $direction);
-        }
-
         return $this->setMetaData($pagination)->setData(AutoPresenter::decorate($items->values()))->respond();
     }
 
     /**
      * Respond with a no content response.
-     *
-     * @param string $message
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -189,6 +181,8 @@ abstract class AbstractApiController extends Controller
      */
     protected function respond()
     {
+        $response = [];
+
         if (!empty($this->meta)) {
             $response['meta'] = $this->meta;
         }

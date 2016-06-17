@@ -24,34 +24,30 @@ class ApiRoutes
      * Define the api routes.
      *
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
+     * @return void
      */
     public function map(Registrar $router)
     {
-        $router->group([
-            'namespace'  => 'Api',
-            'prefix'     => 'api/v1',
-            'middleware' => ['accept:application/json', 'timezone', 'auth.api.optional'],
-        ], function ($router) {
-            // General
-            $router->get('ping', 'GeneralController@ping');
+        $router->group(['namespace' => 'Api', 'prefix' => 'api/v1', 'middleware' => ['api']], function (Registrar $router) {
+            $router->group(['middleware' => ['auth.api']], function (Registrar $router) {
+                $router->get('ping', 'GeneralController@ping');
+                $router->get('version', 'GeneralController@version');
 
-            // Components
-            $router->get('components', 'ComponentController@getComponents');
-            $router->get('components/groups', 'ComponentGroupController@getGroups');
-            $router->get('components/groups/{component_group}', 'ComponentGroupController@getGroup');
-            $router->get('components/{component}', 'ComponentController@getComponent');
+                $router->get('components', 'ComponentController@getComponents');
+                $router->get('components/groups', 'ComponentGroupController@getGroups');
+                $router->get('components/groups/{component_group}', 'ComponentGroupController@getGroup');
+                $router->get('components/{component}', 'ComponentController@getComponent');
 
-            // Incidents
-            $router->get('incidents', 'IncidentController@getIncidents');
-            $router->get('incidents/{incident}', 'IncidentController@getIncident');
+                $router->get('incidents', 'IncidentController@getIncidents');
+                $router->get('incidents/{incident}', 'IncidentController@getIncident');
 
-            // Metrics
-            $router->get('metrics', 'MetricController@getMetrics');
-            $router->get('metrics/{metric}', 'MetricController@getMetric');
-            $router->get('metrics/{metric}/points', 'MetricController@getMetricPoints');
+                $router->get('metrics', 'MetricController@getMetrics');
+                $router->get('metrics/{metric}', 'MetricController@getMetric');
+                $router->get('metrics/{metric}/points', 'MetricController@getMetricPoints');
+            });
 
-            // Authorization Required
-            $router->group(['middleware' => 'auth.api'], function ($router) {
+            $router->group(['middleware' => ['auth.api:true']], function (Registrar $router) {
                 $router->get('subscribers', 'SubscriberController@getSubscribers');
 
                 $router->post('components', 'ComponentController@postComponents');
@@ -73,6 +69,7 @@ class ApiRoutes
                 $router->delete('metrics/{metric}', 'MetricController@deleteMetric');
                 $router->delete('metrics/{metric}/points/{metric_point}', 'MetricPointController@deleteMetricPoint');
                 $router->delete('subscribers/{subscriber}', 'SubscriberController@deleteSubscriber');
+                $router->delete('subscriptions/{subscription}', 'SubscriberController@deleteSubscription');
             });
         });
     }

@@ -3,10 +3,10 @@
 @section('content')
     <div class="header">
         <div class="sidebar-toggler visible-xs">
-            <i class="icon ion-navicon"></i>
+            <i class="ion ion-navicon"></i>
         </div>
         <span class="uppercase">
-            <i class="ion ion-person"></i> {{ trans('dashboard.team.member') }}
+            <i class="ion ion-ios-people-outline"></i> {{ trans('dashboard.team.member') }}
         </span>
     </div>
     <div class="content-wrapper">
@@ -29,6 +29,15 @@
                             <input type="password" class="form-control password-strength" name="password" value="" {{ !$current_user->isAdmin ? "disabled": "" }}>
                             <div class="strengthify-wrapper"></div>
                         </div>
+                        @if($current_user->isAdmin)
+                        <div class="form-group">
+                            <label>{{ trans('forms.user.user_level') }}</label>
+                            <select name="level" class="form-control">
+                                <option value="2" {{ $user->level === 2 ? "selected" : null }}>{{ trans('forms.user.levels.user') }}</option>
+                                <option value="1" {{ $user->level === 1 ? "selected" : null }}>{{ trans('forms.user.levels.admin') }}</option>
+                            </select>
+                        </div>
+                        @endif
                     </fieldset>
 
                     <div class="form-group">

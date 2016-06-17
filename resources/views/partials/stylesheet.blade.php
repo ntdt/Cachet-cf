@@ -6,6 +6,7 @@ body.status-page {
     padding-top: 0;
     @endif
 }
+p, strong { color: {{ $theme_text_color }} !important; }
 .reds { color: {{ $theme_reds }} !important; }
 .blues { color: {{ $theme_blues }} !important; }
 .greens { color: {{ $theme_greens }} !important; }
@@ -109,9 +110,13 @@ body.status-page {
     background-color: {{ $theme_background_fills }};
     border-color: {{ color_darken($theme_background_fills, -0.1) }};
 }
+.panel.panel-message:before {
+    border-left-color: {{ $theme_background_fills }} !important;
+    border-right-color: {{ $theme_background_fills }} !important;
+}
 .panel.panel-message:after {
-    border-left-color: {{ $theme_background_fills }};
-    border-right-color: {{ $theme_background_fills }};
+    border-left-color: {{ $theme_background_fills }} !important;
+    border-right-color: {{ $theme_background_fills }} !important;
 }
 .footer a {
     color: {{ $theme_text_color }};

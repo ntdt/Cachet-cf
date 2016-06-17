@@ -11,12 +11,14 @@
 
 namespace CachetHQ\Cachet\Presenters;
 
-use CachetHQ\Cachet\Facades\Setting;
+use CachetHQ\Cachet\Dates\DateFactory;
 use CachetHQ\Cachet\Presenters\Traits\TimestampsTrait;
 use GrahamCampbell\Markdown\Facades\Markdown;
-use Jenssegers\Date\Date;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Facades\Config;
+use McCool\LaravelAutoPresenter\BasePresenter;
 
-class IncidentPresenter extends AbstractPresenter
+class IncidentPresenter extends BasePresenter implements Arrayable
 {
     use TimestampsTrait;
 
@@ -37,9 +39,7 @@ class IncidentPresenter extends AbstractPresenter
      */
     public function created_at_diff()
     {
-        return (new Date($this->wrappedObject->created_at))
-            ->setTimezone($this->setting->get('app_timezone'))
-            ->diffForHumans();
+        return app(DateFactory::class)->make($this->wrappedObject->created_at)->diffForHumans();
     }
 
     /**
@@ -49,9 +49,7 @@ class IncidentPresenter extends AbstractPresenter
      */
     public function created_at_formatted()
     {
-        return ucfirst((new Date($this->wrappedObject->created_at))
-            ->setTimezone($this->setting->get('app_timezone'))
-            ->format($this->setting->get('incident_date_format', 'l jS F Y H:i:s')));
+        return ucfirst(app(DateFactory::class)->make($this->wrappedObject->created_at)->format(Config::get('setting.incident_date_format', 'l jS F Y H:i:s')));
     }
 
     /**
@@ -61,7 +59,7 @@ class IncidentPresenter extends AbstractPresenter
      */
     public function created_at_datetimepicker()
     {
-        return $this->wrappedObject->created_at->setTimezone($this->setting->get('app_timezone'))->format('d/m/Y H:i');
+        return app(DateFactory::class)->make($this->wrappedObject->created_at)->format('d/m/Y H:i');
     }
 
     /**
@@ -71,7 +69,7 @@ class IncidentPresenter extends AbstractPresenter
      */
     public function created_at_iso()
     {
-        return $this->wrappedObject->created_at->setTimezone($this->setting->get('app_timezone'))->toISO8601String();
+        return app(DateFactory::class)->make($this->wrappedObject->created_at)->toISO8601String();
     }
 
     /**
@@ -81,8 +79,7 @@ class IncidentPresenter extends AbstractPresenter
      */
     public function scheduled_at()
     {
-        return (new Date($this->wrappedObject->scheduled_at))
-            ->setTimezone($this->setting->get('app_timezone'))->toDateTimeString();
+        return app(DateFactory::class)->make($this->wrappedObject->scheduled_at)->toDateTimeString();
     }
 
     /**
@@ -92,21 +89,17 @@ class IncidentPresenter extends AbstractPresenter
      */
     public function scheduled_at_diff()
     {
-        return (new Date($this->wrappedObject->scheduled_at))
-            ->setTimezone($this->setting->get('app_timezone'))
-            ->diffForHumans();
+        return app(DateFactory::class)->make($this->wrappedObject->scheduled_at)->diffForHumans();
     }
 
     /**
-     * Present formated date time.
+     * Present formatted date time.
      *
      * @return string
      */
     public function scheduled_at_formatted()
     {
-        return ucfirst((new Date($this->wrappedObject->scheduled_at))
-            ->setTimezone($this->setting->get('app_timezone'))
-            ->format($this->setting->get('incident_date_format', 'l jS F Y H:i:s')));
+        return ucfirst(app(DateFactory::class)->make($this->wrappedObject->scheduled_at)->format(Config::get('setting.incident_date_format', 'l jS F Y H:i:s')));
     }
 
     /**
@@ -116,7 +109,7 @@ class IncidentPresenter extends AbstractPresenter
      */
     public function scheduled_at_iso()
     {
-        return $this->wrappedObject->scheduled_at->setTimezone($this->setting->get('app_timezone'))->toISO8601String();
+        return app(DateFactory::class)->make($this->wrappedObject->scheduled_at)->toISO8601String();
     }
 
     /**
@@ -126,7 +119,7 @@ class IncidentPresenter extends AbstractPresenter
      */
     public function scheduled_at_datetimepicker()
     {
-        return $this->wrappedObject->scheduled_at->setTimezone($this->setting->get('app_timezone'))->format('d/m/Y H:i');
+        return app(DateFactory::class)->make($this->wrappedObject->scheduled_at)->format('d/m/Y H:i');
     }
 
     /**
@@ -138,9 +131,9 @@ class IncidentPresenter extends AbstractPresenter
     {
         if ($this->wrappedObject->is_scheduled) {
             return $this->scheduled_at_formatted;
-        } else {
-            return $this->created_at_formatted;
         }
+
+        return $this->created_at_formatted;
     }
 
     /**
@@ -152,9 +145,9 @@ class IncidentPresenter extends AbstractPresenter
     {
         if ($this->wrappedObject->is_scheduled) {
             return $this->scheduled_at_iso;
-        } else {
-            return $this->created_at_iso;
         }
+
+        return $this->created_at_iso;
     }
 
     /**
@@ -181,6 +174,16 @@ class IncidentPresenter extends AbstractPresenter
     }
 
     /**
+     * Returns a human readable version of the status.
+     *
+     * @return string
+     */
+    public function human_status()
+    {
+        return trans('cachet.incidents.status.'.$this->wrappedObject->status);
+    }
+
+    /**
      * Convert the presenter instance to an array.
      *
      * @return string[]
@@ -188,6 +191,7 @@ class IncidentPresenter extends AbstractPresenter
     public function toArray()
     {
         return array_merge($this->wrappedObject->toArray(), [
+            'human_status' => $this->human_status(),
             'scheduled_at' => $this->scheduled_at(),
             'created_at'   => $this->created_at(),
             'updated_at'   => $this->updated_at(),

@@ -21,7 +21,7 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label>{{ trans('forms.settings.security.allowed-domains') }}</label>
-                                        <textarea class="form-control" name="allowed_domains" rows="5" placeholder="http://cachet.io, http://cachet.herokuapp.com">{{ Setting::get('allowed_domains') }}</textarea>
+                                        <textarea class="form-control" name="allowed_domains" rows="5" placeholder="http://cachet.io, http://cachet.herokuapp.com">{{ Config::get('setting.allowed_domains') }}</textarea>
                                         <div class="help-block">
                                             {{ trans('forms.settings.security.allowed-domains-help') }}
                                         </div>
@@ -47,7 +47,7 @@
                                 @foreach($unsecure_users as $user)
                                 <div class="list-group-item">
                                     <strong>{{ $user->username }}</strong>
-                                    <span class="label label-danger pull-right"><i class="ion-ios-unlocked"></i></span>
+                                    <span class="label label-danger pull-right"><i class="ion ion-ios-unlocked"></i></span>
                                 </div>
                                 @endforeach
                             </div>

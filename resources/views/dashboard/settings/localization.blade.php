@@ -22,11 +22,11 @@
                                     <div class="form-group">
                                         <label>{{ trans('forms.settings.localization.site-timezone') }}</label>
                                         <select name="app_timezone" class="form-control" required>
-                                            <option value="">Select Timezone</option>
+                                            <option disabled>Select Timezone</option>
                                             @foreach($timezones as $region => $list)
                                                 <optgroup label="{{ $region }}">
                                                     @foreach($list as $timezone => $name)
-                                                        <option value="{{ $timezone }}" @if(Setting::get('app_timezone') == $timezone) selected @endif>
+                                                        <option value="{{ $timezone }}" @if(Config::get('cachet.timezone') == $timezone) selected @endif>
                                                             {{ $name }}
                                                         </option>
                                                     @endforeach
@@ -41,9 +41,9 @@
                                     <div class="form-group">
                                         <label>
                                             {{ trans('forms.settings.localization.date-format') }}
-                                            <a href="http://php.net/manual/en/function.date.php" target="_blank"><i class="icon ion-help-circled"></i></a>
+                                            <a href="http://php.net/manual/en/function.date.php" target="_blank"><i class="ion ion-help-circled"></i></a>
                                         </label>
-                                        <input type="text" class="form-control" name="date_format" value="{{ Setting::get('date_format') ?: 'l jS F Y' }}">
+                                        <input type="text" class="form-control" name="date_format" value="{{ Config::get('setting.date_format') ?: 'l jS F Y' }}">
                                     </div>
                                 </div>
                             </div>
@@ -52,9 +52,9 @@
                                     <div class="form-group">
                                         <label>
                                             {{ trans('forms.settings.localization.incident-date-format') }}
-                                            <a href="http://php.net/manual/en/function.date.php" target="_blank"><i class="icon ion-help-circled"></i></a>
+                                            <a href="http://php.net/manual/en/function.date.php" target="_blank"><i class="ion ion-help-circled"></i></a>
                                         </label>
-                                        <input type="text" class="form-control" name="incident_date_format" value="{{ Setting::get('incident_date_format') ?: 'l jS F Y H:i:s' }}">
+                                        <input type="text" class="form-control" name="incident_date_format" value="{{ Config::get('setting.incident_date_format') ?: 'l jS F Y H:i:s' }}">
                                     </div>
                                 </div>
                             </div>
@@ -64,12 +64,23 @@
                                         <label>{{ trans('forms.settings.localization.site-locale') }}</label>
                                         <select name="app_locale" class="form-control" required>
                                             <option value="">Select Language</option>
-                                            @foreach($langs as $lang => $name)
-                                                <option value="{{ $lang }}" @if($app_locale === $lang) selected @endif>
-                                                    {{ $name }}
+                                            @foreach($langs as $key => $lang)
+                                                <option value="{{ $key }}" @if($app_locale === $key) selected @endif>
+                                                    {{ $lang['name'] }}
                                                 </option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="hidden" value="0" name="automatic_localization">
+                                            <input type="checkbox" value="1" name="automatic_localization" {{ $automatic_localization ? 'checked' : null }}>
+                                            {{ trans('forms.settings.app-setup.automatic_localization') }}
+                                        </label>
                                     </div>
                                 </div>
                             </div>

@@ -23,12 +23,16 @@ return [
         'add'                      => [
             'title'   => 'Ajouter un incident',
             'success' => 'Incident ajouté.',
-            'failure' => 'Quelque chose n\'allait pas avec l\'incident.',
+            'failure' => 'Une erreur s\'est produite en ajoutant l\'incident, veuillez réessayer.',
         ],
         'edit' => [
             'title'   => 'Modifier un incident',
             'success' => 'Incident mis à jour.',
-            'failure' => 'Une erreur est survenue avec l\'incident.',
+            'failure' => 'Une erreur s\'est produite en modifiant l\'incident, veuillez réessayer.',
+        ],
+        'delete' => [
+            'success' => 'L\'incident a été supprimé et ne sera pas affiché sur votre page de statut.',
+            'failure' => 'L\'incident n\'a pas pu être supprimé. Veuillez réessayer.',
         ],
 
         // Incident templates
@@ -36,13 +40,18 @@ return [
             'title' => 'Modèles d\'incident',
             'add'   => [
                 'title'   => 'Créer un modèle d\'incident',
-                'success' => 'Modèle créé.',
+                'message' => 'Vous devriez ajouter un modèle d\'incident.',
+                'success' => 'Votre nouveau modèle d\'incident a été créé.',
                 'failure' => 'Une erreur est survenue avec le modèle d\'incident.',
             ],
             'edit' => [
-                'title'   => 'Editer le Template',
-                'success' => 'Le modèle a été mis à jour !',
-                'failure' => 'Une erreur est survenue avec la mise à jour le modèle d\'incident',
+                'title'   => 'Éditer le modèle',
+                'success' => 'Le modèle d\'incident a été mis à jour.',
+                'failure' => 'Une erreur est survenue lors de la mise à jour du modèle d\'incident',
+            ],
+            'delete' => [
+                'success' => 'Le modèle d\'incident a été supprimé.',
+                'failure' => 'Le modèle d\'incident n\'a pas pu être supprimé. Veuillez réessayer.',
             ],
         ],
     ],
@@ -50,11 +59,12 @@ return [
     // Incident Maintenance
     'schedule' => [
         'schedule'     => 'Maintenance planifiée',
+        'logged'       => '{0} Aucune maintenance en cours, félicitations.|Vous avez une maintenance planifiée.|Vous avez <strong>:count</strong> maintenances planifiées.',
         'scheduled_at' => 'Planifiée à :timestamp',
         'add'          => [
             'title'   => 'Ajouter une maintenance planifiée',
             'success' => 'Planification ajoutée.',
-            'failure' => 'Une erreur est survenue lors de l\'ajout de la planification.',
+            'failure' => 'Une erreur est survenue lors de l\'ajout de la planification, veuillez réessayer.',
         ],
         'edit' => [
             'title'   => 'Modifier la maintenance planifiée',
@@ -62,96 +72,117 @@ return [
             'failure' => 'Une erreur est survenue lors de l\'édition de la planification.',
         ],
         'delete' => [
-            'success' => 'Cette planification a été supprimée et ne sera pas affichée sur votre page de statut.',
-            'failure' => 'Cette planification n\'a pas pu être supprimée. Veuillez réessayer.',
+            'success' => 'La planification a été supprimée et ne sera pas affichée sur votre page de statut.',
+            'failure' => 'La maintenance planifiée n\'a pas pu être supprimée. Veuillez réessayer.',
         ],
     ],
 
     // Components
     'components' => [
         'components'         => 'Composants',
-        'component_statuses' => 'Statuts des composant',
-        'listed_group'       => 'Groupés dans : nom',
+        'component_statuses' => 'Statut des composants',
+        'listed_group'       => 'Groupés par :nom',
         'add'                => [
             'title'   => 'Ajouter un composant',
             'message' => 'Vous devez ajouter un composant.',
             'success' => 'Composant créé.',
-            'failure' => 'Une erreur est survenue avec le composant.',
+            'failure' => 'Un problème est survenu avec le composant. Veuillez réessayer.',
         ],
         'edit' => [
             'title'   => 'Modifier un composant',
             'success' => 'Composant mis à jour.',
-            'failure' => 'Une erreur est survenue avec le composant.',
+            'failure' => 'Un problème est survenu avec le composant. Veuillez réessayer.',
+        ],
+        'delete' => [
+            'success' => 'Le composant a été supprimé !',
+            'failure' => 'Le composant n\'a pas pu être supprimé. Veuillez réessayer.',
         ],
 
         // Component groups
         'groups' => [
-            'groups'        => 'Groupes de composants',
+            'groups'        => 'Groupe de composants|Groupes de composants',
             'no_components' => 'Vous devez ajouter un groupe de composants.',
             'add'           => [
                 'title'   => 'Ajouter un groupe de composants',
-                'success' => 'Groupe composant ajouté.',
-                'failure' => 'Une erreur est survenue avec le groupe de composants.',
+                'success' => 'Groupe de composants ajouté.',
+                'failure' => 'Un problème est survenu avec le groupe de composants. Veuillez réessayer.',
             ],
             'edit' => [
                 'title'   => 'Modifier un groupe de composants',
                 'success' => 'Groupe de composants mis à jour.',
-                'failure' => 'Un problème est survenu avec le groupe de composants.',
+                'failure' => 'Un problème est survenu avec le groupe de composants. Veuillez réessayer.',
+            ],
+            'delete' => [
+                'success' => 'Le groupe de composants a été supprimé !',
+                'failure' => 'Le groupe de composants n\'a pas pu être supprimé. Veuillez réessayer.',
             ],
         ],
     ],
 
     // Metrics
     'metrics' => [
-        'metrics' => 'Métriques',
+        'metrics' => 'Indicateur',
         'add'     => [
-            'title'   => 'Créer un indicateur',
-            'success' => 'Métrique créé.',
-            'failure' => 'Un problème est survenu avec cet indicateur.',
+            'title'   => 'Créer une métrique',
+            'message' => 'Vous devez ajouter un indicateur.',
+            'success' => 'Indicateur créé.',
+            'failure' => 'Une erreur est survenue avec l\'indicateur. Veuillez réessayer.',
         ],
         'edit' => [
-            'title'   => 'Modifier un indicateur',
+            'title'   => 'Modifier une métrique',
             'success' => 'Indicateur mise à jour.',
-            'failure' => 'Un problème est survenu avec cet indicateur.',
+            'failure' => 'Une erreur est survenue avec l\'indicateur. Veuillez réessayer.',
+        ],
+        'delete' => [
+            'success' => 'La métrique a été supprimé et ne sera plus visible sur votre page de statut.',
+            'failure' => 'L\'indicateur n\'a pas pu être supprimé. Veuillez réessayer.',
         ],
     ],
     // Subscribers
     'subscribers' => [
-        'subscribers'  => '',
-        'description'  => '',
-        'verified'     => '',
-        'not_verified' => '',
-        'add'          => [
-            'title'   => '',
-            'success' => '',
-            'failure' => 'Une erreur est survenue avec le composant.',
+        'subscribers'      => 'Abonnés',
+        'description'      => 'Les abonnés recevront des notifications par e-mail lorsque des incidents sont créés ou des composants sont mis à jour.',
+        'verified'         => 'Vérifié',
+        'not_verified'     => 'Non vérifié',
+        'subscriber'       => ':email, abonné à :date',
+        'no_subscriptions' => 'Souscrire à toutes les mises à jour',
+        'add'              => [
+            'title'   => 'Ajouter un abonné',
+            'success' => 'L\'abonné a été ajouté !',
+            'failure' => 'Une erreur s\'est produite lors de l\'ajout de l\'abonné. Veuillez réessayer.',
+            'help'    => 'Saisissez un abonné par ligne.',
         ],
         'edit' => [
-            'title'   => '',
-            'success' => '',
-            'failure' => 'Une erreur est survenue lors de l\'actualisation.',
+            'title'   => 'Mettre à jour l\'abonné',
+            'success' => 'L\'abonné a été mis à jour !',
+            'failure' => 'Une erreur s\'est produite lors de la modification de l\'abonné. Veuillez réessayer.',
         ],
     ],
 
     // Team
     'team' => [
-        'team'        => 'Equipe',
-        'member'      => 'Utilisateur',
+        'team'        => 'Équipe',
+        'member'      => 'Membre',
         'profile'     => 'Profil utilisateur',
-        'description' => 'Membres de l\'équipe sera en mesure d\'ajouter, de modifier et de modifier les composants et les incidents.',
+        'description' => 'Les membres de l\'équipe pourront ajouter &amp; modifier les composants et les incidents.',
         'add'         => [
             'title'   => 'Ajouter un nouveau membre de l\'équipe',
             'success' => 'Membre de l\'équipe a ajouté.',
-            'failure' => 'Une erreur est survenue avec le composant.',
+            'failure' => 'Le membre de l\'équipe n\'a pas pu être ajouté. Veuillez réessayer.',
         ],
         'edit' => [
-            'title'   => 'Mettre le Profil à Jour',
+            'title'   => 'Mettre le profil à jour',
             'success' => 'Profil mis à jour.',
-            'failure' => 'Une erreur est survenue lors de l\'actualisation.',
+            'failure' => 'Une erreur s\'est produite lors de la mise à jour du profil. Veuillez réessayer.',
         ],
         'delete' => [
-            'success' => '',
-            'failure' => '',
+            'success' => 'Le membre de l\'équipe a été supprimé et n\'aura plus l\'accès au tableau de bord !',
+            'failure' => 'Le membre de l\'équipe n\'a pas pu être ajouté. Veuillez réessayer.',
+        ],
+        'invite' => [
+            'title'   => 'Inviter un nouveau membre de l\'équipe',
+            'success' => 'Nouveau membre invité.',
+            'failure' => 'L\'invitation n\'a pas pu être envoyé. Veuillez réessayer.',
         ],
     ],
 
@@ -160,14 +191,19 @@ return [
         'settings'  => 'Paramètres',
         'app-setup' => [
             'app-setup'   => 'Configuration de l\'application',
-            'images-only' => 'Seules les images peuvent être déposées.',
-            'too-big'     => 'Le fichier déposé est trop grand. Déposer une image d\'une taille inférieur à :size',
+            'images-only' => 'Seules les images peuvent être envoyées.',
+            'too-big'     => 'Le fichier envoyé est trop grand. Envoyer une image d\'une taille inférieur à :size',
         ],
         'analytics' => [
             'analytics' => 'Analytics',
         ],
         'localization' => [
-            'localization' => 'Localization',
+            'localization' => 'Localisation',
+        ],
+        'customization' => [
+            'customization' => 'Personnalisation',
+            'header'        => 'Entête HTML personnalisé',
+            'footer'        => 'Pied de page HTML personnalisé',
         ],
         'security' => [
             'security'   => 'Sécurité',
@@ -177,26 +213,34 @@ return [
             'stylesheet' => 'Feuille de style',
         ],
         'theme' => [
-            'theme' => ' Thème',
+            'theme' => 'Thème',
         ],
         'edit' => [
             'success' => 'Paramètres sauvegardés.',
-            'failure' => 'Les paramètres ne peuvent pas être sauvegardés.',
+            'failure' => 'Les paramètres n\'ont pas pu être sauvegardés.',
+        ],
+        'credits' => [
+            'credits'       => 'Credits',
+            'contributors'  => 'Contributors',
+            'license'       => 'Cachet is a BSD-3-licensed open source project, released by <a href="https://alt-three.com/?utm_source=cachet&utm_medium=credits&utm_campaign=Cachet%20Credit%20Dashboard" target="_blank">Alt Three Services Limited</a>.',
+            'backers-title' => 'Backers & Sponsors',
+            'backers'       => 'If you\'d like to support future development, check out the <a href="https://patreon.com/jbrooksuk" target="_blank">Cachet Patreon</a> campaign.',
+            'thank-you'     => 'Thank you to each and every one of the :count contributors.',
         ],
     ],
 
     // Login
     'login' => [
-        'login'      => 'Identifiez-vous',
+        'login'      => 'Connexion',
         'logged_in'  => 'Vous êtes connecté.',
         'welcome'    => 'Re-bonjour !',
-        'two-factor' => 'Entrez votre jeton, s\'il vous plait.',
+        'two-factor' => 'Veuillez entrer votre jeton.',
     ],
 
     // Sidebar footer
     'help'        => 'Aide',
-    'status_page' => 'État des services',
-    'logout'      => 'Se déconnecter',
+    'status_page' => 'Page de statut',
+    'logout'      => 'Déconnexion',
 
     // Notifications
     'notifications' => [
@@ -205,17 +249,25 @@ return [
         'whoops'        => 'Oups.',
     ],
 
+    // Widgets
+    'widgets' => [
+        'support'          => 'Support Cachet',
+        'support_subtitle' => 'Check out our <strong><a href="https://patreon.com/jbrooksuk" target="_blank">Patreon</a></strong> page!',
+        'news'             => 'Latest News',
+        'news_subtitle'    => 'Get the latest updates',
+    ],
+
     // Welcome modal
     'welcome' => [
-        'welcome' => 'Bienvenue sur Cachet',
-        'message' => 'Votre page de statut est presque prêt ! Vous pouvez configurer ces paramètres supplémentaires',
-        'close'   => 'Il suffit d\'aller directement à mon tableau de bord',
+        'welcome' => 'Bienvenue sur votre page de statut !',
+        'message' => 'Votre page de statut est presque prête ! Vous voudrez peut-être configurer ces paramètres supplémentaires',
+        'close'   => 'Aller directement à mon tableau de bord',
         'steps'   => [
             'component'  => 'Créer des composants',
             'incident'   => 'Créer des incidents',
             'customize'  => 'Personnaliser',
             'team'       => 'Ajouter des utilisateurs',
-            'api'        => 'Générer un jeton pour l\'API',
+            'api'        => 'Générer un jeton API',
             'two-factor' => 'Authentification à deux facteurs',
         ],
     ],

@@ -11,15 +11,18 @@
 
 namespace CachetHQ\Cachet\Http\Controllers\Dashboard;
 
-use CachetHQ\Cachet\Models\Setting;
+use CachetHQ\Cachet\Integrations\Credits;
 use CachetHQ\Cachet\Models\User;
+use CachetHQ\Cachet\Settings\Repository;
 use Exception;
 use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 class SettingsController extends Controller
 {
@@ -56,6 +59,12 @@ class SettingsController extends Controller
                 'icon'   => 'ion-paintbucket',
                 'active' => false,
             ],
+            'customization' => [
+                'title'  => trans('dashboard.settings.customization.customization'),
+                'url'    => route('dashboard.settings.customization'),
+                'icon'   => 'ion-wand',
+                'active' => false,
+            ],
             'localization' => [
                 'title'  => trans('dashboard.settings.localization.localization'),
                 'url'    => route('dashboard.settings.localization'),
@@ -72,6 +81,12 @@ class SettingsController extends Controller
                 'title'  => trans('dashboard.settings.analytics.analytics'),
                 'url'    => route('dashboard.settings.analytics'),
                 'icon'   => 'ion-stats-bars',
+                'active' => false,
+            ],
+            'credits' => [
+                'title'  => trans('dashboard.settings.credits.credits'),
+                'url'    => route('dashboard.settings.credits'),
+                'icon'   => 'ion-ios-list',
                 'active' => false,
             ],
             'about' => [
@@ -101,7 +116,8 @@ class SettingsController extends Controller
 
         return View::make('dashboard.settings.app-setup')
             ->withPageTitle(trans('dashboard.settings.app-setup.app-setup').' - '.trans('dashboard.dashboard'))
-            ->withSubMenu($this->subMenu);
+            ->withSubMenu($this->subMenu)
+            ->withRawAppAbout(Config::get('setting.app_about'));
     }
 
     /**
@@ -133,6 +149,22 @@ class SettingsController extends Controller
 
         return View::make('dashboard.settings.localization')
             ->withPageTitle(trans('dashboard.settings.localization.localization').' - '.trans('dashboard.dashboard'))
+            ->withSubMenu($this->subMenu);
+    }
+
+    /**
+     * Shows the settings customization view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showCustomizationView()
+    {
+        $this->subMenu['customization']['active'] = true;
+
+        Session::flash('redirect_to', $this->subMenu['customization']['url']);
+
+        return View::make('dashboard.settings.customization')
+            ->withPageTitle(trans('dashboard.settings.customization.customization').' - '.trans('dashboard.dashboard'))
             ->withSubMenu($this->subMenu);
     }
 
@@ -188,61 +220,122 @@ class SettingsController extends Controller
     }
 
     /**
+     * Show the credits view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showCreditsView()
+    {
+        $this->subMenu['credits']['active'] = true;
+
+        $credits = app(Credits::class)->latest();
+
+        $backers = $credits['backers'];
+        $contributors = $credits['contributors'];
+
+        shuffle($backers);
+        shuffle($contributors);
+
+        return View::make('dashboard.settings.credits')
+            ->withPageTitle(trans('dashboard.settings.credits.credits').' - '.trans('dashboard.dashboard'))
+            ->withBackers($backers)
+            ->withContributors($contributors)
+            ->withSubMenu($this->subMenu);
+    }
+
+    /**
      * Updates the status page settings.
      *
      * @return \Illuminate\View\View
      */
     public function postSettings()
     {
-        $redirectUrl = Session::get('redirect_to', route('dashboard.settings.setup'));
+        $setting = app(Repository::class);
 
         if (Binput::get('remove_banner') === '1') {
-            $setting = Setting::where('name', 'app_banner');
-            $setting->delete();
+            $setting->set('app_banner', null);
+        }
+
+        $parameters = Binput::all();
+
+        if (isset($parameters['header'])) {
+            if ($header = Binput::get('header', null, false, false)) {
+                $setting->set('header', $header);
+            } else {
+                $setting->delete('header');
+            }
+        }
+
+        if (isset($parameters['footer'])) {
+            if ($footer = Binput::get('footer', null, false, false)) {
+                $setting->set('footer', $footer);
+            } else {
+                $setting->delete('footer');
+            }
         }
 
         if (Binput::hasFile('app_banner')) {
-            $file = Binput::file('app_banner');
-
-            // Image Validation.
-            // Image size in bytes.
-            $maxSize = $file->getMaxFilesize();
-
-            if ($file->getSize() > $maxSize) {
-                return Redirect::to($redirectUrl)->withErrors(trans('dashboard.settings.app-setup.too-big', ['size' => $maxSize]));
-            }
-
-            if (!$file->isValid() || $file->getError()) {
-                return Redirect::to($redirectUrl)->withErrors($file->getErrorMessage());
-            }
-
-            if (!starts_with($file->getMimeType(), 'image/')) {
-                return Redirect::to($redirectUrl)->withErrors(trans('dashboard.settings.app-setup.images-only'));
-            }
-
-            // Store the banner.
-            Setting::firstOrCreate(['name' => 'app_banner'])->update(['value' => base64_encode(file_get_contents($file->getRealPath()))]);
-
-            // Store the banner type
-            Setting::firstOrCreate(['name' => 'app_banner_type'])->update(['value' => $file->getMimeType()]);
+            $this->handleUpdateBanner($setting);
         }
 
+        $excludedParams = [
+            '_token',
+            'app_banner',
+            'remove_banner',
+            'header',
+            'footer',
+        ];
+
         try {
-            foreach (Binput::except(['app_banner', 'remove_banner']) as $settingName => $settingValue) {
+            foreach (Binput::except($excludedParams) as $settingName => $settingValue) {
                 if ($settingName === 'app_analytics_pi_url') {
                     $settingValue = rtrim($settingValue, '/');
                 }
 
-                Setting::firstOrCreate(['name' => $settingName])->update(['value' => $settingValue]);
+                $setting->set($settingName, $settingValue);
             }
         } catch (Exception $e) {
-            return Redirect::to($redirectUrl)->withErrors(trans('dashboard.settings.edit.failure'));
+            return Redirect::back()->withErrors(trans('dashboard.settings.edit.failure'));
         }
 
         if (Binput::has('app_locale')) {
             Lang::setLocale(Binput::get('app_locale'));
         }
 
-        return Redirect::to($redirectUrl)->withSuccess(trans('dashboard.settings.edit.success'));
+        return Redirect::back()->withSuccess(trans('dashboard.settings.edit.success'));
+    }
+
+    /**
+     * Handle updating of the banner image.
+     *
+     * @param \CachetHQ\Cachet\Settings\Repository $setting
+     *
+     * @return void
+     */
+    protected function handleUpdateBanner(Repository $setting)
+    {
+        $file = Binput::file('app_banner');
+
+        // Image Validation.
+        // Image size in bytes.
+        $maxSize = $file->getMaxFilesize();
+
+        if ($file->getSize() > $maxSize) {
+            return Redirect::to($redirectUrl)->withErrors(trans('dashboard.settings.app-setup.too-big', ['size' => $maxSize]));
+        }
+
+        if (!$file->isValid() || $file->getError()) {
+            return Redirect::to($redirectUrl)->withErrors($file->getErrorMessage());
+        }
+
+        if (!Str::startsWith($file->getMimeType(), 'image/')) {
+            return Redirect::to($redirectUrl)->withErrors(trans('dashboard.settings.app-setup.images-only'));
+        }
+
+        // Store the banner.
+        $setting->set('app_banner', base64_encode(file_get_contents($file->getRealPath())));
+
+        // Store the banner type.
+        $setting->set('app_banner_type', $file->getMimeType());
     }
 }

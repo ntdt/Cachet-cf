@@ -5,8 +5,11 @@ namespace Arthurh\CloudFoundry;
 
 
 use Arhframe\Util\File;
+use CachetHQ\Cachet\Models\User;
+use CachetHQ\Cachet\Settings\Repository;
 use CfCommunity\CfHelper\CfHelper;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Config;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -48,6 +51,19 @@ class MigrateDatabase
         );
         $kernel->terminate($input, $status);
         $this->createLockFile();
+        $this->bootSettings();
+        $username = env("DEFAULT_ADMIN_USERNAME", "admin");
+
+        $user = User::query()->where('username', '=', $username)->first();
+        if (!empty($user)) {
+            return;
+        }
+        User::create([
+            'username' => $username,
+            'email' => env("DEFAULT_ADMIN_EMAIL", "admin@admin.com"),
+            'password' => env("DEFAULT_ADMIN_PASSWORD", "p@ssw0rd"),
+            'level' => User::LEVEL_ADMIN,
+        ]);
     }
 
     public function isLocked()
@@ -58,5 +74,22 @@ class MigrateDatabase
     public function createLockFile()
     {
         $this->lockFile->setContent("1");
+    }
+
+    private function bootSettings()
+    {
+        if (Config::get('setting.app_name')) {
+            return;
+        }
+        $setting = app(Repository::class);
+        $setting->set('app_name', env('APP_NAME', 'cachet'));
+        $setting->set('app_timezone', env('APP_TIMEZONE', 'UTC'));
+        $setting->set('app_locale', env('APP_LOCALE', 'en'));
+        $uris = (array)$this->cfHelper->getApplicationInfo()->getUris();
+        $protocol = 'http://';
+        if (env('USE_SSL', false)) {
+            $protocol = 'https://';
+        }
+        $setting->set('app_domain', $protocol . $uris[0]);
     }
 }

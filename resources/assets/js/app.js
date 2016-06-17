@@ -39,11 +39,9 @@ $(function() {
     // Mock the DELETE form requests.
     $('[data-method]').not(".disabled").append(function() {
         var methodForm = "\n";
-        methodForm    += "<form action='" + $(this).attr('href') + "' method='POST' style='display:none'>\n";
-        methodForm    += " <input type='hidden' name='_method' value='" + $(this).attr('data-method') + "'>\n";
-        if ($(this).attr('data-token')) {
-            methodForm += "<input type='hidden' name='_token' value='" + $(this).attr('data-token') + "'>\n";
-        }
+        methodForm += "<form action='" + $(this).attr('href') + "' method='POST' style='display:none'>\n";
+        methodForm += "<input type='hidden' name='_method' value='" + $(this).attr('data-method') + "'>\n";
+        methodForm += "<input type='hidden' name='_token' value='" + $('meta[name=token]').attr('content') + "'>\n";
         methodForm += "</form>\n";
         return methodForm;
     })
@@ -80,6 +78,9 @@ $(function() {
 
     window.Cachet.Notifier = function () {
         this.notify = function (message, type, options) {
+            if (_.isPlainObject(message)) {
+                message = message.detail;
+            }
             type = (typeof type === 'undefined' || type === 'error') ? 'error' : type;
 
             var defaultOptions = {
@@ -119,12 +120,12 @@ $(function() {
         var $option = $(this).find('option:selected');
         var $componentStatus = $('#component-status');
 
-        if ($option.val() !== '') {
+        if (parseInt($option.val(), 10) !== 0) {
             if ($componentStatus.hasClass('hidden')) {
                 $componentStatus.removeClass('hidden');
-            } else {
-                $componentStatus.addClass('hidden');
             }
+        } else {
+            $componentStatus.addClass('hidden');
         }
     });
 
@@ -252,8 +253,8 @@ $(function() {
                 url: '/dashboard/api/incidents/templates',
                 success: function(tpl) {
                     var $form = $('form[role=form]');
-                    $form.find('input[name=incident\\[name\\]]').val(tpl.name);
-                    $form.find('textarea[name=incident\\[message\\]]').val(tpl.template);
+                    $form.find('input[name=name]').val(tpl.name);
+                    $form.find('textarea[name=message]').val(tpl.template);
                 },
                 error: function() {
                     (new Cachet.Notifier()).notify('There was an error finding that template.');
@@ -363,6 +364,19 @@ $(function() {
 
     // Password strength
     $('.password-strength').strengthify();
+
+    // Check for updates.
+    if ($('#update-alert').length > 0) {
+        $.ajax({
+            async: true,
+            dataType: 'json',
+            url: '/api/v1/version',
+        }).done(function (result) {
+            if (result.meta.on_latest === false) {
+                $('#update-alert').removeClass('hidden');
+            }
+        });
+    }
 });
 
 function askConfirmation(callback) {

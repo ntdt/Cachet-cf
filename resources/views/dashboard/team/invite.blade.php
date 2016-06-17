@@ -3,10 +3,10 @@
 @section('content')
     <div class="header">
         <div class="sidebar-toggler visible-xs">
-            <i class="icon ion-navicon"></i>
+            <i class="ion ion-navicon"></i>
         </div>
         <span class="uppercase">
-            <i class="icon ion-person"></i> {{ trans('dashboard.team.team') }}
+            <i class="ion ion-ios-people-outline"></i> {{ trans('dashboard.team.team') }}
         </span>
     </div>
     <div class="content-wrapper">
@@ -35,7 +35,10 @@
                     </fieldset>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success">{{ trans('forms.invite') }}</button>
+                        <div class='btn-group'>
+                            <button type="submit" class="btn btn-success">{{ trans('forms.invite') }}</button>
+                            <a class="btn btn-default" href="{{ route('dashboard.team.index') }}">{{ trans('forms.cancel') }}</a>
+                        </div>
                     </div>
                 </form>
             </div>

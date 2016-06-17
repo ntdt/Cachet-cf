@@ -12,6 +12,8 @@
 namespace CachetHQ\Cachet\Models;
 
 use AltThree\Validator\ValidatingTrait;
+use CachetHQ\Cachet\Models\Traits\SearchableTrait;
+use CachetHQ\Cachet\Models\Traits\SortableTrait;
 use CachetHQ\Cachet\Presenters\IncidentPresenter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -20,14 +22,7 @@ use McCool\LaravelAutoPresenter\HasPresenter;
 
 class Incident extends Model implements HasPresenter
 {
-    use SoftDeletes, ValidatingTrait;
-
-    /**
-     * The accessors to append to the model's serialized form.
-     *
-     * @var string[]
-     */
-    protected $appends = ['human_status'];
+    use SearchableTrait, SoftDeletes, SortableTrait, ValidatingTrait;
 
     /**
      * The attributes that should be casted to native types.
@@ -35,7 +30,6 @@ class Incident extends Model implements HasPresenter
      * @var string[]
      */
     protected $casts = [
-        'id'           => 'int',
         'visible'      => 'int',
         'scheduled_at' => 'date',
         'deleted_at'   => 'date',
@@ -68,6 +62,32 @@ class Incident extends Model implements HasPresenter
         'status'       => 'required|int',
         'visible'      => 'required|bool',
         'message'      => 'required',
+    ];
+
+    /**
+     * The searchable fields.
+     *
+     * @var string[]
+     */
+    protected $searchable = [
+        'id',
+        'component_id',
+        'name',
+        'status',
+        'visible',
+    ];
+
+    /**
+     * The sortable fields.
+     *
+     * @var string[]
+     */
+    protected $sortable = [
+        'id',
+        'name',
+        'status',
+        'visible',
+        'message',
     ];
 
     /**
@@ -116,18 +136,6 @@ class Incident extends Model implements HasPresenter
     public function component()
     {
         return $this->belongsTo(Component::class, 'component_id', 'id');
-    }
-
-    /**
-     * Returns a human readable version of the status.
-     *
-     * @return string
-     */
-    public function getHumanStatusAttribute()
-    {
-        $statuses = trans('cachet.incidents.status');
-
-        return $statuses[$this->status];
     }
 
     /**

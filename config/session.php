@@ -8,7 +8,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
+$pathConfig = new \Arthurh\CloudFoundry\PathConfig();
+$driverConfig = new \Arthurh\CloudFoundry\DriverConfig();
 return [
 
     /*
@@ -25,7 +26,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
+    'driver' => $driverConfig->getSessionDriver(),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,7 +67,7 @@ return [
     |
     */
 
-    'files' => storage_path().'/framework/sessions',
+    'files' => $pathConfig->getStoragePath('framework/sessions'),
 
     /*
     |--------------------------------------------------------------------------
@@ -118,7 +119,7 @@ return [
     |
     */
 
-    'cookie' => 'laravel_session',
+    'cookie' => $driverConfig->getSessionCookie(),
 
     /*
     |--------------------------------------------------------------------------
@@ -158,5 +159,18 @@ return [
     */
 
     'secure' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | HTTP Access Only
+    |--------------------------------------------------------------------------
+    |
+    | Setting this value to true will prevent JavaScript from accessing the
+    | value of the cookie and the cookie will only be accessible through
+    | the HTTP protocol. You are free to modify this option if needed.
+    |
+    */
+
+    'http_only' => true,
 
 ];

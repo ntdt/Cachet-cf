@@ -10,12 +10,12 @@
  */
 
 return [
-    'setup'             => 'Réglages',
+    'setup'             => 'Installation',
     'title'             => 'Configuration de Cachet',
     'service_details'   => 'Détails du service',
     'env_setup'         => 'Configuration de l\'environnement',
     'status_page_setup' => 'Configuration de la page de statut',
-    'show_support'      => 'Afficher votre soutien à Cachet?',
+    'show_support'      => 'Afficher votre soutien à Cachet ?',
     'admin_account'     => 'Compte administrateur',
     'complete_setup'    => 'Terminer la configuration',
     'completed'         => 'Cachet a été configuré avec succès !',

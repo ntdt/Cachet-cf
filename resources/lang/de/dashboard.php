@@ -23,12 +23,16 @@ return [
         'add'                      => [
             'title'   => 'Vorfall hinzufügen',
             'success' => 'Vorfall hinzugefügt.',
-            'failure' => 'Etwas ist mit dem Vorfall schiefgelaufen.',
+            'failure' => 'Es ist ein Fehler beim Hinzufügen der Störung aufgetreten. Bitte erneut versuchen.',
         ],
         'edit' => [
             'title'   => 'Vorfall bearbeiten',
             'success' => 'Vorfall aktualisiert.',
-            'failure' => 'Etwas ist mit dem Vorfall schiefgelaufen.',
+            'failure' => 'Es ist ein Fehler beim Editieren der Störung aufgetreten. Bitte erneut versuchen.',
+        ],
+        'delete' => [
+            'success' => 'Der Vorfall wurde gelöscht und wird nicht mehr angezeigt.',
+            'failure' => 'Die Störung konnte nicht gelöscht werden. Bitte versuche es erneut.',
         ],
 
         // Incident templates
@@ -36,13 +40,18 @@ return [
             'title' => 'Vorfall Vorlagen',
             'add'   => [
                 'title'   => 'Vorfallvorlage erstellen',
-                'success' => 'Vorlage erstellt.',
+                'message' => 'Du solltest eine Vorfall-Vorlage hinzufügen.',
+                'success' => 'Deine neue Störungsvorlage wurde angelegt.',
                 'failure' => 'Etwas ist mit der Vorfallvorlage schiefgelaufen.',
             ],
             'edit' => [
                 'title'   => 'Vorlage bearbeiten',
-                'success' => 'Vorlage aktualisiert!',
+                'success' => 'Die Vorfallvorlage wurde aktualisiert.',
                 'failure' => 'Etwas ist mit dem Updaten der Vorfallvorlage schiefgelaufen',
+            ],
+            'delete' => [
+                'success' => 'Die Vorfall-Vorlage wurde gelöscht.',
+                'failure' => 'Die Vorfall-Vorlage konnte nicht gelöscht werden. Bitte versuche es erneut.',
             ],
         ],
     ],
@@ -50,16 +59,17 @@ return [
     // Incident Maintenance
     'schedule' => [
         'schedule'     => 'Planmäßige Wartung',
+        'logged'       => '{0} Es gibt keine Zeitpläne, gute Arbeit.|Du hast einen Zeitplan geloggt.|Du hast <strong>:count</strong> Zeitpläne gemeldet.',
         'scheduled_at' => 'Geplant am :timestamp',
         'add'          => [
             'title'   => 'Planmäßige Wartung hinzufügen',
             'success' => 'Zeitplan hinzugefügt.',
-            'failure' => 'Etwas ist mit dem hinzufügen des Zeitplanes schiefgelaufen.',
+            'failure' => 'Etwas lief schief mit dem Hinzufügen des Zeitplans. Bitte versuchen Sie es erneut.',
         ],
         'edit' => [
             'title'   => 'Planmäßige Wartung bearbeiten',
             'success' => 'Zeitplan wurde aktualisiert!',
-            'failure' => 'Etwas ist mit dem Bearbeiten des Zeitplanes schiefgelaufen.',
+            'failure' => 'Etwas lief schief mit dem Editieren des Zeitplans. Bitte versuchen Sie es erneut.',
         ],
         'delete' => [
             'success' => 'Der Zeitplan wurde gelöscht und wird nicht auf Ihrer Statusseite angezeigt.',
@@ -76,12 +86,16 @@ return [
             'title'   => 'Komponente hinzufügen',
             'message' => 'Sie sollten eine Komponente erstellen.',
             'success' => 'Komponente erstellt.',
-            'failure' => 'Beim Erstellen der Komponente ist etwas schiefgegangen.',
+            'failure' => 'Etwas ist schief gelaufen mit der Komponente, versuchen sie es erneut.',
         ],
         'edit' => [
             'title'   => 'Komponente bearbeiten',
             'success' => 'Komponente aktualisiert.',
-            'failure' => 'Mit der Komponente ist etwas schiefgegangen.',
+            'failure' => 'Etwas ist schief gelaufen mit der Komponente, versuchen sie es erneut.',
+        ],
+        'delete' => [
+            'success' => 'Die Komponente wurde gelöscht!',
+            'failure' => 'Die Komponente konnte nicht gelöscht werden. Bitte versuche es erneut.',
         ],
 
         // Component groups
@@ -91,12 +105,16 @@ return [
             'add'           => [
                 'title'   => 'Eine Komponentengruppe hinzufügen',
                 'success' => 'Komponentengruppe hinzugefügt.',
-                'failure' => 'Mit der Komponentengruppe ist etwas schiefgegangen.',
+                'failure' => 'Etwas ist mit der Komponentengruppe schiefgelaufen, versuchen sie es erneut.',
             ],
             'edit' => [
                 'title'   => 'Komponentengruppe bearbeiten',
                 'success' => 'Komponentengruppe aktualisiert.',
-                'failure' => 'Mit der Komponentengruppe ist etwas schiefgegangen.',
+                'failure' => 'Etwas ist mit der Komponentengruppe schiefgelaufen, versuchen sie es erneut.',
+            ],
+            'delete' => [
+                'success' => 'Die Komponentengruppe wurde gelöscht!',
+                'failure' => 'Die Komponentengruppe konnte nicht gelöscht werden. Bitte versuche es erneut.',
             ],
         ],
     ],
@@ -106,30 +124,38 @@ return [
         'metrics' => 'Metriken',
         'add'     => [
             'title'   => 'Metrik erstellen',
+            'message' => 'Du solltest eine Metrik hinzufügen.',
             'success' => 'Metrik erstellt.',
-            'failure' => 'Mit der Metrik ist etwas schiefgegangen.',
+            'failure' => 'Es lieft etwas mit der Metrik schief, bitte nochmal versuchen.',
         ],
         'edit' => [
             'title'   => 'Metrik bearbeiten',
             'success' => 'Metrik aktualisiert.',
-            'failure' => 'Mit der Metrik ist etwas schiefgegangen.',
+            'failure' => 'Es lieft etwas mit der Metrik schief, bitte nochmal versuchen.',
+        ],
+        'delete' => [
+            'success' => 'Die Metrik wurde gelöscht und wird nicht mehr angezeigt.',
+            'failure' => 'Die Metrik konnte nicht gelöscht werden. Bitte versuche es erneut.',
         ],
     ],
     // Subscribers
     'subscribers' => [
-        'subscribers'  => 'Abonnenten',
-        'description'  => 'Abonnenten erhalten E-Mail Updates wenn Vorfälle erstellt werden.',
-        'verified'     => 'Verifiziert',
-        'not_verified' => 'Nicht verifiziert',
-        'add'          => [
+        'subscribers'      => 'Abonnenten',
+        'description'      => 'Abonnenten erhalten E-Mail Updates, wenn Vorfälle erstellt oder Komponenten bearbeitet werden.',
+        'verified'         => 'Verifiziert',
+        'not_verified'     => 'Nicht verifiziert',
+        'subscriber'       => ':email, abonniert am :date',
+        'no_subscriptions' => 'Aktualisierungen per E-Mail abonnieren',
+        'add'              => [
             'title'   => 'Einen neuen Abonnenten hinzufügen',
             'success' => 'Abonnent hinzugefügt.',
-            'failure' => 'Mit der Komponente ist etwas schiefgegangen.',
+            'failure' => 'Etwas lief schief dem dem Hinzufügen eines Abonnenten. Bitte versuchen Sie es erneut.',
+            'help'    => 'Gebe jeden Abonnenten in eine neue Zeile ein.',
         ],
         'edit' => [
             'title'   => 'Abonnent aktualisieren',
             'success' => 'Abonnent aktualisiert.',
-            'failure' => 'Bei der Aktualisierung ist etwas schiefgegangen.',
+            'failure' => 'Etwas lief schief mit dem Bearbeiten eines Abonnenten. Bitte versuchen sie es erneut.',
         ],
     ],
 
@@ -142,16 +168,21 @@ return [
         'add'         => [
             'title'   => 'Neues Teammitglied hinzufügen',
             'success' => 'Teammitglied hinzugefügt.',
-            'failure' => 'Mit der Komponente ist etwas schiefgegangen.',
+            'failure' => 'Teammitglied konnte nicht hinzugefügt werden. Bitte versuchen Sie es erneut.',
         ],
         'edit' => [
             'title'   => 'Profil aktualisieren',
             'success' => 'Profil aktualisiert.',
-            'failure' => 'Bei der Aktualisierung ging etwas schief.',
+            'failure' => 'Etwas lief schief mit dem Aktualisieren des Profils. Bitte versuchen Sie es erneut.',
         ],
         'delete' => [
             'success' => 'Benutzer aktualisiert.',
-            'failure' => 'Bei dem Löschen dieses Benutzers ging etwas schief.',
+            'failure' => 'Teammitglied konnte nicht hinzugefügt werden. Bitte versuchen Sie es erneut.',
+        ],
+        'invite' => [
+            'title'   => 'Ein neues Teammitglied einladen',
+            'success' => 'Eine Einladung wurde verschickt',
+            'failure' => 'Diese Einladung konnte nicht versendet werden. Bitte versuchen Sie es erneut.',
         ],
     ],
 
@@ -169,6 +200,11 @@ return [
         'localization' => [
             'localization' => 'Localization',
         ],
+        'customization' => [
+            'customization' => 'Individualisierung',
+            'header'        => 'Benutzerdefinierter HTML Header',
+            'footer'        => 'Benutzerdefinierter HTML Footer',
+        ],
         'security' => [
             'security'   => 'Sicherheit',
             'two-factor' => 'Nutzer ohne Zwei-Faktor-Authentifizierung',
@@ -183,12 +219,20 @@ return [
             'success' => 'Einstellungen gespeichert.',
             'failure' => 'Einstellungen konnten nicht gespeichert werden.',
         ],
+        'credits' => [
+            'credits'       => 'Credits',
+            'contributors'  => 'Contributors',
+            'license'       => 'Cachet is a BSD-3-licensed open source project, released by <a href="https://alt-three.com/?utm_source=cachet&utm_medium=credits&utm_campaign=Cachet%20Credit%20Dashboard" target="_blank">Alt Three Services Limited</a>.',
+            'backers-title' => 'Backers & Sponsors',
+            'backers'       => 'If you\'d like to support future development, check out the <a href="https://patreon.com/jbrooksuk" target="_blank">Cachet Patreon</a> campaign.',
+            'thank-you'     => 'Thank you to each and every one of the :count contributors.',
+        ],
     ],
 
     // Login
     'login' => [
         'login'      => 'Anmelden',
-        'logged_in'  => 'Sie sind angemeldet.',
+        'logged_in'  => 'Sie sind eingeloggt.',
         'welcome'    => 'Willkommen zurück!',
         'two-factor' => 'Bitte geben Sie Ihren Token ein.',
     ],
@@ -205,9 +249,17 @@ return [
         'whoops'        => 'Hoppla.',
     ],
 
+    // Widgets
+    'widgets' => [
+        'support'          => 'Support Cachet',
+        'support_subtitle' => 'Check out our <strong><a href="https://patreon.com/jbrooksuk" target="_blank">Patreon</a></strong> page!',
+        'news'             => 'Latest News',
+        'news_subtitle'    => 'Get the latest updates',
+    ],
+
     // Welcome modal
     'welcome' => [
-        'welcome' => 'Willkommen zu Cachet',
+        'welcome' => 'Willkommen zu Deiner Status Seite!',
         'message' => 'Ihre Statusseite ist fast fertig! Vielleicht möchten Sie diese zusätzlichen Einstellungen konfigurieren',
         'close'   => 'Gehe einfach direkt zu meinem Dashboard',
         'steps'   => [

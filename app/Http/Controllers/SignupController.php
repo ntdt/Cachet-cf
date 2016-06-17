@@ -12,11 +12,11 @@
 namespace CachetHQ\Cachet\Http\Controllers;
 
 use AltThree\Validator\ValidationException;
-use CachetHQ\Cachet\Commands\Invite\ClaimInviteCommand;
-use CachetHQ\Cachet\Commands\User\SignupUserCommand;
+use CachetHQ\Cachet\Bus\Commands\Invite\ClaimInviteCommand;
+use CachetHQ\Cachet\Bus\Commands\User\SignupUserCommand;
 use CachetHQ\Cachet\Models\Invite;
+use CachetHQ\Cachet\Models\User;
 use GrahamCampbell\Binput\Facades\Binput;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
@@ -25,8 +25,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SignupController extends Controller
 {
-    use DispatchesJobs;
-
     /**
      * Handle the signup with invite.
      *
@@ -42,7 +40,7 @@ class SignupController extends Controller
 
         $invite = Invite::where('code', '=', $code)->first();
 
-        if (!$invite || $invite->claimed()) {
+        if (!$invite || $invite->is_claimed) {
             throw new BadRequestHttpException();
         }
 
@@ -53,7 +51,7 @@ class SignupController extends Controller
     }
 
     /**
-     * Handle the unsubscribe.
+     * Handle a signup request.
      *
      * @param string|null $code
      *
@@ -67,16 +65,16 @@ class SignupController extends Controller
 
         $invite = Invite::where('code', '=', $code)->first();
 
-        if (!$invite || $invite->claimed()) {
+        if (!$invite || $invite->is_claimed) {
             throw new BadRequestHttpException();
         }
 
         try {
-            $this->dispatch(new SignupUserCommand(
+            dispatch(new SignupUserCommand(
                 Binput::get('username'),
                 Binput::get('password'),
                 Binput::get('email'),
-                2
+                User::LEVEL_USER
             ));
         } catch (ValidationException $e) {
             return Redirect::route('signup.invite', ['code' => $invite->code])
@@ -85,7 +83,7 @@ class SignupController extends Controller
                 ->withErrors($e->getMessageBag());
         }
 
-        $this->dispatch(new ClaimInviteCommand($invite));
+        dispatch(new ClaimInviteCommand($invite));
 
         return Redirect::route('status-page')
             ->withSuccess(sprintf('<strong>%s</strong> %s', trans('dashboard.notifications.awesome'), trans('cachet.signup.success')));

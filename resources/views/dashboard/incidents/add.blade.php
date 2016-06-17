@@ -3,10 +3,10 @@
 @section('content')
     <div class="header">
         <div class="sidebar-toggler visible-xs">
-            <i class="icon ion-navicon"></i>
+            <i class="ion ion-navicon"></i>
         </div>
         <span class="uppercase">
-            <i class="icon ion-android-alert"></i> {{ trans('dashboard.incidents.incidents') }}
+            <i class="ion ion-ios-information-outline"></i> {{ trans('dashboard.incidents.incidents') }}
         </span>
         &gt; <small>{{ trans('dashboard.incidents.add.title') }}</small>
     </div>
@@ -30,28 +30,28 @@
                         @endif
                         <div class="form-group">
                             <label for="incident-name">{{ trans('forms.incidents.name') }}</label>
-                            <input type="text" class="form-control" name="name" id="incident-name" required value="{{ Input::old('incident.name') }}">
+                            <input type="text" class="form-control" name="name" id="incident-name" required value="{{ Binput::old('name') }}">
                         </div>
                         <div class="form-group">
                             <label for="incident-name">{{ trans('forms.incidents.status') }}</label><br>
                             <label class="radio-inline">
                                 <input type="radio" name="status" value="1">
-                                <i class="icon ion-flag"></i>
+                                <i class="ion ion-flag"></i>
                                 {{ trans('cachet.incidents.status')[1] }}
                             </label>
                             <label class="radio-inline">
                                 <input type="radio" name="status" value="2">
-                                <i class="icon ion-alert-circled"></i>
+                                <i class="ion ion-alert-circled"></i>
                                 {{ trans('cachet.incidents.status')[2] }}
                             </label>
                             <label class="radio-inline">
                                 <input type="radio" name="status" value="3">
-                                <i class="icon ion-eye"></i>
+                                <i class="ion ion-eye"></i>
                                 {{ trans('cachet.incidents.status')[3] }}
                             </label>
                             <label class="radio-inline">
                                 <input type="radio" name="status" value="4">
-                                <i class="icon ion-checkmark"></i>
+                                <i class="ion ion-checkmark"></i>
                                 {{ trans('cachet.incidents.status')[4] }}
                             </label>
                         </div>
@@ -100,17 +100,18 @@
                         <div class="form-group">
                             <label>{{ trans('forms.incidents.message') }}</label>
                             <div class='markdown-control'>
-                                <textarea name="message" class="form-control autosize" rows="5" required>{{ Input::old('incident.message') }}</textarea>
+                                <textarea name="message" class="form-control autosize" rows="5" required>{{ Binput::old('message') }}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>{{ trans('forms.incidents.incident_time') }}</label> <small class="text-muted">{{ trans('forms.optional') }}</small>
                             <input type="text" name="created_at" class="form-control" rel="datepicker-any">
                         </div>
+                        <input type="hidden" name="notify" value="0">
                         @if(subscribers_enabled())
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="notify" value="1" checked="{{ Input::old('incident.message', 'checked') }}">
+                                <input type="checkbox" name="notify" value="1" checked="{{ Binput::old('notify', 'checked') }}">
                                 {{ trans('forms.incidents.notify_subscribers') }}
                             </label>
                         </div>

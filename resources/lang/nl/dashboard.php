@@ -21,28 +21,37 @@ return [
         'incident-create-template' => 'Maak template',
         'incident-templates'       => 'Incident Sjablonen',
         'add'                      => [
-            'title'   => 'Incident toevoegen',
+            'title'   => 'Meld een incident',
             'success' => 'Incident toegevoegd.',
-            'failure' => 'Er ging iets mis met het incident.',
+            'failure' => 'Er is een fout opgetreden tijdens het toevoegen van het incident, probeer het opnieuw.',
         ],
         'edit' => [
             'title'   => 'Wijzig een incident',
             'success' => 'Incident bijgewerkt.',
-            'failure' => 'Er ging iets mis met het incident.',
+            'failure' => 'Er is een fout opgetreden bij het wijzigen van het incident, probeer het opnieuw.',
+        ],
+        'delete' => [
+            'success' => 'Het incident is verwijderd en zal niet meer worden weergegeven op de statuspagina.',
+            'failure' => 'Het incident kon niet worden verwijderd, probeer het opnieuw.',
         ],
 
         // Incident templates
         'templates' => [
             'title' => 'Incident Sjablonen',
             'add'   => [
-                'title'   => 'Een incident sjabloon maken',
-                'success' => 'Sjabloon aangemaakt.',
-                'failure' => 'Er ging iets mis met het incident sjabloon.',
+                'title'   => 'Creëer een incident template',
+                'message' => 'Voeg een incident template toe.',
+                'success' => 'Je nieuwe incident template is aangemaakt.',
+                'failure' => 'Er is iets misgegaan met de incident template.',
             ],
             'edit' => [
-                'title'   => 'Bewerk sjabloon',
-                'success' => 'Sjabloon is bijgewerkt!',
-                'failure' => 'Er ging iets mis bij het bijwerken van het sjabloon',
+                'title'   => 'Wijzig template',
+                'success' => 'De incident template is bijgewerkt.',
+                'failure' => 'Er is een fout opgetreden bij het wijzigen van het incident template',
+            ],
+            'delete' => [
+                'success' => 'De incident template is verwijderd.',
+                'failure' => 'De incident template kon niet worden verwijderd, probeer het opnieuw.',
             ],
         ],
     ],
@@ -50,20 +59,21 @@ return [
     // Incident Maintenance
     'schedule' => [
         'schedule'     => 'Gepland onderhoud',
+        'logged'       => '{0} Er zijn geen schema\'s, goed werk.|Je hebt één schema aangemaakt.|Je hebt <strong>:count</strong> schema\'s aangegeven.',
         'scheduled_at' => 'Gepland op :timestamp',
         'add'          => [
             'title'   => 'Gepland onderhoud toevoegen',
             'success' => 'Planning toegevoegd.',
-            'failure' => 'Er ging iets mis bij het toevoegen van de planning.',
+            'failure' => 'Er ging iets mis met het toevoegen van het geplande onderhoud, probeer het opnieuw.',
         ],
         'edit' => [
             'title'   => 'Gepland onderhoud bewerken',
             'success' => 'Planning is bijgewerkt!',
-            'failure' => 'Er ging iets mis bij het bewerken van de planning.',
+            'failure' => 'Er ging iets mis met het wijzigen van het geplande onderhoud, probeer het opnieuw.',
         ],
         'delete' => [
-            'success' => 'De planning is verwijderd en zal niet worden getoond op je statuspagina.',
-            'failure' => 'De planning kon niet worden verwijderd. Probeer het nogmaals.',
+            'success' => 'De planning is verwijderd en zal niet worden getoond op jouw statuspagina.',
+            'failure' => 'De planning kon niet worden verwijderd, probeer het opnieuw.',
         ],
     ],
 
@@ -73,15 +83,19 @@ return [
         'component_statuses' => 'Onderdeel statussen',
         'listed_group'       => 'Gegroepeerd onder :name',
         'add'                => [
-            'title'   => 'Voeg een onderdeel toe',
+            'title'   => 'Voeg een component toe',
             'message' => 'Gelieve een onderdeel toe te voegen.',
             'success' => 'Onderdeel aangemaakt.',
-            'failure' => 'Er ging iets mis met het onderdeel.',
+            'failure' => 'Er ging iets mis met de component group, probeer het opnieuw.',
         ],
         'edit' => [
-            'title'   => 'Een onderdeel bewerken',
+            'title'   => 'Wijzig een component',
             'success' => 'Onderdeel bijgewerkt.',
-            'failure' => 'Er ging iets mis met het onderdeel.',
+            'failure' => 'Er ging iets mis met de component group, probeer het opnieuw.',
+        ],
+        'delete' => [
+            'success' => 'Het component is verwijderd!',
+            'failure' => 'Het component kon niet worden verwijderd, probeer het opnieuw.',
         ],
 
         // Component groups
@@ -90,13 +104,17 @@ return [
             'no_components' => 'U moet een componentgroep toevoegen.',
             'add'           => [
                 'title'   => 'Componentgroep toevoegen',
-                'success' => 'Onderdeel groep toegevoegd.',
-                'failure' => 'Er ging iets mis met de onderdeel groep.',
+                'success' => 'Componentengroep toegevoegd.',
+                'failure' => 'Er ging iets mis met de componentengroep, probeer het opnieuw.',
             ],
             'edit' => [
                 'title'   => 'Componentgroep bewerken',
-                'success' => 'Componentgroep bijgewerkt.',
-                'failure' => 'Er ging iets mis met de componentgroep.',
+                'success' => 'Componentengroep bijgewerkt.',
+                'failure' => 'Er ging iets mis met de componentengroep, probeer het opnieuw.',
+            ],
+            'delete' => [
+                'success' => 'De component groep is verwijderd!',
+                'failure' => 'De componentengroep kon niet worden verwijderd, probeer het opnieuw.',
             ],
         ],
     ],
@@ -106,30 +124,38 @@ return [
         'metrics' => 'Statistieken',
         'add'     => [
             'title'   => 'Meting aanmaken',
+            'message' => 'Voeg een meting toe.',
             'success' => 'Meting aangemaakt.',
-            'failure' => 'Er ging iets mis met de meting.',
+            'failure' => 'Er ging iets mis met de metingen, probeer het opnieuw.',
         ],
         'edit' => [
             'title'   => 'Meting bewerken',
             'success' => 'Meting bijgewerkt.',
-            'failure' => 'Er ging iets mis met de meting.',
+            'failure' => 'Er ging iets mis met de metingen, probeer het opnieuw.',
+        ],
+        'delete' => [
+            'success' => 'De meting is verwijderd en zal niet meer worden weergegeven op de statuspagina.',
+            'failure' => 'De meting kon niet verwijderd worden, probeer het opnieuw.',
         ],
     ],
     // Subscribers
     'subscribers' => [
-        'subscribers'  => '',
-        'description'  => '',
-        'verified'     => '',
-        'not_verified' => '',
-        'add'          => [
-            'title'   => '',
-            'success' => '',
-            'failure' => '',
+        'subscribers'      => 'Abonnees',
+        'description'      => 'Abonnees ontvangen een email update wanneer er incidenten zijn gemaakt of componenten worden bijgewerkt.',
+        'verified'         => 'Geverifiëerd',
+        'not_verified'     => 'Niet geverifiëerd',
+        'subscriber'       => ':email, geabonneerd op :date',
+        'no_subscriptions' => 'Geabonneerd op alle updates',
+        'add'              => [
+            'title'   => 'Voeg een nieuwe abonnee toe',
+            'success' => 'Abonnee is toegevoegd!',
+            'failure' => 'Er ging iets mis met het toevoegen van de abonnee, probeer het opnieuw.',
+            'help'    => 'Vul elke abonnee in op een nieuwe regel',
         ],
         'edit' => [
-            'title'   => '',
-            'success' => '',
-            'failure' => '',
+            'title'   => 'Abonnee bijwerken',
+            'success' => 'Abonnee is gewijzigd!',
+            'failure' => 'Er ging iets verkeerd met bewerken van de abonnee, probeer het opnieuw.',
         ],
     ],
 
@@ -142,16 +168,21 @@ return [
         'add'         => [
             'title'   => 'Voeg een nieuw teamlid toe',
             'success' => 'Teamlid toegevoegd.',
-            'failure' => 'Er ging iets mis met het onderdeel.',
+            'failure' => 'Het teamlid kon niet worden toegevoegd, probeer het opnieuw.',
         ],
         'edit' => [
             'title'   => 'Profiel bijwerken',
             'success' => 'Profiel bijgewerkt.',
-            'failure' => 'Er ging iets mis tijdens het bijwerken.',
+            'failure' => 'Er ging iets mis met het bijwerken van het profiel, probeer het opnieuw.',
         ],
         'delete' => [
-            'success' => '',
-            'failure' => '',
+            'success' => 'Het teamlid is verwijderd en heeft geen toegang meer tot het dashboard!',
+            'failure' => 'Het teamlid kon niet worden toegevoegd, probeer het opnieuw.',
+        ],
+        'invite' => [
+            'title'   => 'Nodig een nieuw teamlid uit',
+            'success' => 'De uitnodiging is verzonden',
+            'failure' => 'De uitnodiging kon niet verzonden worden, probeer het opnieuw.',
         ],
     ],
 
@@ -164,10 +195,15 @@ return [
             'too-big'     => 'Het bestand dat u heeft geüpload is te groot. Upload een afbeelding kleiner dan :size',
         ],
         'analytics' => [
-            'analytics' => 'Analytics',
+            'analytics' => 'Analyses',
         ],
         'localization' => [
-            'localization' => 'Localization',
+            'localization' => 'Lokalisatie',
+        ],
+        'customization' => [
+            'customization' => 'Aanpassing',
+            'header'        => 'Aangepaste Header HTML',
+            'footer'        => 'Aangepaste voettekst HTML',
         ],
         'security' => [
             'security'   => 'Beveiliging',
@@ -182,6 +218,14 @@ return [
         'edit' => [
             'success' => 'Instellingen bewaard.',
             'failure' => 'Instellingen kunnen niet worden opgeslagen.',
+        ],
+        'credits' => [
+            'credits'       => 'Credits',
+            'contributors'  => 'Contributors',
+            'license'       => 'Cachet is a BSD-3-licensed open source project, released by <a href="https://alt-three.com/?utm_source=cachet&utm_medium=credits&utm_campaign=Cachet%20Credit%20Dashboard" target="_blank">Alt Three Services Limited</a>.',
+            'backers-title' => 'Backers & Sponsors',
+            'backers'       => 'If you\'d like to support future development, check out the <a href="https://patreon.com/jbrooksuk" target="_blank">Cachet Patreon</a> campaign.',
+            'thank-you'     => 'Thank you to each and every one of the :count contributors.',
         ],
     ],
 
@@ -205,11 +249,19 @@ return [
         'whoops'        => 'Oepsie.',
     ],
 
+    // Widgets
+    'widgets' => [
+        'support'          => 'Support Cachet',
+        'support_subtitle' => 'Check out our <strong><a href="https://patreon.com/jbrooksuk" target="_blank">Patreon</a></strong> page!',
+        'news'             => 'Latest News',
+        'news_subtitle'    => 'Get the latest updates',
+    ],
+
     // Welcome modal
     'welcome' => [
-        'welcome' => 'Welkom bij Cachet',
+        'welcome' => 'Welkom op je statuspagina!',
         'message' => 'Uw statuspagina is bijna klaar! U kunt deze extra instellingen configureren',
-        'close'   => 'Ga direct naar mijn dashboard',
+        'close'   => 'Stuur me direct naar mijn dashboard',
         'steps'   => [
             'component'  => 'Onderdelen maken',
             'incident'   => 'Incidenten aanmaken',

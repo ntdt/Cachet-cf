@@ -3,10 +3,10 @@
 @section('content')
     <div class="header">
         <div class="sidebar-toggler visible-xs">
-            <i class="icon ion-navicon"></i>
+            <i class="ion ion-navicon"></i>
         </div>
         <span class="uppercase">
-            <i class="icon ion-person"></i> {{ trans('dashboard.team.team') }}
+            <i class="ion ion-ios-people-outline"></i> {{ trans('dashboard.team.team') }}
         </span>
     </div>
     <div class="content-wrapper">
@@ -18,11 +18,11 @@
                     <fieldset>
                         <div class="form-group">
                             <label>{{ trans('forms.user.username') }}</label>
-                            <input type="text" class="form-control" name="username" value="{{ Input::old('username') }}" required>
+                            <input type="text" class="form-control" name="username" value="{{ Binput::old('username') }}" required>
                         </div>
                         <div class="form-group">
                             <label>{{ trans('forms.user.email') }}</label>
-                            <input type="email" class="form-control" name="email" value="{{ Input::old('email') }}" required>
+                            <input type="email" class="form-control" name="email" value="{{ Binput::old('email') }}" required>
                         </div>
                         <div class="form-group">
                             <label>{{ trans('forms.user.password') }}</label>
@@ -41,7 +41,10 @@
                     </fieldset>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success">{{ trans('forms.add') }}</button>
+                        <div class='btn-group'>
+                            <button type="submit" class="btn btn-success">{{ trans('forms.add') }}</button>
+                            <a class="btn btn-default" href="{{ route('dashboard.team.index') }}">{{ trans('forms.cancel') }}</a>
+                        </div>
                     </div>
                 </form>
             </div>

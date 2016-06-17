@@ -8,7 +8,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
+$pathConfig = new \Arthurh\CloudFoundry\PathConfig();
+$driverConfig = new \Arthurh\CloudFoundry\DriverConfig();
 return [
 
     /*
@@ -22,7 +23,7 @@ return [
     |
     */
 
-    'default' => env('CACHE_DRIVER', 'file'),
+    'default' => $driverConfig->getCacheDriver(),
 
     /*
     |--------------------------------------------------------------------------
@@ -46,27 +47,29 @@ return [
         ],
 
         'database' => [
-            'driver'     => 'database',
-            'table'      => 'cache',
+            'driver' => 'database',
+            'table' => 'cache',
             'connection' => null,
         ],
 
         'file' => [
             'driver' => 'file',
-            'path'   => storage_path().'/framework/cache',
+            'path' => $pathConfig->getStoragePath('framework/cache'),
         ],
 
         'memcached' => [
-            'driver'  => 'memcached',
+            'driver' => 'memcached',
             'servers' => [
                 [
-                    'host' => '127.0.0.1', 'port' => 11211, 'weight' => 100,
+                    'host' => '127.0.0.1',
+                    'port' => 11211,
+                    'weight' => 100,
                 ],
             ],
         ],
 
         'redis' => [
-            'driver'     => 'redis',
+            'driver' => 'redis',
             'connection' => 'default',
         ],
 

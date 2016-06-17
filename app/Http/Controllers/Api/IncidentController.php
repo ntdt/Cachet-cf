@@ -11,36 +11,40 @@
 
 namespace CachetHQ\Cachet\Http\Controllers\Api;
 
-use CachetHQ\Cachet\Commands\Incident\RemoveIncidentCommand;
-use CachetHQ\Cachet\Commands\Incident\ReportIncidentCommand;
-use CachetHQ\Cachet\Commands\Incident\UpdateIncidentCommand;
+use CachetHQ\Cachet\Bus\Commands\Incident\RemoveIncidentCommand;
+use CachetHQ\Cachet\Bus\Commands\Incident\ReportIncidentCommand;
+use CachetHQ\Cachet\Bus\Commands\Incident\UpdateIncidentCommand;
 use CachetHQ\Cachet\Models\Incident;
 use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\QueryException;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class IncidentController extends AbstractApiController
 {
-    use DispatchesJobs;
-
     /**
      * Get all incidents.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Illuminate\Contracts\Auth\Guard          $auth
-     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getIncidents(Request $request, Guard $auth)
+    public function getIncidents()
     {
-        $incidentVisiblity = $auth->check() ? 0 : 1;
+        $incidentVisibility = app(Guard::class)->check() ? 0 : 1;
 
-        $incidents = Incident::where('visible', '>=', $incidentVisiblity)->paginate(Binput::get('per_page', 20));
+        $incidents = Incident::where('visible', '>=', $incidentVisibility);
 
-        return $this->paginator($incidents, $request);
+        $incidents->search(Binput::except(['sort', 'order', 'per_page']));
+
+        if ($sortBy = Binput::get('sort')) {
+            $direction = Binput::has('order') && Binput::get('order') == 'desc';
+
+            $incidents->sort($sortBy, $direction);
+        }
+
+        $incidents = $incidents->paginate(Binput::get('per_page', 20));
+
+        return $this->paginator($incidents, Request::instance());
     }
 
     /**
@@ -58,14 +62,12 @@ class IncidentController extends AbstractApiController
     /**
      * Create a new incident.
      *
-     * @param \Illuminate\Contracts\Auth\Guard $auth
-     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postIncidents(Guard $auth)
+    public function postIncidents()
     {
         try {
-            $incident = $this->dispatch(new ReportIncidentCommand(
+            $incident = dispatch(new ReportIncidentCommand(
                 Binput::get('name'),
                 Binput::get('status'),
                 Binput::get('message'),
@@ -87,14 +89,14 @@ class IncidentController extends AbstractApiController
     /**
      * Update an existing incident.
      *
-     * @param \CachetHQ\Cachet\Models\Inicdent $incident
+     * @param \CachetHQ\Cachet\Models\Incident $incident
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function putIncident(Incident $incident)
     {
         try {
-            $incident = $this->dispatch(new UpdateIncidentCommand(
+            $incident = dispatch(new UpdateIncidentCommand(
                 $incident,
                 Binput::get('name'),
                 Binput::get('status'),
@@ -117,13 +119,13 @@ class IncidentController extends AbstractApiController
     /**
      * Delete an existing incident.
      *
-     * @param \CachetHQ\Cachet\Models\Inicdent $incident
+     * @param \CachetHQ\Cachet\Models\Incident $incident
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function deleteIncident(Incident $incident)
     {
-        $this->dispatch(new RemoveIncidentCommand($incident));
+        dispatch(new RemoveIncidentCommand($incident));
 
         return $this->noContent();
     }

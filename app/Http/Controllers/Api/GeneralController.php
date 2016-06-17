@@ -11,6 +11,13 @@
 
 namespace CachetHQ\Cachet\Http\Controllers\Api;
 
+use CachetHQ\Cachet\Integrations\Releases;
+
+/**
+ * This is the general api controller.
+ *
+ * @author James Brooks <james@bluebaytravel.co.uk>
+ */
 class GeneralController extends AbstractApiController
 {
     /**
@@ -21,5 +28,20 @@ class GeneralController extends AbstractApiController
     public function ping()
     {
         return $this->item('Pong!');
+    }
+
+    /**
+     * Endpoint to show the Cachet version.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function version()
+    {
+        $latest = app(Releases::class)->latest();
+
+        return $this->setMetaData([
+            'on_latest' => version_compare(CACHET_VERSION, $latest['tag_name']) === 1,
+            'latest'    => $latest,
+        ])->item(CACHET_VERSION);
     }
 }

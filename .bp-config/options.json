@@ -1,4 +1,26 @@
 {
-    "WEBDIR": "public",
-    "PHP_EXTENSIONS": ["pdo", "pdo_mysql", "redis", "bz2", "zlib", "curl", "mcrypt"]
+  "COMPOSER_VENDOR_DIR": "{BUILD_DIR}/vendor",
+  "WEBDIR": "public",
+  "LIBDIR": "./",
+  "PHP_EXTENSIONS": [
+    "pdo",
+    "pdo_mysql",
+    "redis",
+    "bz2",
+    "zlib",
+    "curl",
+    "mcrypt",
+    "mbstring",
+    "json",
+    "tokenizer",
+    "spl",
+    "reflection",
+    "dom"
+  ],
+  "COMPOSER_INSTALL_OPTIONS": [
+    "--no-interaction",
+    "--no-dev",
+    "--no-progress",
+    "--prefer-dist"
+  ]
 }

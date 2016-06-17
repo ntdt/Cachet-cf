@@ -15,77 +15,85 @@ return [
     'setup' => [
         'email'            => '电子邮箱',
         'username'         => '用户名',
-        'password'         => '密码',
-        'site_name'        => '网站名称',
+        'password'         => 'Password',
+        'site_name'        => '站点名称',
         'site_domain'      => '域名',
-        'site_timezone'    => '选择您的时区',
-        'site_locale'      => '选择您的语言',
-        'enable_google2fa' => '启用谷歌双因素身份验证',
-        'cache_driver'     => '缓存驱动',
-        'session_driver'   => '会话驱动',
+        'site_timezone'    => 'Select your timezone',
+        'site_locale'      => 'Select your language',
+        'enable_google2fa' => 'Enable Google Two Factor Authentication',
+        'cache_driver'     => 'Cache Driver',
+        'session_driver'   => 'Session Driver',
     ],
 
     // Login form fields
     'login' => [
+        'login'         => '用户名或者邮箱地址',
         'email'         => '电子邮箱',
         'password'      => '密码',
-        '2fauth'        => '双因素验证代码',
-        'invalid'       => '无效的电子邮件或密码。',
-        'invalid-token' => '无效的令牌。',
-        'cookies'       => '您必须启用 cookies 来进行登录。',
+        '2fauth'        => 'Authentication Code',
+        'invalid'       => '无效的用户名或密码',
+        'invalid-token' => 'Invalid token',
+        'cookies'       => 'You must enable cookies to login.',
+        'rate-limit'    => 'Rate limit exceeded.',
     ],
 
     // Incidents form fields
     'incidents' => [
         'name'               => '名称',
-        'status'             => '状态',
-        'component'          => '组件',
+        'status'             => 'Status',
+        'component'          => 'Component',
         'message'            => '描述',
-        'message-help'       => '您可以使用Markdown语言。',
-        'scheduled_at'       => '什么时间安排维护？',
+        'message-help'       => 'You may also use Markdown.',
+        'scheduled_at'       => 'When to schedule the maintenance for?',
         'incident_time'      => '这次故障是什么时候发生的？',
         'notify_subscribers' => '通知订阅者',
         'visibility'         => '故障的可见性',
-        'public'             => '公共可见',
+        'public'             => 'Viewable by public',
         'logged_in_only'     => '仅登录用户可见',
         'templates'          => [
-            'name'     => '故障模板名称',
-            'template' => '模板',
-            'twig'     => '故障模板可使用 <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> 模板引擎的语法.',
+            'name'     => '事件名',
+            'template' => 'Template',
+            'twig'     => '故障模板可以使用 <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> 模板语言',
         ],
     ],
 
     // Components form fields
     'components' => [
-        'name'        => '组件名称',
-        'status'      => '组件状态',
+        'name'        => '组件名',
+        'status'      => '状态',
         'group'       => '组件分组',
         'description' => '组件描述',
-        'link'        => '链接',
-        'tags'        => '标签',
-        'tags-help'   => '以逗号分隔。',
+        'link'        => 'Link',
+        'tags'        => 'Tags',
+        'tags-help'   => 'Comma separated.',
         'enabled'     => '启用',
 
         'groups' => [
-            'name'        => '组名',
+            'name'               => '组名',
+            'collapsing'         => '选择分组可见',
+            'visible'            => '总是展开',
+            'collapsed'          => '默认折叠',
+            'collapsed_incident' => '折叠分组，但当有故障时展开',
         ],
     ],
 
     // Metric form fields
     'metrics' => [
         'name'             => '图表名',
-        'suffix'           => '后缀',
+        'suffix'           => 'Suffix',
         'description'      => '描述信息',
         'description-help' => '您可以使用Markdown语言。',
-        'display-chart'    => '在状态页上显示图表?',
+        'display-chart'    => 'Display chart on status page?',
         'default-value'    => '默认值',
         'calc_type'        => '图表计算方法',
-        'type_sum'         => '求和',
-        'type_avg'         => '求平均数',
+        'type_sum'         => 'Sum',
+        'type_avg'         => 'Average',
         'places'           => '小数点位数',
+        'default_view'     => '默认视图',
+        'threshold'        => 'How many minutes of threshold between metric points?',
 
         'points' => [
-            'value' => '数值',
+            'value' => 'Value',
         ],
     ],
 
@@ -93,20 +101,21 @@ return [
     'settings' => [
         /// Application setup
         'app-setup' => [
-            'site-name'              => '网站名称',
+            'site-name'              => '站点名称',
             'site-url'               => '网址',
-            'display-graphs'         => '是否在状态页上显示图表',
+            'display-graphs'         => 'Display graphs on status page?',
             'about-this-page'        => '关于本页',
             'days-of-incidents'      => '显示多少天的故障？',
             'banner'                 => '横幅图像',
-            'banner-help'            => '建议上传文件宽度不大于930像素。',
-            'subscribers'            => '允许用户订阅邮件通知吗?',
+            'banner-help'            => "It's recommended that you upload files no bigger than 930px wide .",
+            'subscribers'            => 'Allow people to signup to email notifications?',
+            'automatic_localization' => '根据访客的系统语言自动本地化状态页面？',
         ],
         'analytics' => [
             'analytics_google'       => 'Google Analytics 代码',
             'analytics_gosquared'    => 'GoSquared Analytics 代码',
             'analytics_piwik_url'    => '输入Piwik实例的URL(不含http(s)://)',
-            'analytics_piwik_siteid' => 'Piwik 网站的 id',
+            'analytics_piwik_siteid' => 'Piwik 的站点 id',
         ],
         'localization' => [
             'site-timezone'          => '系统时区',
@@ -116,17 +125,17 @@ return [
         ],
         'security' => [
             'allowed-domains'      => '允许的域',
-            'allowed-domains-help' => '以逗号分隔。默认情况下，API跨域请求将自动允许以上已设置的域。',
+            'allowed-domains-help' => 'Comma separated. The domain set above is automatically allowed by default.',
         ],
         'stylesheet' => [
-            'custom-css' => '自定义样式表',
+            'custom-css' => '自定义 CSS 样式表',
         ],
         'theme' => [
-            'background-color'        => '页面背景色',
+            'background-color'        => '背景色',
             'background-fills'        => '区块填充色(组件, 故障, 页尾)',
             'banner-background-color' => '横幅背景色',
             'banner-padding'          => '横幅Padding值',
-            'fullwidth-banner'        => '横幅全宽？',
+            'fullwidth-banner'        => '启用全宽横幅？',
             'text-color'              => '文字颜色',
             'dashboard-login'         => '在页尾显示 管理后台 的入口？',
             'reds'                    => '红 (用于错误类提示)',
@@ -140,7 +149,7 @@ return [
     ],
 
     'user' => [
-        'username'       => '用户名',
+        'username'       => 'Username',
         'email'          => '电子邮箱',
         'password'       => '密码',
         'api-token'      => 'API Token',
@@ -151,7 +160,7 @@ return [
             'admin' => '管理员',
             'user'  => '普通用户',
         ],
-        '2fa'            => [
+        '2fa' => [
             'help' => '启用双因素身份验证会增加您的帐户安全。您将需要下载 <a href="https://support.google.com/accounts/answer/1066447?hl=en">Google Authenticator</a> 或类似的应用到您的移动设备。当您登录时将会要求您提供由应用程序生成的一个短码。',
         ],
         'team' => [
@@ -161,18 +170,18 @@ return [
     ],
 
     // Buttons
-    'add'    => '增加',
-    'save'   => '保存​​',
-    'update' => '更新',
-    'create' => '创建',
-    'edit'   => '编辑',
-    'delete' => '删除',
-    'submit' => '提交',
-    'cancel' => '取消',
-    'remove' => '移除',
+    'add'    => 'Add',
+    'save'   => 'Save',
+    'update' => 'Update',
+    'create' => 'Create',
+    'edit'   => 'Edit',
+    'delete' => 'Delete',
+    'submit' => 'Submit',
+    'cancel' => 'Cancel',
+    'remove' => 'Remove',
     'invite' => '邀请',
     'signup' => '注册',
 
     // Other
-    'optional' => '* 可选',
+    'optional' => '* Optional',
 ];

@@ -13,6 +13,7 @@ namespace CachetHQ\Cachet\Http\Middleware;
 
 use Closure;
 use Illuminate\Config\Repository;
+use Illuminate\Http\Request;
 use Jenssegers\Date\Date;
 
 class Localize
@@ -25,14 +26,14 @@ class Localize
     protected $langs;
 
     /**
-     * Config repository.
+     * The config repository instance.
      *
      * @var \Illuminate\Config\Repository
      */
     protected $config;
 
     /**
-     * Constructs a new localize instance.
+     * Constructs a new localize middleware instance.
      *
      * @param \Illuminate\Config\Repository $config
      *
@@ -52,8 +53,12 @@ class Localize
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
+        if (!(bool) $this->config->get('setting.automatic_localization')) {
+            return $next($request);
+        }
+
         $supportedLanguages = $request->getLanguages();
         $userLanguage = $this->config->get('app.locale');
 

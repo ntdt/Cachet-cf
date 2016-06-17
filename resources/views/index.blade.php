@@ -5,11 +5,11 @@
     @include('dashboard.partials.errors')
 </div>
 
-@include('partials.about-app')
-
 <div class="section-status">
-    <div class="alert alert-{{ $systemStatus }}">{{ $systemMessage }}</div>
+    <div class="alert alert-{{ $system_status }}">{{ $system_message }}</div>
 </div>
+
+@include('partials.about-app')
 
 @if(!$component_groups->isEmpty() || !$ungrouped_components->isEmpty())
 <div class="section-components">
@@ -56,4 +56,5 @@
     </ul>
 </nav>
 @endif
+
 @stop

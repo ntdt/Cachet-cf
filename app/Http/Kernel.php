@@ -23,10 +23,26 @@ class Kernel extends HttpKernel
     protected $middleware = [
         'Fideloper\Proxy\TrustProxies',
         'Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode',
-        'Illuminate\Cookie\Middleware\EncryptCookies',
-        'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
-        'Illuminate\Session\Middleware\StartSession',
-        'Illuminate\View\Middleware\ShareErrorsFromSession',
+    ];
+
+    /**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [
+        'web' => [
+            'Illuminate\Cookie\Middleware\EncryptCookies',
+            'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
+            'Illuminate\Session\Middleware\StartSession',
+            'Illuminate\View\Middleware\ShareErrorsFromSession',
+            'Illuminate\Foundation\Http\Middleware\VerifyCsrfToken',
+        ],
+        'api' => [
+            'Barryvdh\Cors\HandleCors',
+            'CachetHQ\Cachet\Http\Middleware\Acceptable',
+            'CachetHQ\Cachet\Http\Middleware\Timezone',
+        ],
     ];
 
     /**
@@ -35,19 +51,14 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'accept'            => 'CachetHQ\Cachet\Http\Middleware\Acceptable',
-        'admin'             => 'CachetHQ\Cachet\Http\Middleware\Admin',
-        'app.hasSetting'    => 'CachetHQ\Cachet\Http\Middleware\HasSetting',
-        'app.isSetup'       => 'CachetHQ\Cachet\Http\Middleware\AppIsSetup',
-        'app.subscribers'   => 'CachetHQ\Cachet\Http\Middleware\SubscribersConfigured',
-        'auth'              => 'CachetHQ\Cachet\Http\Middleware\Authenticate',
-        'auth.api'          => 'CachetHQ\Cachet\Http\Middleware\ApiAuthenticate',
-        'auth.basic'        => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-        'auth.api.optional' => 'CachetHQ\Cachet\Http\Middleware\ApiOptionalAuthenticate',
-        'csrf'              => 'Illuminate\Foundation\Http\Middleware\VerifyCsrfToken',
-        'guest'             => 'CachetHQ\Cachet\Http\Middleware\RedirectIfAuthenticated',
-        'localize'          => 'CachetHQ\Cachet\Http\Middleware\Localize',
-        'timezone'          => 'CachetHQ\Cachet\Http\Middleware\Timezone',
-        'throttling'        => 'GrahamCampbell\Throttle\Http\Middleware\ThrottleMiddleware',
+        'admin'       => 'CachetHQ\Cachet\Http\Middleware\Admin',
+        'auth'        => 'CachetHQ\Cachet\Http\Middleware\Authenticate',
+        'auth.api'    => 'CachetHQ\Cachet\Http\Middleware\ApiAuthentication',
+        'guest'       => 'CachetHQ\Cachet\Http\Middleware\RedirectIfAuthenticated',
+        'localize'    => 'CachetHQ\Cachet\Http\Middleware\Localize',
+        'ready'       => 'CachetHQ\Cachet\Http\Middleware\ReadyForUse',
+        'setup'       => 'CachetHQ\Cachet\Http\Middleware\SetupAlreadyCompleted',
+        'subscribers' => 'CachetHQ\Cachet\Http\Middleware\SubscribersConfigured',
+        'throttle'    => 'AltThree\Throttle\ThrottlingMiddleware',
     ];
 }

@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
+$pathConfig = new \Arthurh\CloudFoundry\PathConfig();
 return [
 
     /*
@@ -22,9 +22,7 @@ return [
     |
     */
 
-    'paths' => [
-        realpath(base_path('resources/views')),
-    ],
+    'paths' => [$pathConfig->getBasePath('resources/views')],
 
     /*
     |--------------------------------------------------------------------------
@@ -37,6 +35,6 @@ return [
     |
     */
 
-    'compiled' => realpath(storage_path().'/framework/views'),
+    'compiled' => $pathConfig->getStoragePath('framework/views'),
 
 ];

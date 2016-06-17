@@ -11,14 +11,16 @@
 
 namespace CachetHQ\Tests\Cachet\Api;
 
-use CachetHQ\Tests\Cachet\AbstractTestCase;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class MetricPointTest extends AbstractTestCase
+/**
+ * This is the metric point test class.
+ *
+ * @author James Brooks <james@alt-three.com>
+ * @author Graham Campbell <graham@alt-three.com>
+ */
+class MetricPointTest extends AbstractApiTestCase
 {
-    use DatabaseMigrations;
-
     public function testGetMetricPoint()
     {
         $metric = factory('CachetHQ\Cachet\Models\Metric')->create();
@@ -27,9 +29,12 @@ class MetricPointTest extends AbstractTestCase
         ]);
 
         $this->get("/api/v1/metrics/{$metric->id}/points");
+
         $this->seeJson(['id' => $metricPoint[0]->id]);
         $this->seeJson(['id' => $metricPoint[1]->id]);
         $this->seeJson(['id' => $metricPoint[2]->id]);
+
+        $this->assertResponseOk();
     }
 
     public function testPostMetricPointUnauthorized()
@@ -53,7 +58,10 @@ class MetricPointTest extends AbstractTestCase
         ]);
 
         $this->post("/api/v1/metrics/{$metric->id}/points", $metricPoint->toArray());
+
         $this->seeJson(['value' => $metricPoint->value]);
+
+        $this->assertResponseOk();
     }
 
     public function testPostMetricPointTimestamp()
@@ -70,7 +78,10 @@ class MetricPointTest extends AbstractTestCase
         $postData['timestamp'] = $timestamp;
 
         $this->post("/api/v1/metrics/{$metric->id}/points", $postData);
+
         $this->seeJson(['value' => $metricPoint->value, 'created_at' => $datetime]);
+
+        $this->assertResponseOk();
     }
 
     public function testPostMetricPointTimestampTimezone()
@@ -81,18 +92,23 @@ class MetricPointTest extends AbstractTestCase
 
         $this->beUser();
 
+        // prevent tests breaking due to rolling into the next second
+        Carbon::setTestNow(Carbon::now());
+
         $timezone = 'America/Mexico_City';
         $metric = factory('CachetHQ\Cachet\Models\Metric')->create();
-        $timestamp = Carbon::now()->timezone($timezone)->timestamp;
-        $datetime = Carbon::now()->toDateTimeString();
+        $datetime = Carbon::now()->timezone($timezone);
         $metricPoint = factory('CachetHQ\Cachet\Models\MetricPoint')->make([
             'metric_id' => $metric->id,
         ]);
         $postData = $metricPoint->toArray();
-        $postData['timestamp'] = $timestamp;
+        $postData['timestamp'] = $datetime->timestamp;
 
         $this->post("/api/v1/metrics/{$metric->id}/points", $postData, ['Time-Zone' => $timezone]);
-        $this->seeJson(['value' => $metricPoint->value, 'created_at' => $datetime]);
+
+        $this->seeJson(['value' => $metricPoint->value, 'created_at' => $datetime->toDateTimeString()]);
+
+        $this->assertResponseOk();
     }
 
     public function testPutMetricPoint()
@@ -102,10 +118,14 @@ class MetricPointTest extends AbstractTestCase
         $metricPoint = factory('CachetHQ\Cachet\Models\MetricPoint')->create([
             'metric_id' => $metric->id,
         ]);
+
         $this->put("/api/v1/metrics/{$metric->id}/points/{$metricPoint->id}", [
             'value' => 999,
         ]);
+
         $this->seeJson(['value' => 999]);
+
+        $this->assertResponseOk();
     }
 
     public function testDeleteMetricPoint()
@@ -115,7 +135,9 @@ class MetricPointTest extends AbstractTestCase
         $metricPoint = factory('CachetHQ\Cachet\Models\MetricPoint')->create([
             'metric_id' => $metric->id,
         ]);
+
         $this->delete("/api/v1/metrics/{$metric->id}/points/{$metricPoint->id}");
+
         $this->assertResponseStatus(204);
     }
 }

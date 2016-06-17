@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
+$pathConfig = new \Arthurh\CloudFoundry\PathConfig();
 return [
 
     /*
@@ -54,32 +54,21 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root'   => storage_path().'/app',
+            'root' => $pathConfig->getStoragePath('app'),
         ],
 
-        'ftp' => [
-            'driver'   => 'ftp',
-            'host'     => 'ftp.example.com',
-            'username' => 'your-username',
-            'password' => 'your-password',
+        'public' => [
+            'driver' => 'local',
+            'root' => $pathConfig->getStoragePath('app/public'),
+            'visibility' => 'public',
         ],
 
         's3' => [
             'driver' => 's3',
-            'key'    => 'your-key',
+            'key' => 'your-key',
             'secret' => 'your-secret',
             'region' => 'your-region',
             'bucket' => 'your-bucket',
-        ],
-
-        'rackspace' => [
-            'driver'    => 'rackspace',
-            'username'  => 'your-username',
-            'key'       => 'your-key',
-            'container' => 'your-container',
-            'endpoint'  => 'https://identity.api.rackspacecloud.com/v2.0/',
-            'region'    => 'IAD',
-            'url_type'  => 'publicURL',
         ],
 
     ],

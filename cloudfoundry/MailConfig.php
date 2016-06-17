@@ -11,6 +11,12 @@ class MailConfig
      * @var CfHelper
      */
     private $cfHelper;
+    private $knownHosts = [
+        'sendmail' => [
+            'port' => 587,
+            'encryption' => 'tls'
+        ]
+    ];
 
     public function __construct()
     {
@@ -60,9 +66,13 @@ class MailConfig
         }
         $this->config['encryption'] = '';
         $this->config['sendmail'] = '';
-        $this->config['host'] = $smtp->getValue("host");
-        $this->config['password'] = $smtp->getValue("password");
-        $this->config['username'] = $smtp->getValue("username");
+        $this->config['host'] = $smtp->getValue(".*host.*");
+        $this->config['password'] = $smtp->getValue(".*pass.*");
+        $this->config['username'] = $smtp->getValue(".*user.*");
         $this->config['port'] = $smtp->getValue("port");
+        if (isset($this->knownHosts[$smtp->getLabel()])) {
+            $this->config['encryption'] = $this->knownHosts[$smtp->getLabel()]['encryption'];
+            $this->config['port'] = $this->knownHosts[$smtp->getLabel()]['port'];
+        }
     }
 }

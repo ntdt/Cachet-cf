@@ -3,10 +3,10 @@
 @section('content')
     <div class="header">
         <div class="sidebar-toggler visible-xs">
-            <i class="icon ion-navicon"></i>
+            <i class="ion ion-navicon"></i>
         </div>
         <span class="uppercase">
-            <i class="icons ion-ios-keypad"></i> {{ trans_choice('dashboard.components.groups.groups', 2) }}
+            <i class="ion  ion-ios-keypad"></i> {{ trans_choice('dashboard.components.groups.groups', 2) }}
         </span>
         &gt; <small>{{ trans('dashboard.components.groups.edit.title') }}</small>
     </div>
@@ -18,8 +18,16 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <fieldset>
                         <div class="form-group">
-                            <label for="incident-name">{{ trans('forms.components.groups.name') }}</label>
+                            <label>{{ trans('forms.components.groups.name') }}</label>
                             <input type="text" class="form-control" name="name" id="group-name" value="{{ $group->name }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ trans('forms.components.groups.collapsing') }}</label>
+                            <select name="collapsed" class="form-control" required>
+                                <option value="0" {{ $group->collapsed === 0 ? "selected" : null }}>{{ trans('forms.components.groups.visible') }}</option>
+                                <option value="1" {{ $group->collapsed === 1 ? "selected" : null }}>{{ trans('forms.components.groups.collapsed') }}</option>
+                                <option value="2" {{ $group->collapsed === 2 ? "selected" : null }}>{{ trans('forms.components.groups.collapsed_incident') }}</option>
+                            </select>
                         </div>
                     </fieldset>
 

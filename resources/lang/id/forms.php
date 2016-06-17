@@ -27,12 +27,14 @@ return [
 
     // Login form fields
     'login' => [
+        'login'         => 'Username or Email',
         'email'         => 'Email',
         'password'      => 'Password',
         '2fauth'        => 'Kode Otentikasi',
-        'invalid'       => 'Email atau password tidak benar',
+        'invalid'       => 'Invalid username or password',
         'invalid-token' => 'Token tidak benar',
         'cookies'       => 'Mohon aktifkan cookies untuk login.',
+        'rate-limit'    => 'Rate limit exceeded.',
     ],
 
     // Incidents form fields
@@ -45,7 +47,7 @@ return [
         'scheduled_at'       => 'Berapa lama pemeliharaan ini dijadwalkan?',
         'incident_time'      => 'Kapan insiden ini terjadi?',
         'notify_subscribers' => 'Beritahu subscriber',
-        'visibility'         => 'Tampilan Insiden',
+        'visibility'         => 'Incident Visibility',
         'public'             => 'Bisa dilihat oleh publik',
         'logged_in_only'     => 'Hanya bisa dilihat oleh yang login',
         'templates'          => [
@@ -67,7 +69,11 @@ return [
         'enabled'     => 'Component enabled?',
 
         'groups' => [
-            'name' => 'Nama',
+            'name'               => 'Nama',
+            'collapsing'         => 'Choose visibility of the group',
+            'visible'            => 'Always expanded',
+            'collapsed'          => 'Collapse the group by default',
+            'collapsed_incident' => 'Collapse the group, but expand if there are issues',
         ],
     ],
 
@@ -82,6 +88,9 @@ return [
         'calc_type'        => 'Kalkulasi metrik',
         'type_sum'         => 'Jumlah',
         'type_avg'         => 'Rata-rata',
+        'places'           => 'Digit Desimal',
+        'default_view'     => 'Default view',
+        'threshold'        => 'How many minutes of threshold between metric points?',
 
         'points' => [
             'value' => 'Nilai',
@@ -97,9 +106,10 @@ return [
             'display-graphs'         => 'Tampilkan grafik di halaman status?',
             'about-this-page'        => 'Tentang halaman ini',
             'days-of-incidents'      => 'Berapa hari insiden akan ditampilkan?',
-            'banner'                 => 'Gambar Banner',
+            'banner'                 => 'Banner Image',
             'banner-help'            => 'Disarankan gambar yang anda unggah tidak lebih lebar dari 930px.',
             'subscribers'            => 'Bolehkan pengunjung mendaftar notifikasi email?',
+            'automatic_localization' => 'Automatically localise your status page to your visitor\'s language?',
         ],
         'analytics' => [
             'analytics_google'       => 'Kode Google Analytics',
@@ -118,14 +128,23 @@ return [
             'allowed-domains-help' => 'Pisahkan dengan koma. Domain yang ada di atas otomatis akan dibolehkan.',
         ],
         'stylesheet' => [
-            'custom-css' => 'Stylesheet Kustom',
+            'custom-css' => 'Custom Stylesheet',
         ],
         'theme' => [
-            'background-color'        => 'Warna Latar',
-            'text-color'              => 'Warna Teks',
+            'background-color'        => 'Background Color',
+            'background-fills'        => 'Isian latar belakang (Komponen, Insiden, Footer)',
             'banner-background-color' => 'Banner Background Color',
             'banner-padding'          => 'Banner Padding',
             'fullwidth-banner'        => 'Enable fullwidth banner?',
+            'text-color'              => 'Text Color',
+            'dashboard-login'         => 'Tampilkan tombol dashboard di footer?',
+            'reds'                    => 'Merah (Digunakan jika ada kesalahan)',
+            'blues'                   => 'Biru (Digunakan jika ada informasi)',
+            'greens'                  => 'Hijau (Digunakan saat operasi berhasil)',
+            'yellows'                 => 'Kuning (Digunakan sebagai peringatan)',
+            'oranges'                 => 'Jingga (Digunakan sebagai pemberitahuan)',
+            'metrics'                 => 'Isian metrik',
+            'links'                   => 'Tautan',
         ],
     ],
 
@@ -136,7 +155,12 @@ return [
         'api-token'      => 'Token API',
         'api-token-help' => 'Pembuatan ulang token API akan bermasalah jika sudah ada aplikasi lain yang mengakses Cachet.',
         'gravatar'       => 'Change your profile picture at Gravatar.',
-        '2fa'            => [
+        'user_level'     => 'Tingkatan pengguna',
+        'levels'         => [
+            'admin' => 'Admin',
+            'user'  => 'User',
+        ],
+        '2fa' => [
             'help' => 'Mengaktifkan otentikasi dua faktor akan memperkuat keamanan akun anda. Anda perlu mengunduh <a href="https://support.google.com/accounts/answer/1066447?hl=en">Google Authenticator</a> atau app sejenis di gadget anda. Saat login anda akan ditanyakan untuk mengisi token yang dibuat oleh app tersebut.',
         ],
         'team' => [
@@ -155,6 +179,8 @@ return [
     'submit' => 'Kirim',
     'cancel' => 'Batalkan',
     'remove' => 'Buang',
+    'invite' => 'Undang',
+    'signup' => 'Daftar',
 
     // Other
     'optional' => '* Tidak wajib',

@@ -12,15 +12,28 @@
 namespace CachetHQ\Cachet\Models;
 
 use AltThree\Validator\ValidatingTrait;
+use CachetHQ\Cachet\Models\Traits\SortableTrait;
 use CachetHQ\Cachet\Presenters\MetricPresenter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
 class Metric extends Model implements HasPresenter
 {
-    use ValidatingTrait;
+    use SortableTrait, ValidatingTrait;
 
+    /**
+     * The calculation type of sum.
+     *
+     * @var int
+     */
     const CALC_SUM = 0;
+
+    /**
+     * The calculation type of average.
+     *
+     * @var int
+     */
     const CALC_AVG = 1;
 
     /**
@@ -34,6 +47,9 @@ class Metric extends Model implements HasPresenter
         'default_value' => 0,
         'calc_type'     => 0,
         'places'        => 2,
+        'default_view'  => 1,
+        'threshold'     => 5,
+        'order'         => 0,
     ];
 
     /**
@@ -42,12 +58,14 @@ class Metric extends Model implements HasPresenter
      * @var string[]
      */
     protected $casts = [
-        'id'            => 'int',
         'name'          => 'string',
         'display_chart' => 'bool',
         'default_value' => 'int',
         'calc_type'     => 'int',
         'places'        => 'int',
+        'default_view'  => 'int',
+        'threshold'     => 'int',
+        'order'         => 'int',
     ];
 
     /**
@@ -63,6 +81,9 @@ class Metric extends Model implements HasPresenter
         'default_value',
         'calc_type',
         'places',
+        'default_view',
+        'threshold',
+        'order',
     ];
 
     /**
@@ -75,7 +96,24 @@ class Metric extends Model implements HasPresenter
         'suffix'        => 'required',
         'display_chart' => 'bool',
         'default_value' => 'numeric',
-        'places'        => 'numeric|min:0|max:4',
+        'places'        => 'numeric|between:0,4',
+        'default_view'  => 'numeric|between:0,3',
+        'threshold'     => 'numeric|between:0,10',
+        'threshold'     => 'int',
+    ];
+
+    /**
+     * The sortable fields.
+     *
+     * @var string[]
+     */
+    protected $sortable = [
+        'id',
+        'name',
+        'display_chart',
+        'default_value',
+        'calc_type',
+        'order',
     ];
 
     /**
@@ -86,6 +124,18 @@ class Metric extends Model implements HasPresenter
     public function points()
     {
         return $this->hasMany(MetricPoint::class, 'metric_id', 'id');
+    }
+
+    /**
+     * Scope metrics to those of which are displayable.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeDisplayable(Builder $query)
+    {
+        return $query->where('display_chart', 1);
     }
 
     /**

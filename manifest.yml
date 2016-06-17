@@ -1,9 +1,18 @@
 ---
 name: cachettest
 env:
-  APP_KEY: W0CUoZdiYX3I0ysuvPTw2dFC9QQ0n6lC
+  APP_KEY: W0CUoZdiYX3I0ysuvPTw2dFC9QQ0n6lC # please change it
   APP_DEBUG: true
+  APP_NAME: cachet
+  DEFAULT_ADMIN_USERNAME: admin
+  DEFAULT_ADMIN_PASSWORD: p@ssw0rd
+  DEFAULT_ADMIN_EMAIL: admin@admin.com
+  APP_TIMEZONE: Europe/Paris
+  APP_LOCALE: en
+  MAIL_ADDRESS: support@mydomain.com # set the `from` mail address
+  USE_SSL: false # to enforce https on your app
 buildpack: php_buildpack
 services:
 - mysql-cachet
 - redis-cachet
+

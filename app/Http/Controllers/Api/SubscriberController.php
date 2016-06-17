@@ -11,31 +11,34 @@
 
 namespace CachetHQ\Cachet\Http\Controllers\Api;
 
-use CachetHQ\Cachet\Commands\Subscriber\SubscribeSubscriberCommand;
-use CachetHQ\Cachet\Commands\Subscriber\UnsubscribeSubscriberCommand;
+use CachetHQ\Cachet\Bus\Commands\Subscriber\SubscribeSubscriberCommand;
+use CachetHQ\Cachet\Bus\Commands\Subscriber\UnsubscribeSubscriberCommand;
+use CachetHQ\Cachet\Bus\Commands\Subscriber\UnsubscribeSubscriptionCommand;
 use CachetHQ\Cachet\Models\Subscriber;
+use CachetHQ\Cachet\Models\Subscription;
 use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Database\QueryException;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+/**
+ * This is the subscriber controller class.
+ *
+ * @author James Brooks <james@alt-three.com>
+ * @author Graham Campbell <graham@alt-three.com>
+ */
 class SubscriberController extends AbstractApiController
 {
-    use DispatchesJobs;
-
     /**
      * Get all subscribers.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getSubscribers(Request $request)
+    public function getSubscribers()
     {
         $subscribers = Subscriber::paginate(Binput::get('per_page', 20));
 
-        return $this->paginator($subscribers, $request);
+        return $this->paginator($subscribers, Request::instance());
     }
 
     /**
@@ -46,7 +49,11 @@ class SubscriberController extends AbstractApiController
     public function postSubscribers()
     {
         try {
-            $subscriber = $this->dispatch(new SubscribeSubscriberCommand(Binput::get('email'), Binput::get('verify', false)));
+            $subscriber = dispatch(new SubscribeSubscriberCommand(
+                Binput::get('email'),
+                Binput::get('verify', false),
+                Binput::get('components', null)
+            ));
         } catch (QueryException $e) {
             throw new BadRequestHttpException();
         }
@@ -63,7 +70,21 @@ class SubscriberController extends AbstractApiController
      */
     public function deleteSubscriber(Subscriber $subscriber)
     {
-        $this->dispatch(new UnsubscribeSubscriberCommand($subscriber));
+        dispatch(new UnsubscribeSubscriberCommand($subscriber));
+
+        return $this->noContent();
+    }
+
+    /**
+     * Delete a subscriber.
+     *
+     * @param \CachetHQ\Cachet\Models\Subscriber $subscriber
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteSubscription(Subscription $subscriber)
+    {
+        dispatch(new UnsubscribeSubscriptionCommand($subscriber));
 
         return $this->noContent();
     }

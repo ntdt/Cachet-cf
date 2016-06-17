@@ -12,20 +12,17 @@
 namespace CachetHQ\Cachet\Http\Controllers\Dashboard;
 
 use AltThree\Validator\ValidationException;
-use CachetHQ\Cachet\Commands\User\AddTeamMemberCommand;
-use CachetHQ\Cachet\Commands\User\InviteTeamMemberCommand;
-use CachetHQ\Cachet\Commands\User\RemoveUserCommand;
+use CachetHQ\Cachet\Bus\Commands\User\AddTeamMemberCommand;
+use CachetHQ\Cachet\Bus\Commands\User\InviteTeamMemberCommand;
+use CachetHQ\Cachet\Bus\Commands\User\RemoveUserCommand;
 use CachetHQ\Cachet\Models\User;
 use GrahamCampbell\Binput\Facades\Binput;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
 class TeamController extends Controller
 {
-    use DispatchesJobs;
-
     /**
      * Shows the team members view.
      *
@@ -42,6 +39,8 @@ class TeamController extends Controller
 
     /**
      * Shows the edit team member view.
+     *
+     * @param \CachetHQ\Cachet\Models\User $user
      *
      * @return \Illuminate\View\View
      */
@@ -82,7 +81,7 @@ class TeamController extends Controller
     public function postAddUser()
     {
         try {
-            $this->dispatch(new AddTeamMemberCommand(
+            dispatch(new AddTeamMemberCommand(
                 Binput::get('username'),
                 Binput::get('password'),
                 Binput::get('email'),
@@ -131,7 +130,7 @@ class TeamController extends Controller
     public function postInviteUser()
     {
         try {
-            $this->dispatch(new InviteTeamMemberCommand(
+            dispatch(new InviteTeamMemberCommand(
                 array_unique(array_filter((array) Binput::get('emails')))
             ));
         } catch (ValidationException $e) {
@@ -154,7 +153,7 @@ class TeamController extends Controller
      */
     public function deleteUser(User $user)
     {
-        $this->dispatch(new RemoveUserCommand($user));
+        dispatch(new RemoveUserCommand($user));
 
         return Redirect::route('dashboard.team.index')
             ->withSuccess(sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.team.delete.success')));

@@ -11,39 +11,43 @@
 
 namespace CachetHQ\Cachet\Http\Controllers\Api;
 
-use CachetHQ\Cachet\Commands\Component\AddComponentCommand;
-use CachetHQ\Cachet\Commands\Component\RemoveComponentCommand;
-use CachetHQ\Cachet\Commands\Component\UpdateComponentCommand;
+use CachetHQ\Cachet\Bus\Commands\Component\AddComponentCommand;
+use CachetHQ\Cachet\Bus\Commands\Component\RemoveComponentCommand;
+use CachetHQ\Cachet\Bus\Commands\Component\UpdateComponentCommand;
 use CachetHQ\Cachet\Models\Component;
 use CachetHQ\Cachet\Models\Tag;
 use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\QueryException;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ComponentController extends AbstractApiController
 {
-    use DispatchesJobs;
-
     /**
      * Get all components.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Illuminate\Contracts\Auth\Guard          $auth
-     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getComponents(Request $request, Guard $auth)
+    public function getComponents()
     {
-        if ($auth->check()) {
-            $components = Component::whereRaw('1 = 1');
+        if (app(Guard::class)->check()) {
+            $components = Component::query();
         } else {
             $components = Component::enabled();
         }
 
-        return $this->paginator($components->paginate(Binput::get('per_page', 20)), $request);
+        $components->search(Binput::except(['sort', 'order', 'per_page']));
+
+        if ($sortBy = Binput::get('sort')) {
+            $direction = Binput::has('order') && Binput::get('order') == 'desc';
+
+            $components->sort($sortBy, $direction);
+        }
+
+        $components = $components->paginate(Binput::get('per_page', 20));
+
+        return $this->paginator($components, Request::instance());
     }
 
     /**
@@ -66,7 +70,7 @@ class ComponentController extends AbstractApiController
     public function postComponents()
     {
         try {
-            $component = $this->dispatch(new AddComponentCommand(
+            $component = dispatch(new AddComponentCommand(
                 Binput::get('name'),
                 Binput::get('description'),
                 Binput::get('status'),
@@ -106,7 +110,7 @@ class ComponentController extends AbstractApiController
     public function putComponent(Component $component)
     {
         try {
-            $this->dispatch(new UpdateComponentCommand(
+            dispatch(new UpdateComponentCommand(
                 $component,
                 Binput::get('name'),
                 Binput::get('description'),
@@ -143,7 +147,7 @@ class ComponentController extends AbstractApiController
      */
     public function deleteComponent(Component $component)
     {
-        $this->dispatch(new RemoveComponentCommand($component));
+        dispatch(new RemoveComponentCommand($component));
 
         return $this->noContent();
     }

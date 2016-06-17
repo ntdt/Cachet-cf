@@ -27,23 +27,33 @@ class StatusPageComposer
      */
     public function compose(View $view)
     {
+        $totalComponents = Component::enabled()->count();
+        $majorOutages = Component::enabled()->status(4)->count();
+        $isMajorOutage = $totalComponents ? ($majorOutages / $totalComponents) >= 0.5 : false;
+
         // Default data
         $withData = [
-            'systemStatus'  => 'info',
-            'systemMessage' => trans('cachet.service.bad'),
-            'favicon'       => 'favicon-high-alert',
+            'system_status'  => 'info',
+            'system_message' => trans_choice('cachet.service.bad', $totalComponents),
+            'favicon'        => 'favicon-high-alert',
         ];
 
-        if (Component::enabled()->notStatus(1)->count() === 0) {
+        if ($isMajorOutage) {
+            $withData = [
+                'system_status'  => 'danger',
+                'system_message' => trans_choice('cachet.service.major', $totalComponents),
+                'favicon'        => 'favicon-high-alert',
+            ];
+        } elseif (Component::enabled()->notStatus(1)->count() === 0) {
             // If all our components are ok, do we have any non-fixed incidents?
             $incidents = Incident::notScheduled()->orderBy('created_at', 'desc')->get();
             $incidentCount = $incidents->count();
 
             if ($incidentCount === 0 || ($incidentCount >= 1 && (int) $incidents->first()->status === 4)) {
                 $withData = [
-                    'systemStatus'  => 'success',
-                    'systemMessage' => trans('cachet.service.good'),
-                    'favicon'       => 'favicon',
+                    'system_status'  => 'success',
+                    'system_message' => trans_choice('cachet.service.good', $totalComponents),
+                    'favicon'        => 'favicon',
                 ];
             }
         } else {
@@ -56,7 +66,7 @@ class StatusPageComposer
         $scheduledMaintenance = Incident::scheduled()->orderBy('scheduled_at')->get();
 
         // Component & Component Group lists.
-        $usedComponentGroups = Component::enabled()->where('group_id', '>', 0)->groupBy('group_id')->lists('group_id');
+        $usedComponentGroups = Component::enabled()->where('group_id', '>', 0)->groupBy('group_id')->pluck('group_id');
         $componentGroups = ComponentGroup::whereIn('id', $usedComponentGroups)->orderBy('order')->get();
         $ungroupedComponents = Component::enabled()->where('group_id', 0)->orderBy('order')->orderBy('created_at')->get();
 
