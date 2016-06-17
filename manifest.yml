@@ -7,6 +7,7 @@ env:
   DEFAULT_ADMIN_USERNAME: admin
   DEFAULT_ADMIN_PASSWORD: p@ssw0rd
   DEFAULT_ADMIN_EMAIL: admin@admin.com
+  DEFAULT_ADMIN_API_KEY: YWRtaW5wQHNzdzByZGFkbWlucGFzc3dvcmQ= # please change it
   APP_TIMEZONE: Europe/Paris
   APP_LOCALE: en
   MAIL_ADDRESS: support@mydomain.com # set the `from` mail address

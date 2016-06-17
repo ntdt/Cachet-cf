@@ -63,6 +63,7 @@ class MigrateDatabase
             'email' => env("DEFAULT_ADMIN_EMAIL", "admin@admin.com"),
             'password' => env("DEFAULT_ADMIN_PASSWORD", "p@ssw0rd"),
             'level' => User::LEVEL_ADMIN,
+            'api_key' => env("DEFAULT_ADMIN_API_KEY", "YWRtaW5wQHNzdzByZGFkbWlucGFzc3dvcmQ=")
         ]);
     }
 
