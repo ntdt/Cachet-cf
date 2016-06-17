@@ -822,16 +822,16 @@
         },
         {
             "name": "cloudfoundry-community/cf-helper-php",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudfoundry-community/cf-helper-php.git",
-                "reference": "e33ad921b361dfd6fcd4944128655e1d758f2476"
+                "reference": "d7fc77a8402045bbeba085e55f72761ede6c3f4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudfoundry-community/cf-helper-php/zipball/e33ad921b361dfd6fcd4944128655e1d758f2476",
-                "reference": "e33ad921b361dfd6fcd4944128655e1d758f2476",
+                "url": "https://api.github.com/repos/cloudfoundry-community/cf-helper-php/zipball/d7fc77a8402045bbeba085e55f72761ede6c3f4f",
+                "reference": "d7fc77a8402045bbeba085e55f72761ede6c3f4f",
                 "shasum": ""
             },
             "require": {
@@ -869,7 +869,7 @@
                 "services",
                 "vcapservices"
             ],
-            "time": "2016-06-16 09:21:19"
+            "time": "2016-06-17 17:20:02"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -6009,16 +6009,16 @@
         },
         {
             "name": "sebastian/exporter",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "7ae5513327cb536431847bcc0c10edba2701064e"
+                "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/7ae5513327cb536431847bcc0c10edba2701064e",
-                "reference": "7ae5513327cb536431847bcc0c10edba2701064e",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/42c4c2eec485ee3e159ec9884f95b431287edde4",
+                "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4",
                 "shasum": ""
             },
             "require": {
@@ -6026,12 +6026,13 @@
                 "sebastian/recursion-context": "~1.0"
             },
             "require-dev": {
+                "ext-mbstring": "*",
                 "phpunit/phpunit": "~4.4"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -6071,7 +6072,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2015-06-21 07:55:53"
+            "time": "2016-06-17 09:04:28"
         },
         {
             "name": "sebastian/global-state",

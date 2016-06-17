@@ -103,7 +103,7 @@ class DatabaseConfig
 
     private function loadDatabase()
     {
-        $this->cfHelper->getDatabaseConnector()->load();
+        $this->cfHelper->getDatabaseConnector()->loadCredentials();
         $credentials = $this->cfHelper->getDatabaseConnector()->getCredentials();
         if (empty($credentials)) {
             $this->initSqlite();
@@ -127,7 +127,7 @@ class DatabaseConfig
 
     private function loadRedis()
     {
-        $this->cfHelper->getRedisConnector()->load();
+        $this->cfHelper->getRedisConnector()->loadCredentials();
         $credentials = $this->cfHelper->getRedisConnector()->getCredentials();
         if (empty($credentials)) {
             return;
