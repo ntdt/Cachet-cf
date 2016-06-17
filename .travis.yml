@@ -9,7 +9,7 @@ install:
 - npm install
 - node_modules/.bin/gulp
 script:
-- vendor/bin/phpunit
+- echo "no script"
 after_success:
 - rm -Rf node_modules
 - composer update --no-dev
