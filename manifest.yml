@@ -1,5 +1,5 @@
 ---
-name: cachettest
+name: cachet
 env:
   APP_KEY: W0CUoZdiYX3I0ysuvPTw2dFC9QQ0n6lC # please change it
   APP_DEBUG: true

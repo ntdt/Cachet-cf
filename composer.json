@@ -25,7 +25,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.0",
         "ext-xml": "*",
         "laravel/framework": "5.2.39",
         "alt-three/badger": "^3.1",
@@ -70,7 +70,8 @@
             "app/helpers.php"
         ],
         "psr-4": {
-            "CachetHQ\\Cachet\\": "app/"
+            "CachetHQ\\Cachet\\": "app/",
+            "Arthurh\\CloudFoundry\\": "cloudfoundry/"
         }
     },
     "autoload-dev": {
@@ -104,7 +105,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.4-dev"
+            "dev-master": "2.3-dev"
         }
     },
     "minimum-stability": "stable",
