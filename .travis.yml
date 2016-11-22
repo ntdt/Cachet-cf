@@ -5,13 +5,9 @@ sudo: false
 install:
 - composer config --global github-oauth.github.com $GITHUB_TOKEN_COMPOSER
 - travis_retry composer install --no-interaction --no-scripts
-- npm install -g npm@latest
-- npm install
-- node_modules/.bin/gulp
 script:
 - echo "no script"
 after_success:
-- rm -Rf node_modules
 - composer update --no-dev
 - zip -r cachet-cf-bundled ./* .bp-config
 deploy:
