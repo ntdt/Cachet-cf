@@ -21,7 +21,7 @@ jobs:
         globs:
         - "om-linux"
   - task: get-deployed-products
-    file: tasks/get-deployed-products.yml
+    file: cachet-cf/ci/tasks/get-deployed-products.yml
     params:
       pcf_ert_domain: {{pcf_ert_domain}}
       pcf_opsman_admin: {{pcf_opsman_admin}}
