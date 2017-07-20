@@ -1,0 +1,19 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: virtmerlin/c0-worker
+
+inputs:
+  - name: cachet-cf 
+  - name: tool-om
+
+run:
+  path: cachet-cf/ci/tasks/get-deployed-products.sh
+
+params:
+  pcf_ert_domain:
+  pcf_opsman_admin:
+  pcf_opsman_admin_passwd:

@@ -2,3 +2,5 @@
 node_modules
 phpunit.xml
 vendor
+my-manifest.yml
+params.yml
