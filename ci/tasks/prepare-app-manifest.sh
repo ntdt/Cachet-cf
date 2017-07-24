@@ -10,6 +10,6 @@ s/app_admin_email/${app_admin_email}/g; \
 s/app_admin_api_key/${app_admin_api_key}/; \
 s/app_timezone/${app_timezore}/; \
 s/app_locale/${app_locale}/; \
-s/app_mail_address/${app_mail_address}/;" > ./app-manifest-output/manifest.yml
+s/app_mail_address/${app_mail_address}/;" cachet-cf/ci/templates/manifest.yml > ./app-manifest-output/manifest.yml
 
 cat ./app-manifest-output/manifest.yml
