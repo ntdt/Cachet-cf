@@ -13,4 +13,4 @@ s/app_locale/${app_locale}/; \
 s/app_mail_address/${app_mail_address}/;" cachet-cf/ci/templates/manifest.yml > ./app-manifest-output/manifest.yml
 echo "Done."
 echo "Unzip cachet-cf-bundled"
-mkdir cache-cf-app && unzip cf-release/cachet-cf-bundled.zip -d cache-cf-app
+mkdir cachet-cf-app && unzip cf-release/cachet-cf-bundled.zip -d cachet-cf-app

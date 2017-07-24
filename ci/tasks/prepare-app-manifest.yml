@@ -8,6 +8,7 @@ image_resource:
 
 inputs:
 - name: cachet-cf
+- name: cachet-release
 
 outputs:
 - name: app-manifest-output

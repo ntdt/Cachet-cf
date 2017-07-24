@@ -88,7 +88,7 @@ jobs:
         - create-services
     - get: cachet-release
       trigger: false
-  - task: prepare-manifest
+  - task: prepare-app-manifest
     file: cachet-cf/ci/tasks/prepare-app-manifest.yml
     params:
       app_name: {{app_name}}
