@@ -4,3 +4,4 @@ phpunit.xml
 vendor
 my-manifest.yml
 params.yml
+**/*params.yml

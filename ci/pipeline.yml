@@ -29,11 +29,13 @@ resources:
   source:
     owner: cloudfoundry-community
     repository: Cachet-cf
+    access_token: ((ntdt_githubtoken))
 - name: cachet-cf
   type: git
   source:
     uri: https://github.com/ntdt/Cachet-cf.git
     branch: master
+    private_key: ((ntdt_privkey))
 - name: tool-om
   type: github-release
   source:
@@ -106,6 +108,8 @@ jobs:
   - aggregate:
     - get: cachet-cf
       trigger: false
+      passed:
+        - deploy-cachet
     - get: tool-om
       params:
         globs:
