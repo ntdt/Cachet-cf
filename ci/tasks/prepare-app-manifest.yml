@@ -1,0 +1,16 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: ubuntu
+
+inputs:
+- name: cachet-cf
+
+outputs:
+- name: app-manifest-output
+
+run:
+path: cachet-cf/ci/tasks/prepare-app-manifest.sh

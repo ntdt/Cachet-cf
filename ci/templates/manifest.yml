@@ -1,0 +1,19 @@
+---
+name: cachet
+env:
+  APP_KEY: app_key
+  APP_DEBUG: false
+  APP_NAME: app_name
+  DEFAULT_ADMIN_USERNAME: app_admin_username
+  DEFAULT_ADMIN_PASSWORD: app_admin_password
+  DEFAULT_ADMIN_EMAIL: app_admin_email
+  DEFAULT_ADMIN_API_KEY: app_admin_api_key
+  APP_TIMEZONE: app_timezone
+  APP_LOCALE: app_locale
+  MAIL_ADDRESS: app_mail_address # set the `from` mail address
+  USE_SSL: true # to enforce https on your app
+buildpack: php_buildpack
+services:
+- mysql-status
+- redis-status
+
