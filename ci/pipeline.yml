@@ -33,7 +33,7 @@ resources:
 - name: cachet-cf
   type: git
   source:
-    uri: https://github.com/ntdt/Cachet-cf.git
+    uri: git@github.com:ntdt/Cachet-cf.git
     branch: master
     private_key: ((ntdt_privkey))
 - name: tool-om
@@ -41,6 +41,7 @@ resources:
   source:
     owner: pivotal-cf
     repository: om
+    access_token: ((ntdt_githubtoken))
 
 jobs:
 
