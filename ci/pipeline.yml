@@ -1,4 +1,34 @@
+resource_types:
+- name: cf-cli-resource
+  type: docker-image
+  source:
+    repository: pivotalpa/cf-cli-resource
+    tag: latest
+
 resources:
+- name: cf-env
+  type: cf-cli-resource
+  source:
+    skip_cert_check: 'false'
+    api: {{api_url}}
+    username: {{cf_user}}
+    password: ((supportpaas_password))
+    org: {{cf_org}}
+    space: {{cf_space}}
+- name: pcf
+  type: cf
+  source:
+    api: {{api_url}}
+    username: {{cf_user}}
+    password: ((supportpaas_password))
+    organization: {{cf_org}}
+    space: {{cf_space}}
+    skip_cert_check: 'false'
+- name: cachet-release
+  type: github-release
+  source:
+    owner: cloudfoundry-community
+    repository: Cachet-cf
 - name: cachet-cf
   type: git
   source:
@@ -11,6 +41,66 @@ resources:
     repository: om
 
 jobs:
+
+- name: create-services
+  plan:
+  - get: cachet-cf
+    trigger: false
+  - task: create-services
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ubuntu
+      outputs:
+      - name: build
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          echo "Creation of services mysql and redis for Cachet app." > ./build/cachet-$(date +"%Y%m%d%H%S").txt
+          find .
+  - put: cf-create-service-mysql
+    resource: cf-env
+    params:
+      command: create-service
+      service: p-mysql
+      plan: 100mb
+      service_instance: mysql-status
+  - put: cf-create-service-redis
+    resource: cf-env
+    params:
+      command: create-service
+      service: p-redis
+      plan: shared-vm
+      service_instance: redis-status
+- name: deploy-cachet
+  plan:
+  - aggregate:
+    - get: cachet-cf
+      trigger: false
+      passed:
+        - create-services
+    - get: cachet-release
+      trigger: false
+  - task: prepare-manifest
+    file: cachet-cf/ci/tasks/prepare-app-manifest.yml
+    params:
+      app_name: {{app_name}}
+      app_key: {{app_key}}
+      app_admin_username: {{app_admin_username}}
+      app_admin_password: {{app_admin_password}}
+      app_admin_email: {{app_admin_email}}
+      app_admin_api_key: {{app_admin_api_key}}
+      app_timezone: {{app_timezone}}
+      app_locale: {{app_locale}}
+      app_mail_address: {{app_mail_address}}
+  - put: pcf
+    params:
+      manifest: app-manifest-output/manifest.yml
+      path: cache-cf-app
 - name: get-deployed-products
   plan:
   - aggregate:
@@ -26,4 +116,3 @@ jobs:
       pcf_ert_domain: {{pcf_ert_domain}}
       pcf_opsman_admin: {{pcf_opsman_admin}}
       pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
-      

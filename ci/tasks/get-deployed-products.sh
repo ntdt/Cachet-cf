@@ -11,4 +11,7 @@ echo "==========================================================================
 om-linux --target https://opsman.$pcf_ert_domain -k \
          --username "$pcf_opsman_admin" \
 	 --password "$pcf_opsman_admin_passwd" \
-	 deployed-products
+	 deployed-products > deployed-products
+mysql_version=$(grep p-mysql deployed-products |grep -v -e '+-' -e NAME|tr -d '[:blank:]'|cut -d'|' -f 2,3 ) > tiles-versions
+cat tiles-versions
+
