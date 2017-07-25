@@ -104,13 +104,24 @@ jobs:
     params:
       manifest: app-manifest-output/manifest.yml
       path: cachet-release/cachet-cf-bundled.zip
+
+- name: populate-data
+  plan:
+  - get: cachet-cf
+    trigger: false
+    passed:
+      - deploy-cachet
+  - task: populate-data
+    file: cachet-cf/ci/task/populate-data.yml
+    params:
+      pcf_components: ((pcf_components))
 - name: get-deployed-products
   plan:
   - aggregate:
     - get: cachet-cf
       trigger: false
       passed:
-        - deploy-cachet
+        - populate-data
     - get: tool-om
       params:
         globs:
