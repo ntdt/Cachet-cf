@@ -23,7 +23,7 @@ resources:
     password: ((supportpaas_password))
     organization: {{cf_org}}
     space: {{cf_space}}
-    skip_cert_check: 'false'
+    skip_cert_check: false
 - name: cachet-release
   type: github-release
   source:
@@ -87,7 +87,7 @@ jobs:
       passed:
         - create-services
     - get: cachet-release
-      trigger: false
+
   - task: prepare-app-manifest
     file: cachet-cf/ci/tasks/prepare-app-manifest.yml
     params:
@@ -103,7 +103,7 @@ jobs:
   - put: pcf
     params:
       manifest: app-manifest-output/manifest.yml
-      path: cache-cf-app
+      path: cachet-cf-app
 - name: get-deployed-products
   plan:
   - aggregate:

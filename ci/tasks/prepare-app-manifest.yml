@@ -12,6 +12,7 @@ inputs:
 
 outputs:
 - name: app-manifest-output
+- name: cachet-cf-app
 
 run:
   path: cachet-cf/ci/tasks/prepare-app-manifest.sh
