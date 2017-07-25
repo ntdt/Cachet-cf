@@ -103,7 +103,7 @@ jobs:
   - put: pcf
     params:
       manifest: app-manifest-output/manifest.yml
-      path: cachet-cf-app
+      path: cachet-release/cachet-cf-bundled.zip
 - name: get-deployed-products
   plan:
   - aggregate:
