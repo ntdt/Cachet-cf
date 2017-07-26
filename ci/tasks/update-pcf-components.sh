@@ -11,7 +11,11 @@ echo "==========================================================================
 om-linux --target https://opsman.$pcf_ert_domain -k \
          --username "$pcf_opsman_admin" \
 	 --password "$pcf_opsman_admin_passwd" \
-	 deployed-products > deployed-products
-mysql_version=$(grep p-mysql deployed-products |grep -v -e '+-' -e NAME|tr -d '[:blank:]'|cut -d'|' -f 2,3 ) > tiles-versions
+	 deployed-products | grep -v -e '+-' -e NAME|tr -d '[:blank:]'|cut -d'|' -f 2,3  > tiles-versions
 cat tiles-versions
 
+for tile in cf p-rabbitmq Pivotal_Single_Sign-On_Service p-redis apm p-mysql p-spring-cloud-services
+do
+    version=$(grep $tile tiles-versions| cut -d '|' -f 2)
+    exec update-pcf-component.rb $tile $version
+done

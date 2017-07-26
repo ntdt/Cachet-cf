@@ -1,0 +1,14 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: ntdt/concourse-cf-tools
+
+inputs:
+  - name: cachet-cf
+  - name: tool-om
+
+run:
+  path: cachet-cf/ci/tasks/update-pcf-components.sh

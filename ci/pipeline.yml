@@ -1,3 +1,12 @@
+groups:
+- name: install
+  jobs:
+    - create-services
+    - deploy-cachet
+    - populate-data
+- name: scheduled-update
+  jobs:
+    - update-status
 resource_types:
 - name: cf-cli-resource
   type: docker-image
@@ -10,19 +19,19 @@ resources:
   type: cf-cli-resource
   source:
     skip_cert_check: 'false'
-    api: {{api_url}}
-    username: {{cf_user}}
+    api: ((api_url))
+    username: ((cf_user))
     password: ((supportpaas_password))
-    org: {{cf_org}}
-    space: {{cf_space}}
+    org: ((cf_org))
+    space: ((cf_space))
 - name: pcf
   type: cf
   source:
-    api: {{api_url}}
-    username: {{cf_user}}
+    api: ((api_url))
+    username: ((cf_user))
     password: ((supportpaas_password))
-    organization: {{cf_org}}
-    space: {{cf_space}}
+    organization: ((cf_org))
+    space: ((cf_space))
     skip_cert_check: false
 - name: cachet-release
   type: github-release
@@ -90,15 +99,15 @@ jobs:
   - task: prepare-app-manifest
     file: cachet-cf/ci/tasks/prepare-app-manifest.yml
     params:
-      app_name: {{app_name}}
-      app_key: {{app_key}}
-      app_admin_username: {{app_admin_username}}
-      app_admin_password: {{app_admin_password}}
-      app_admin_email: {{app_admin_email}}
-      app_admin_api_key: {{app_admin_api_key}}
-      app_timezone: {{app_timezone}}
-      app_locale: {{app_locale}}
-      app_mail_address: {{app_mail_address}}
+      app_name: ((app_name))
+      app_key: ((app_key))
+      app_admin_username: ((app_admin_username))
+      app_admin_password: ((app_admin_password))
+      app_admin_email: ((app_admin_email))
+      app_admin_api_key: ((app_admin_api_key))
+      app_timezone: ((app_timezone))
+      app_locale: ((app_locale))
+      app_mail_address: ((app_mail_address))
   - put: pcf
     params:
       manifest: app-manifest-output/manifest.yml
@@ -127,9 +136,11 @@ jobs:
       params:
         globs:
         - "om-linux"
-  - task: get-deployed-products
-    file: cachet-cf/ci/tasks/get-deployed-products.yml
+  - task: update-pcf-components
+    file: cachet-cf/ci/tasks/update-pcf-components.yml
     params:
-      pcf_ert_domain: {{pcf_ert_domain}}
-      pcf_opsman_admin: {{pcf_opsman_admin}}
-      pcf_opsman_admin_passwd: {{pcf_opsman_admin_passwd}}
+      pcf_ert_domain: ((pcf_ert_domain))
+      pcf_opsman_admin: ((pcf_opsman_admin))
+      pcf_opsman_admin_passwd: ((pcf_opsman_admin_passwd))
+      pcf_components: ((pcf_components))
+
