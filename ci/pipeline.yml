@@ -83,9 +83,8 @@ jobs:
   plan:
   - aggregate:
     - get: cachet-cf
-      trigger: false
       passed:
-        - create-services
+      - create-services
     - get: cachet-release
 
   - task: prepare-app-manifest
@@ -108,12 +107,18 @@ jobs:
 - name: populate-data
   plan:
   - get: cachet-cf
-    trigger: false
+    passed:
+      - deploy-cachet
   - task: populate-data
     file: cachet-cf/ci/tasks/populate-data.yml
     params:
       pcf_components: ((pcf_components))
-- name: get-deployed-products
+      lcd_components: ((lcd_components))
+      app_admin_api_key: ((app_admin_api_key))
+      app_name: ((app_name))
+      pcf_ert_domain: ((pcf_ert_domain))
+
+- name: update-status
   plan:
   - aggregate:
     - get: cachet-cf
