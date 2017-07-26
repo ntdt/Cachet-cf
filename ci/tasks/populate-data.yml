@@ -11,3 +11,13 @@ inputs:
 
 run:
   path: cachet-cf/ci/tasks/populate-data.rb
+params:
+  pcf_components: |
+    - name: cf
+      description: Pivotal Elastic Runtime
+      link: https://docs.pivotal.io/pivotalcf/1-10/pcf-release-notes/runtime-rn.html#1.10.10
+      status: 1
+    - name: p-mysql
+      description: MySQL for PCF
+      link: https://docs.pivotal.io/p-mysql/1-9/release-notes.html#1-9-5
+      status: 1

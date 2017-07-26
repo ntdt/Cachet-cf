@@ -109,10 +109,8 @@ jobs:
   plan:
   - get: cachet-cf
     trigger: false
-    passed:
-      - deploy-cachet
   - task: populate-data
-    file: cachet-cf/ci/task/populate-data.yml
+    file: cachet-cf/ci/tasks/populate-data.yml
     params:
       pcf_components: ((pcf_components))
 - name: get-deployed-products
@@ -120,8 +118,6 @@ jobs:
   - aggregate:
     - get: cachet-cf
       trigger: false
-      passed:
-        - populate-data
     - get: tool-om
       params:
         globs:
