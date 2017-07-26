@@ -1,5 +1,5 @@
 ---
-name: cachet
+name: app_name
 env:
   APP_KEY: app_key
   APP_DEBUG: false

@@ -3,7 +3,7 @@
 set -e
 echo "Prepare Cachet app manifest..."
 sed "s/app_key/${app_key}/; \
-s/app_name/${app_name}/; \
+s/app_name/${app_name}/g; \
 s/app_admin_username/${app_admin_username}/; \
 s/app_admin_password/${app_admin_password}/; \
 s/app_admin_email/${app_admin_email}/g; \
