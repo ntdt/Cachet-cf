@@ -53,7 +53,7 @@ def get_deployed_products(opsman_url,user, password)
   res = JSON.load(response.read_body)
 
   res.map do |e|
-    {"tile" => e["type"],
+    {"name" => e["type"],
      "version" => e["product_version"]}
   end
 end
@@ -65,8 +65,8 @@ pcf_opsman_passwd = ENV['pcf_opsman_admin_passwd']
 api_endpoint      = "https://#{ENV['app_name']}.apps.#{pcf_ert_domain}/api/v1"
 opsman_url        = "https://opsman.#{pcf_ert_domain}"
 
-tiles_versions = get_deployed_products(opsman_url, pcf_opsman_admin, pcf_opsman_passwd)
-tiles_versions.each do |tile, version|
-  tile_id = get_component_id_from_description(api_endpoint, api_token, tile)
-  update_component_version(api_endpoint, tile_id, tile, version)
+tiles = get_deployed_products(opsman_url, pcf_opsman_admin, pcf_opsman_passwd)
+tiles.each do |tile|
+  tile_id = get_component_id_from_description(api_endpoint, api_token, tile['name'])
+  update_component_version(api_endpoint, tile_id, tile['name'], tile['version'])
 end
