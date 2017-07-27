@@ -28,8 +28,8 @@ def update_component_version(api_url, api_token, component_id, description, vers
   request = Net::HTTP::Put.new(url)
   request['Content-Type'] = 'application/json'
   request['X-Cachet-Token'] = "#{api_token}"
-  name = "Update tile #{description}  to #{version}"
-  puts name
+  puts "Update tile #{description} to #{version}"
+  name = "#{description} #{version}"
   request.body = "{\"name\":\"#{name}\", \"status\":1}"
   response = http.request(request)
   response.read_body
