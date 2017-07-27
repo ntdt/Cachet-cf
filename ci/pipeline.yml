@@ -134,6 +134,5 @@ jobs:
       pcf_ert_domain: ((pcf_ert_domain))
       pcf_opsman_admin: ((pcf_opsman_admin))
       pcf_opsman_admin_passwd: ((pcf_opsman_admin_passwd))
-      pcf_components: ((pcf_components))
       app_admin_api_key: ((app_admin_api_key))
 
