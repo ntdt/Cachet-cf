@@ -139,6 +139,7 @@ jobs:
   - task: update-pcf-components
     file: cachet-cf/ci/tasks/update-pcf-components.yml
     params:
+      app_name: ((app_name))
       pcf_ert_domain: ((pcf_ert_domain))
       pcf_opsman_admin: ((pcf_opsman_admin))
       pcf_opsman_admin_passwd: ((pcf_opsman_admin_passwd))

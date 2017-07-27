@@ -11,4 +11,4 @@ inputs:
   - name: tool-om
 
 run:
-  path: cachet-cf/ci/tasks/update-pcf-components.sh
+  path: cachet-cf/ci/tasks/update-pcf-components.rb
