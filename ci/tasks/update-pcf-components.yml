@@ -8,7 +8,6 @@ image_resource:
 
 inputs:
   - name: cachet-cf
-  - name: tool-om
 
 run:
   path: cachet-cf/ci/tasks/update-pcf-components.rb

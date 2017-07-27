@@ -45,12 +45,6 @@ resources:
     uri: git@github.com:ntdt/Cachet-cf.git
     branch: master
     private_key: ((ntdt_privkey))
-- name: tool-om
-  type: github-release
-  source:
-    owner: pivotal-cf
-    repository: om
-    access_token: ((ntdt_githubtoken))
 
 jobs:
 
@@ -132,10 +126,7 @@ jobs:
   - aggregate:
     - get: cachet-cf
       trigger: false
-    - get: tool-om
-      params:
-        globs:
-        - "om-linux"
+
   - task: update-pcf-components
     file: cachet-cf/ci/tasks/update-pcf-components.yml
     params:
