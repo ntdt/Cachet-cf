@@ -21,13 +21,13 @@ def get_component_id_from_description(api_url, api_token, description)
   return 0
 end
 
-def update_component_version(api_url, component_id, description, version)
+def update_component_version(api_url, api_token, component_id, description, version)
   url = URI("#{api_url}/components/#{component_id}")
   http = Net::HTTP.new(url.host, url.port)
   http.use_ssl = true
   request = Net::HTTP::Put.new(url)
   request['Content-Type'] = 'application/json'
-  request['X-Cachet-Token'] = "#{$api_token}"
+  request['X-Cachet-Token'] = "#{api_token}"
   name = "Update tile #{description}  to #{version}"
   puts name
   request.body = "{\"name\":\"#{name}\", \"status\":1}"
@@ -68,5 +68,5 @@ opsman_url        = "https://opsman.#{pcf_ert_domain}"
 tiles = get_deployed_products(opsman_url, pcf_opsman_admin, pcf_opsman_passwd)
 tiles.each do |tile|
   tile_id = get_component_id_from_description(api_endpoint, api_token, tile['name'])
-  update_component_version(api_endpoint, tile_id, tile['name'], tile['version'])
+  update_component_version(api_endpoint, api_token, tile_id, tile['name'], tile['version'])
 end
