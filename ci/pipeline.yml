@@ -45,7 +45,13 @@ resources:
     uri: git@github.com:ntdt/Cachet-cf.git
     branch: master
     private_key: ((ntdt_privkey))
-
+- name: sometime-after-midnight
+  type: time
+  source:
+    start: 12:00 AM
+    stop: 1:00 AM
+    location: America/Toronto
+    days: [Monday, Tuesday, Wednesday, Thursday,Friday]
 jobs:
 
 - name: create-services
@@ -123,10 +129,10 @@ jobs:
 
 - name: update-status
   plan:
-  - aggregate:
-    - get: cachet-cf
-      trigger: false
-
+  - get: cachet-cf
+    trigger: false
+  - get: sometime-after-midnight
+    trigger: true
   - task: update-pcf-components
     file: cachet-cf/ci/tasks/update-pcf-components.yml
     params:
