@@ -74,6 +74,8 @@ components        = {"cf" => "Pivotal Elastic Runtime",
 
 tiles = get_deployed_products(opsman_url, pcf_opsman_admin, pcf_opsman_passwd)
 tiles.each do |tile|
-  tile_id = get_component_id_from_description(api_endpoint, api_token, tile['name'])
-  update_component_version(api_endpoint, api_token, tile_id, tile['name'], tile['version'], components)
+  if components.key? tile['name']
+    tile_id = get_component_id_from_description(api_endpoint, api_token, tile['name'])
+    update_component_version(api_endpoint, api_token, tile_id, tile['name'], tile['version'], components)
+  end
 end
