@@ -70,7 +70,9 @@ components        = {"cf" => "Pivotal Elastic Runtime",
                      "p-rabbitmq" => "RabbitMQ for PCF",
                      "p-spring-cloud-services" => "Spring Cloud Services",
                      "Pivotal_Single_Sign-On_Service" => "Single Sign-On",
-                     "apm" => "PCF Metrics"}
+                     "apm" => "PCF Metrics",
+                     "crunchy" => "Crunchy PostgreSQL for PCF",
+                    }
 
 tiles = get_deployed_products(opsman_url, pcf_opsman_admin, pcf_opsman_passwd)
 tiles.each do |tile|
